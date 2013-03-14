@@ -10,7 +10,7 @@ using namespace std;
 class Level;
 class Field;
 class Event;
-
+///Declarations for class Event
 class Event
 {
 	public:

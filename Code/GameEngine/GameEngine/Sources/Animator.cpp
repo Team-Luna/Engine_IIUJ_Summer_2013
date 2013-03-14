@@ -1,7 +1,7 @@
 using namespace std;
 
 #include "Animator.h"
-
+///Code for class Animator functions
 Animator::Animator(std::string Path, scene::IAnimatedMeshSceneNode* Model)
 {
 	graphic_model = Model;

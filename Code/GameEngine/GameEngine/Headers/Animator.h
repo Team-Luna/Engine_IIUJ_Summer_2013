@@ -19,7 +19,7 @@ using namespace io;
 using namespace gui;
 
 class Field;
-
+///Declarations for class Animator
 class Animator
 {
 	public:
