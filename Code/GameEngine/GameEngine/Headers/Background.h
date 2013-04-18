@@ -25,6 +25,8 @@ using namespace video;
 using namespace io;
 using namespace gui;
 
+class Player;
+class Background;
 
 class Background
 {
@@ -37,10 +39,10 @@ class Background
 
 public:
 	Background(void);
-	Background(vector3df Size, vector3df Position, bool Transparency, char* TexturePath, irr::f32 SpeedHorizontal, irr::f32 SpeedInwards, IrrlichtDevice* Device, Level Lvl);
+	Background(vector3df Size, vector3df Position, bool Transparency, char* TexturePath, irr::f32 SpeedHorizontal, irr::f32 SpeedInwards, IrrlichtDevice* Device, Player* player);
 	~Background(void);
 
-	ISceneNode* generateSingleCube(vector3df Size, vector3df Position, bool Transparency, char* TexturePath, irr::f32 SpeedHorizontal, irr::f32 SpeedInwards, IrrlichtDevice* Device, Level Lvl);
+	ISceneNode* generateSingleCube(vector3df Size, vector3df Position, bool Transparency, char* TexturePath, irr::f32 SpeedHorizontal, irr::f32 SpeedInwards, IrrlichtDevice* Device, Player* player);
 
 
 	irr::f32 getSpeedHorizontal();

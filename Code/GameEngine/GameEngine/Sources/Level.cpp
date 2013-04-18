@@ -48,6 +48,10 @@ Level::Level(IrrlichtDevice* Device) {
 		add_border(Point(30, -10, i), Point(10.0, 10.0, 1.0));
 	for (int i = 1; i < 5; i++)
 		add_border(Point(30 + 10*i, -10, 4), Point(10.0, 10.0, 1.0));
+
+	bg_sky = Background(vector3df(500,350,0), vector3df(1,1,1000), false, "../media/environment/sky16.JPG", 0.1, 1.0, device, player);
+	bg_trees = Background(vector3df(20,10,0), vector3df(-300,1,300), true, "../media/environment/trees.png", 0.5, 3.1, device, player);
+	bg_beach = Background(vector3df(800,200,0), vector3df(1,-1000,600), false, "../media/environment/beach.jpg", 5.1, 10.1, device, player);
 }
 
 Level::Level(IrrlichtDevice* Device, char* path) {
@@ -320,6 +324,11 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 				lineOutput[3], lineOutput[4], //animation id, animation speed
 				lineOutput[5], lineOutput[6], lineOutput[7]); //current frame, min frame, max frame
 	}
+
+	bg_sky = Background(vector3df(500,350,0), vector3df(1,1,1000), false, "../media/environment/sky16.JPG", 0.1, 1.0, device, player);
+	bg_trees = Background(vector3df(20,10,0), vector3df(-300,1,300), true, "../media/environment/trees.png", 0.5, 3.1, device, player);
+	bg_beach = Background(vector3df(800,200,0), vector3df(1,-1000,600), false, "../media/environment/beach.jpg", 5.1, 10.1, device, player);
+
 	infile.close();
 }
 
@@ -596,6 +605,9 @@ void Level::process_key(irr::EKEY_CODE keycode) {
 		{
 			player->facing_angle = 90;
 			player->main_field->velocity.position_x = player->movement_speed;
+			bg_sky.moveLeft();
+			bg_trees.moveLeft();
+			bg_beach.moveLeft();
 		}
 	}
 	if (keycode == irr::KEY_KEY_A)
@@ -604,6 +616,9 @@ void Level::process_key(irr::EKEY_CODE keycode) {
 		{
 			player->facing_angle = 270;
 			player->main_field->velocity.position_x = -player->movement_speed;
+			bg_sky.moveRight();
+			bg_trees.moveRight();
+			bg_beach.moveRight();
 		}
 	}
 	if (keycode == irr::KEY_KEY_Q)
@@ -614,6 +629,9 @@ void Level::process_key(irr::EKEY_CODE keycode) {
 			return;
 		lc_interval = 30;
 		player->main_field->position.layer += 1;
+		bg_sky.moveInwards();
+		bg_trees.moveOutwards();
+		bg_beach.moveOutwards();
 		if (collision_detect(player->main_field))
 			player->main_field->position.layer -= 1;
 	}
@@ -625,6 +643,9 @@ void Level::process_key(irr::EKEY_CODE keycode) {
 			return;
 		lc_interval = 30;
 		player->main_field->position.layer -= 1;
+		bg_sky.moveOutwards();
+		bg_trees.moveInwards();
+		bg_beach.moveInwards();
 		if (collision_detect(player->main_field))
 			player->main_field->position.layer += 1;
 	}

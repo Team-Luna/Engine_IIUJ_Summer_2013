@@ -9,17 +9,17 @@ Background::Background(void)
 {
 }
 
-Background::Background(vector3df Size, vector3df Position, bool Transparency, char* TexturePath, irr::f32 SpeedHorizontal, irr::f32 SpeedInwards, IrrlichtDevice* Device, Level Lvl)
+Background::Background(vector3df Size, vector3df Position, bool Transparency, char* TexturePath, irr::f32 SpeedHorizontal, irr::f32 SpeedInwards, IrrlichtDevice* Device, Player* plr)
 {
 	speedHorizontal = SpeedHorizontal;
 	speedInwards = SpeedInwards;
-	player = Lvl.player;
+	player = plr;
 
 	irr:f32 initialHorizontalPosition = Position.X;
 
 	for(int i=0; i<10; i++)
 	{
-		cubes[i] = generateSingleCube(Size, vector3df(initialHorizontalPosition+Size.X*10*i,Position.Y,Position.Z), Transparency, TexturePath, speedHorizontal, speedInwards, Device, Lvl);
+		cubes[i] = generateSingleCube(Size, vector3df(initialHorizontalPosition+Size.X*10*i,Position.Y,Position.Z), Transparency, TexturePath, speedHorizontal, speedInwards, Device, plr);
 	}
 
 }
@@ -28,7 +28,7 @@ Background::~Background(void)
 {
 }
 
-ISceneNode* Background::generateSingleCube(vector3df Size, vector3df Position, bool Transparency, char* TexturePath, irr::f32 SpeedHorizontal, irr::f32 SpeedInwards, IrrlichtDevice* Device, Level Lvl)
+ISceneNode* Background::generateSingleCube(vector3df Size, vector3df Position, bool Transparency, char* TexturePath, irr::f32 SpeedHorizontal, irr::f32 SpeedInwards, IrrlichtDevice* Device, Player* plr)
 {
 	IVideoDriver* driver = Device->getVideoDriver();
 	ISceneManager* smgr = Device->getSceneManager();

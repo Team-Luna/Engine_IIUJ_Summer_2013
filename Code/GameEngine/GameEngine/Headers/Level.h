@@ -6,6 +6,7 @@
 #include "Point.h"
 #include "Condition.h"
 
+#include "Background.h"
 #include "Player.h"
 #include "Monster.h"
 #include "Item.h"
@@ -30,6 +31,7 @@ using namespace gui;
 
 using namespace std;
 
+class Background;
 class Player;
 class Point;
 class Field;
@@ -64,6 +66,9 @@ class Level
 		double gravity;
 		int lc_interval;
 		float delta_time;
+		Background bg_sky;
+		Background bg_trees;
+		Background bg_beach;
 
 		void add_event(std::string init);
 		void add_border(Point start, Point size);
@@ -79,6 +84,7 @@ class Level
 		void remove_item(Field* field, Item* entity);
 		void trash(Field* field);
 		void process_key(irr::EKEY_CODE keycode);
+
 	private:
 		std::list<Field*> fields;
 		std::list<Field*> garbage;
