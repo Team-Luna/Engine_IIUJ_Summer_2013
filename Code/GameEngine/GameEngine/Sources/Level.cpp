@@ -4,6 +4,18 @@
 #include <list>
 #include <map>
 
+		/*
+			Wyœwietlanie debug output - jakbyœmy jeszcze potrzebowali jakiegos wyswietlenia
+		
+		#include <Windows.h>
+		char msgbuf[10];
+
+		OutputDebugString("============================\n");
+		sprintf(msgbuf, "%f\n", lineOutput[7]);
+		OutputDebugString(msgbuf);
+		OutputDebugString("============================\n");
+		*/
+
 Level::Level(IrrlichtDevice* Device, char* path) {
 	//Loads a level from a file
 	device = Device;
@@ -674,7 +686,7 @@ void Level::extractValues(std::string source, double* output) {
 					else
 					{
 						//decimal
-						ans += (source[i] - 48)/decimal;
+						ans += (double)(source[i] - 48)/(double)decimal;
 						decimal *= 10;
 					}
 				}
