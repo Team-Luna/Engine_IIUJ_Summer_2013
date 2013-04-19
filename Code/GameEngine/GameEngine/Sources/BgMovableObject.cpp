@@ -1,11 +1,16 @@
 #include "BgMovableObject.h"
 #include <exception>
 
-BgMovableObject::BgMovableObject(IrrlichtDevice* Device, vector3df scale, Point position, char* TexturePath, int t){
+BgMovableObject::~BgMovableObject(){
 
+}
+
+BgMovableObject::BgMovableObject(Level* L, Point position, Point scale, char* TexturePath, int t, Point mov){
+
+	movement=mov;
 	type = t;
-	IVideoDriver* driver = Device->getVideoDriver();
-	ISceneManager* smgr = Device->getSceneManager();
+	IVideoDriver* driver = L->driver;
+	ISceneManager* smgr = L->smgr;
 
 	graphic_model= smgr->addCubeSceneNode();
 	graphic_model->setMaterialFlag(video::EMF_LIGHTING, true);
@@ -13,22 +18,24 @@ BgMovableObject::BgMovableObject(IrrlichtDevice* Device, vector3df scale, Point 
 	graphic_model->setMaterialFlag(video::EMF_LIGHTING, false);
 		
 	graphic_model->setPosition(core::vector3df(position.position_x, position.position_y, position.layer));
-	graphic_model->setScale(scale);
+	graphic_model->setScale(core::vector3df(scale.position_x, scale.position_y, scale.layer));
 	graphic_model->setMaterialType(video::EMT_TRANSPARENT_ALPHA_CHANNEL);
 }
 
 void BgMovableObject::move(){
+
+
 	switch(type){
 		case 1:	
 				if (graphic_model->getPosition().X > -500)
-					graphic_model->setPosition(graphic_model->getPosition() - vector3df(0.5, 0, 0)); 
+					graphic_model->setPosition(graphic_model->getPosition() - vector3df(movement.position_x, 0, 0)); 
 				else
 					graphic_model->setPosition(vector3df(500, graphic_model->getPosition().Y, graphic_model->getPosition().Z));
 				break;
 		case 2:
 				if (graphic_model->getPosition().X > -500){
 					if (graphic_model->getPosition().Y > -100)
-						graphic_model->setPosition(graphic_model->getPosition() - vector3df(0.2, 0.2, 0)); 
+						graphic_model->setPosition(graphic_model->getPosition() - vector3df(movement.position_x, movement.position_y, 0)); 
 					else
 						graphic_model->setPosition(vector3df(graphic_model->getPosition().X, 100, graphic_model->getPosition().Z));
 				}else

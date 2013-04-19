@@ -2,6 +2,7 @@
 #define __BgMovableObject_h__
 
 #include "Point.h"
+#include "Level.h"
 #include <exception>
 #include <irrlicht.h>
 
@@ -13,14 +14,18 @@ using namespace video;
 using namespace io;
 using namespace gui;
 
+class Level;
 class BgMovableObject;
 
 class BgMovableObject
 {
 	public:
-		BgMovableObject(IrrlichtDevice* Device, vector3df scale, Point position, char* TexturePath, int t);
+		~BgMovableObject();
+		BgMovableObject(Level* L,Point position, Point scale,  char* TexturePath, int t, Point mov);
 		void move();
 	private:
+
+		Point movement;
 		int type;
 		scene::ISceneNode* graphic_model;
 };

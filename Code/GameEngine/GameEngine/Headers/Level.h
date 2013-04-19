@@ -7,6 +7,7 @@
 #include "Condition.h"
 
 #include "Background.h"
+#include "BgMovableObject.h"
 #include "Player.h"
 #include "Monster.h"
 #include "Item.h"
@@ -32,6 +33,7 @@ using namespace gui;
 using namespace std;
 
 class Background;
+class BgMovableObject;
 class Player;
 class Point;
 class Field;
@@ -44,7 +46,6 @@ class Level;
 class Level
 {
 	public:
-		Level(IrrlichtDevice* Device);
 		Level(IrrlichtDevice* Device, char* path);
 
 		//irrlicht data
@@ -66,22 +67,28 @@ class Level
 		double gravity;
 		int lc_interval;
 		float delta_time;
-		Background bg_sky;
-		Background bg_trees;
-		Background bg_beach;
+		Background* bg_sky;
+		Background* bg_trees;
+		Background* bg_beach;
 
 		void add_event(std::string init);
 		void add_border(Point start, Point size);
 		void add_monster(std::string init, Point position = Point(), Point size = Point(5.0, 10.0, 1.0));
 		void add_item(std::string init, Point position = Point(), Point size = Point(5.0, 5.0, 1.0));
+		void add_bgobject(Point start);
+
 		void advance_frame(ICameraSceneNode *cam);
 		bool collision_detect(Field* source);
+		
 		void move_field(Field* field);
 		void demove_field(Field* field);
+		
 		void remove_player(Field* field);
 		void remove_border(Field* field, Border* entity);
 		void remove_monster(Field* field, Monster* entity);
 		void remove_item(Field* field, Item* entity);
+		void remove_bgobject(BgMovableObject* entity);
+		
 		void trash(Field* field);
 		void process_key(irr::EKEY_CODE keycode);
 
@@ -89,6 +96,7 @@ class Level
 		std::list<Field*> fields;
 		std::list<Field*> garbage;
 		std::list<Item*> items;
+		std::list<BgMovableObject*> bgobjects;
 		int time_left;
 		std::list<Monster*> monsters;
 		std::list<Border*> boundaries;

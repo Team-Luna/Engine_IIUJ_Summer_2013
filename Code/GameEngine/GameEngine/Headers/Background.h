@@ -9,7 +9,6 @@
 #include "Monster.h"
 #include "Item.h"
 #include "Border.h"
-#include "BgMovableObject.h"
 #include <exception>
 #include <irrlicht.h>
 #include <string>

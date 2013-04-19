@@ -4,56 +4,6 @@
 #include <list>
 #include <map>
 
-Level::Level(IrrlichtDevice* Device) {
-	//Creates a simple, testing Level, more specified constructors to be implemented.
-	device = Device;
-
-	driver = device->getVideoDriver();
-	smgr = device->getSceneManager();
-	guienv = device->getGUIEnvironment();
-	
-	start = Point(-100, 200, 0);
-	size = Point(1200, 900, 5);
-	respawn = Point();
-	player = new Player(this, 5, 100, 3, Point(0, 20, 0), Point(5, 10, 1),
-		0, 0, 0, 100, 90, "ninja", "../media/player/ninja.b3d", Point(0, -5, 0), 0);
-	custom_attribute1 = 0;
-	custom_attribute2 = 0;
-	custom_attribute3 = 0;
-	std::map< std::string, Event* > Temp_ed;
-	event_dictionary = Temp_ed;
-	gravity = 9.81;
-	lc_interval = 0;
-	delta_time = 0;
-	
-	std::list<Field*> Temp_f;
-	fields = Temp_f;
-	fields.insert(fields.end(), player->main_field);
-	std::list<Item*> Temp_i;
-	items = Temp_i;
-	active_range = Point(1200, 900, 2);
-	time_left = -1; //forever?
-	std::list<Monster*> Temp_m;
-	monsters = Temp_m;
-	std::list<Border*> Temp_b;
-	boundaries = Temp_b;
-	
-	add_monster("temp1", Point(-10.0, 3.0, 0.0), Point(5.0, 10.0, 1.0));
-	add_monster("temp2", Point(10.0, 6.0, 0.0), Point(5.0, 10.0, 1.0));
-	add_monster("temp3", Point(20.0, 9.0, 0.0), Point(5.0, 10.0, 1.0));
-	add_item("item", Point(15.0, 30.0, 0.0), Point(10.0, 10.0, 1.0));
-	for (int i = 0; i < 10; i++)
-		add_border(Point(-20 + 10*i, -10, 0), Point(10.0, 10.0, 1.0));
-	for (int i = 1; i < 5; i++)
-		add_border(Point(30, -10, i), Point(10.0, 10.0, 1.0));
-	for (int i = 1; i < 5; i++)
-		add_border(Point(30 + 10*i, -10, 4), Point(10.0, 10.0, 1.0));
-
-	bg_sky = Background(vector3df(500,350,0), vector3df(1,1,1000), false, "../media/environment/sky16.JPG", 0.1, 1.0, device, player);
-	bg_trees = Background(vector3df(20,10,0), vector3df(-300,1,300), true, "../media/environment/trees.png", 0.5, 3.1, device, player);
-	bg_beach = Background(vector3df(800,200,0), vector3df(1,-1000,600), false, "../media/environment/beach.jpg", 5.1, 10.1, device, player);
-}
-
 Level::Level(IrrlichtDevice* Device, char* path) {
 	//Loads a level from a file
 	device = Device;
@@ -65,7 +15,8 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 	//Creating temporary variables
 	std::string TempLine = "";
 	char animT[15];
-	char modelP[30];
+	const int modelP_size=50;
+	char modelP[modelP_size];
 	std::string LINE;
 	double lineOutput[25];
 
@@ -169,7 +120,7 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 		animT[i] = LINE[i];
 	//Transforming std::strings to char arrays (model path)
 	LINE = getNextRelevantLine(infile);
-	for (int i = 0; i < 30; i++)
+	for (int i = 0; i < modelP_size; i++)
 		modelP[i] = 0;
 	for(int i = 0; i < LINE.length(); i++)
 		modelP[i] = LINE[i];
@@ -208,7 +159,7 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 			animT[i] = LINE[i];
 		//Transforming std::strings to char arrays (model path)
 		LINE = getNextRelevantLine(infile);
-		for (int i = 0; i < 30; i++)
+		for (int i = 0; i < modelP_size; i++)
 			modelP[i] = 0;
 		for(int i = 0; i < LINE.length(); i++)
 			modelP[i] = LINE[i];
@@ -253,7 +204,7 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 			animT[i] = LINE[i];
 		//Transforming std::strings to char arrays (model path)
 		LINE = getNextRelevantLine(infile);
-		for (int i = 0; i < 30; i++)
+		for (int i = 0; i < modelP_size; i++)
 			modelP[i] = 0;
 		for(int i = 0; i < LINE.length(); i++)
 			modelP[i] = LINE[i];
@@ -299,7 +250,7 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 			animT[i] = LINE[i];
 		//Transforming std::strings to char arrays (model path)
 		LINE = getNextRelevantLine(infile);
-		for (int i = 0; i < 30; i++)
+		for (int i = 0; i < modelP_size; i++)
 			modelP[i] = 0;
 		for(int i = 0; i < LINE.length(); i++)
 			modelP[i] = LINE[i];
@@ -325,9 +276,35 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 				lineOutput[5], lineOutput[6], lineOutput[7]); //current frame, min frame, max frame
 	}
 
-	bg_sky = Background(vector3df(500,350,0), vector3df(1,1,1000), false, "../media/environment/sky16.JPG", 0.1, 1.0, device, player);
-	bg_trees = Background(vector3df(20,10,0), vector3df(-300,1,300), true, "../media/environment/trees.png", 0.5, 3.1, device, player);
-	bg_beach = Background(vector3df(800,200,0), vector3df(1,-1000,600), false, "../media/environment/beach.jpg", 5.1, 10.1, device, player);
+	//Initializing BgMovableObject
+	LINE = getNextRelevantLine(infile);
+	std::list<BgMovableObject*> Temp_bgo;
+	bgobjects = Temp_bgo;
+	extractValues(LINE, lineOutput);
+	for (int i = lineOutput[0]; 0 < i; i--)
+	{
+		LINE = getNextRelevantLine(infile);
+		TempLine = LINE;
+		//Transforming std::strings to char arrays (model path)
+		LINE = getNextRelevantLine(infile);
+		for (int i = 0; i < modelP_size; i++)
+			modelP[i] = 0;
+		for(int i = 0; i < LINE.length(); i++)
+			modelP[i] = LINE[i];
+
+		//Creating bgobject
+		extractValues(TempLine, lineOutput);
+		BgMovableObject* p = new BgMovableObject(this, Point(lineOutput[0], lineOutput[1], lineOutput[2]), //position
+			Point(lineOutput[3], lineOutput[4], lineOutput[5]), //scale
+			modelP, lineOutput[6], //texture, type
+			Point(lineOutput[7], lineOutput[8], lineOutput[9])); //movement
+
+		bgobjects.insert(bgobjects.end(), p);
+	}
+
+	bg_sky = new Background(vector3df(500,350,0), vector3df(1,1,1000), false, "../media/environment/sky16.JPG", 0.1, 1.0, device, player);
+	bg_trees = new Background(vector3df(20,10,0), vector3df(-300,1,300), true, "../media/environment/trees.png", 0.5, 3.1, device, player);
+	bg_beach = new Background(vector3df(800,200,0), vector3df(1,-1000,600), false, "../media/environment/beach.jpg", 5.1, 10.1, device, player);
 
 	infile.close();
 }
@@ -354,6 +331,10 @@ void Level::add_item(std::string init, Point position, Point size) {
 	//items.insert(items.end(), i);
 }
 
+void Level::add_bgobject(Point start){
+	
+};
+
 void Level::advance_frame(ICameraSceneNode *cam) {
 	//Updating positions/scales/rotations:
 	for (std::list<Field*>::iterator i = fields.begin(); i != fields.end(); i++)
@@ -368,6 +349,10 @@ void Level::advance_frame(ICameraSceneNode *cam) {
 		}
 	garbage.clear();
 	
+	//BgMovableObjects move
+	for (std::list<BgMovableObject*>::iterator i = bgobjects.begin(); i != bgobjects.end(); i++)
+		(*i)->move();
+
 	//centralizing camera on player (if exists)
 	if (player != 0 && cam != 0) {
 		//position
@@ -583,6 +568,14 @@ void Level::remove_item(Field* field, Item* entity) {
 	delete(field);
 }
 
+void Level::remove_bgobject(BgMovableObject* entity) {
+	//Removing entity:
+	if (player != 0) {
+		bgobjects.remove(entity);
+		delete(entity);
+	}
+}
+
 void Level::trash(Field* field) {
 	//field->destroy_event.invoke() ??
 	garbage.insert(garbage.end(), field);
@@ -605,9 +598,9 @@ void Level::process_key(irr::EKEY_CODE keycode) {
 		{
 			player->facing_angle = 90;
 			player->main_field->velocity.position_x = player->movement_speed;
-			bg_sky.moveLeft();
-			bg_trees.moveLeft();
-			bg_beach.moveLeft();
+			bg_sky->moveLeft();
+			bg_trees->moveLeft();
+			bg_beach->moveLeft();
 		}
 	}
 	if (keycode == irr::KEY_KEY_A)
@@ -616,9 +609,9 @@ void Level::process_key(irr::EKEY_CODE keycode) {
 		{
 			player->facing_angle = 270;
 			player->main_field->velocity.position_x = -player->movement_speed;
-			bg_sky.moveRight();
-			bg_trees.moveRight();
-			bg_beach.moveRight();
+			bg_sky->moveRight();
+			bg_trees->moveRight();
+			bg_beach->moveRight();
 		}
 	}
 	if (keycode == irr::KEY_KEY_Q)
@@ -629,9 +622,9 @@ void Level::process_key(irr::EKEY_CODE keycode) {
 			return;
 		lc_interval = 30;
 		player->main_field->position.layer += 1;
-		bg_sky.moveInwards();
-		bg_trees.moveOutwards();
-		bg_beach.moveOutwards();
+		bg_sky->moveInwards();
+		bg_trees->moveOutwards();
+		bg_beach->moveOutwards();
 		if (collision_detect(player->main_field))
 			player->main_field->position.layer -= 1;
 	}
@@ -643,9 +636,9 @@ void Level::process_key(irr::EKEY_CODE keycode) {
 			return;
 		lc_interval = 30;
 		player->main_field->position.layer -= 1;
-		bg_sky.moveOutwards();
-		bg_trees.moveInwards();
-		bg_beach.moveInwards();
+		bg_sky->moveOutwards();
+		bg_trees->moveInwards();
+		bg_beach->moveInwards();
 		if (collision_detect(player->main_field))
 			player->main_field->position.layer += 1;
 	}
@@ -693,6 +686,7 @@ void Level::extractValues(std::string source, double* output) {
 					else output[n++] = -ans;
 					negative = false;
 					ans = 0.0;
+					decimal=0;
 				}
 		i++;
 	}

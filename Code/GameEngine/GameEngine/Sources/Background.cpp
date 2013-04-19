@@ -1,5 +1,4 @@
 #include "Background.h"
-#include <BgMovableObject.h>
 #include <exception>
 #include <string>
 #include <list>
