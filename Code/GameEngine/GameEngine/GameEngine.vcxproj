@@ -68,7 +68,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Sources\Action.cpp" />
-    <ClCompile Include="Sources\AIPoint.cpp" />
+    <ClCompile Include="Sources\AITable.cpp" />
     <ClCompile Include="Sources\AnimationTable.cpp" />
     <ClCompile Include="Sources\Animator.cpp" />
     <ClCompile Include="Sources\Background.cpp" />
@@ -96,7 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Action.h" />
-    <ClInclude Include="Headers\AIPoint.h" />
+    <ClInclude Include="Headers\AITable.h" />
     <ClInclude Include="Headers\AnimationTable.h" />
     <ClInclude Include="Headers\Animator.h" />
     <ClInclude Include="Headers\Background.h" />

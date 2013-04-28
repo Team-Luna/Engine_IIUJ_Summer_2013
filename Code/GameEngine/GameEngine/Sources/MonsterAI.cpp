@@ -1,101 +1,76 @@
 #include "MonsterAI.h"
 
-MonsterAI::MonsterAI(Monster* own)
+MonsterAI::MonsterAI(Monster* own, AITable* ait, Action* ca, Action* l)
 {
 	owner = own;
+	table = ait;
+	current = ca;
+	looped = l;
 }
 
-void MonsterAI::evaluate(double time)
+void MonsterAI::evaluate_actions(bool v1, bool v2, bool v3, bool v4, bool v5, bool v6,
+		bool v7, bool v8, bool v9, bool v10, bool v11)
 {
-	if (delay != -1)
-	{
-		if (delay-time < 0)
-			delay = 0;
-		else delay = delay-time;
-	}
-	if (ignorePoints-time < 0)
-		ignorePoints = 0;
-	else ignorePoints = ignorePoints-time;
+	//move_inwards, move_outwards, obstackle_in_front, wall_in_front,
+	//jumpable_obstackle, climbable_front, cliff_in_front, can_climb_down, can_drop,
+	//can_jump, can_jump_climb);
+	if (v4)
+		current = table->actions[0];
+	if (v3)
+		current = table->actions[1];
+	if (v7)
+		current = table->actions[2];
+	if (v1 || v2)
+		current = table->actions[5];
+	if (false)
+		current = table->actions[3];
+	if (false)
+		current = table->actions[4];
 
-	
-	if (ignorePoints == 0.0)
+	while(true)
 	{
-		for (std::list<AIPoint*>::iterator i = owner->main_field->location->aipoints.begin(); i != owner->main_field->location->aipoints.end(); i++)
+		if (current == 0)
+			break;
+		if (current->loop)
+			looped = current;
+		if (current->ID < 7)
 		{
-			double x1 = owner->main_field->position.position_x - 5;
-			double x2 = owner->main_field->position.position_x + 5;
-			double y1 = owner->main_field->position.position_y - 5;
-			double y2 = owner->main_field->position.position_y + 5;
-
-			if ((x1 < (*i)->position.position_x) && ((*i)->position.position_x) < x2)
-			{
-				if ((y1 < (*i)->position.position_y) && ((*i)->position.position_y) < y2)
-				{
-					switch((*i)->type)
-					{
-					default:
-						for (std::list<int>::iterator j = behaviours[1].begin(); j != behaviours[1].end(); j++)
-							actions.insert(actions.end(), (*j));
-						break;
-					}
-				}
-			}
+			handle_action(current->ID);
+			current = current->next_normal;
 		}
-	}
-
-	if ((delay == 0) || ((delay == -1) && (0.95 < owner->animator->checkProgress())))
-	{
-		if (!actions.empty())
+		else
 		{
-			int n = actions.front();
-			actions.pop_front();
-
-			current_action = n;
-
-			switch(current_action)
-			{
-			case 0: //Ignore points
-				ignorePoints = owner->main_field->location->actions[current_action]->delay;
-				break;
-			case 1: //Idle
-				owner->main_field->velocity.position_x = 0;
-				owner->animator->setAnimation(0);
-				delay = owner->main_field->location->actions[current_action]->delay;
-				interruptable = owner->main_field->location->actions[current_action]->interruptable;
-				break;
-			case 2: //Turn around
-				if (owner->facing_angle == 90)
-					owner->facing_angle = 270;
-				else owner->facing_angle = 90;
-				break;
-			case 3: //Move
-				if (owner->facing_angle == 90)
-					owner->main_field->velocity.position_x = owner->movement_speed;
-				else owner->main_field->velocity.position_x = -owner->movement_speed;
-				owner->animator->setAnimation(1);
-				delay = owner->main_field->location->actions[current_action]->delay;
-				interruptable = owner->main_field->location->actions[current_action]->interruptable;
-				break;
-			default:
-				break;
-			}
+			//TO DO
 		}
 	}
 }
 
-void MonsterAI::set(double d, double iP, int o)
+void MonsterAI::proceed(double time)
 {
-	delay = d;
-	ignorePoints = iP;
-	orientation = o;
+	if ((current == 0) && (loop == true) && (looped->ID == 1))
+		owner->main_field->location->move_forward(owner->main_field);
 }
 
-void MonsterAI::addToList(int which, int value)
+bool MonsterAI::handle_action(int id)
 {
-	behaviours[which].insert(behaviours[which].end(), value);
+	switch(id)
+	{
+	case 0:
+		owner->main_field->location->turn_around(owner->main_field);
+		return true;
+	case 1:
+		owner->main_field->location->move_forward(owner->main_field);
+		return true;
+	}
+	return false;
 }
 
-void MonsterAI::addCurrent(int value)
+void MonsterAI::set(double de, bool e, bool l, bool c, bool g, bool d)
 {
-	actions.insert(actions.end(), value);
+	delay = de;
+	evaluate = e;
+	loop = l;
+	climbing = c;
+	grounded = g;
+	dead = d;
 }

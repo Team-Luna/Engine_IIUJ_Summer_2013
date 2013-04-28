@@ -5,7 +5,7 @@
 #include "Entity.h"
 #include "Point.h"
 #include "Condition.h"
-#include "AIPoint.h"
+#include "AITable.h"
 #include "Action.h"
 
 #include "Background.h"
@@ -69,8 +69,8 @@ class Level
 		double gravity;
 		int lc_interval;
 		float delta_time;
-		std::list<AIPoint*> aipoints;
-		std::vector<Action*> actions;
+		std::map< std::string, Action*> actions;
+		std::map< std::string, AITable*> action_tables;
 		
 		Background* bg_sky;
 		Background* bg_trees;
@@ -81,6 +81,9 @@ class Level
 		void add_monster(std::string init, Point position = Point(), Point size = Point(5.0, 10.0, 1.0));
 		void add_item(std::string init, Point position = Point(), Point size = Point(5.0, 5.0, 1.0));
 		void add_bgobject(Point start);
+
+		void turn_around(Field* field);
+		void move_forward(Field* field);
 
 		void advance_frame(ICameraSceneNode *cam);
 		bool collision_detect(Field* source);

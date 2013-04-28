@@ -196,43 +196,87 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 				lineOutput[3], lineOutput[4], //animation id, animation speed
 				lineOutput[5], lineOutput[6], lineOutput[7]); //current frame, min frame, max frame
 	}
-	
+
 	//Initializing actions
 	LINE = getNextRelevantLine(infile);
-	std::vector<Action*> Temp_a;
-	actions = Temp_a;
+	std::map< std::string, Action* > Temp_act;
+	actions = Temp_act;
 	extractValues(LINE, lineOutput);
 	for (int i = lineOutput[0]; 0 < i; i--)
 	{
 		LINE = getNextRelevantLine(infile);
-		TempLine = LINE;
-		//Transforming std::strings to char arrays (model path)
-		LINE = getNextRelevantLine(infile);
+
+		//Creating the table
+		std::string name = LINE;
+		actions.insert(std::pair< std::string, Action* >(name, new Action()));
+		
 		for (int i = 0; i < modelP_size; i++)
 			modelP[i] = 0;
-		for(int i = 0; i < LINE.length(); i++)
-			modelP[i] = LINE[i];
-		
-		//Creating item
-		extractValues(TempLine, lineOutput);
-		Action* a = new Action();
-		a->set(modelP, lineOutput[0], lineOutput[1]);
-		actions.insert(actions.end(), a);
-	}
+		for(int i = 0; i < name.length(); i++)
+			modelP[i] = name[i];
 
-	//Initializing AIPoints
+		LINE = getNextRelevantLine(infile);
+		extractValues(LINE, lineOutput);
+		actions.find(name)->second->set_values(modelP, lineOutput[0],
+			lineOutput[1], lineOutput[2], lineOutput[3], lineOutput[4]);
+	}
+	//Setting relatives
 	LINE = getNextRelevantLine(infile);
-	std::list<AIPoint*> Temp_aip;
-	aipoints = Temp_aip;
 	extractValues(LINE, lineOutput);
 	for (int i = lineOutput[0]; 0 < i; i--)
 	{
 		LINE = getNextRelevantLine(infile);
-		extractValues(LINE, lineOutput);
+		std::string name = LINE;
 
-		AIPoint* aip = new AIPoint(lineOutput[0], lineOutput[1], Point(lineOutput[2], lineOutput[3], lineOutput[4]),
-			lineOutput[5], lineOutput[6], lineOutput[7]);
-		aipoints.insert(aipoints.end(), aip);
+		//Getting father
+		LINE = getNextRelevantLine(infile);
+		if (actions.find(LINE) != actions.end())
+			actions.find(name)->second->father = actions.find(LINE)->second;
+		//Getting normal next
+		LINE = getNextRelevantLine(infile);
+		if (actions.find(LINE) != actions.end())
+			actions.find(name)->second->next_normal = actions.find(LINE)->second;
+		//Getting extra next
+		LINE = getNextRelevantLine(infile);
+		if (actions.find(LINE) != actions.end())
+			actions.find(name)->second->next_extra = actions.find(LINE)->second;
+	}
+	
+	//Initializing action tables
+	LINE = getNextRelevantLine(infile);
+	std::map< std::string, AITable* > Temp_aitable;
+	action_tables = Temp_aitable;
+	extractValues(LINE, lineOutput);
+	for (int i = lineOutput[0]; 0 < i; i--)
+	{
+		LINE = getNextRelevantLine(infile);
+		std::string name = LINE;
+		action_tables.insert(std::pair< std::string, AITable* >(name, new AITable()));
+
+		//Wall
+		LINE = getNextRelevantLine(infile);
+		if (action_tables.find(LINE) != action_tables.end())
+			action_tables.find(name)->second->actions[0] = actions.find(LINE)->second;
+		//Obstackle
+		LINE = getNextRelevantLine(infile);
+		if (actions.find(LINE) != actions.end())
+			action_tables.find(name)->second->actions[1] = actions.find(LINE)->second;
+		//Cliff
+		LINE = getNextRelevantLine(infile);
+		if (actions.find(LINE) != actions.end())
+			action_tables.find(name)->second->actions[2] = actions.find(LINE)->second;
+		//Monster
+		LINE = getNextRelevantLine(infile);
+		if (actions.find(LINE) != actions.end())
+			action_tables.find(name)->second->actions[3] = actions.find(LINE)->second;
+		//Player
+		LINE = getNextRelevantLine(infile);
+		if (actions.find(LINE) != actions.end())
+			action_tables.find(name)->second->actions[4] = actions.find(LINE)->second;
+		//Side
+		LINE = getNextRelevantLine(infile);
+		if (actions.find(LINE) != actions.end())
+			action_tables.find(name)->second->actions[5] = actions.find(LINE)->second;
 	}
 
 	//Initializing monsters
@@ -282,46 +326,26 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 				lineOutput[3], lineOutput[4], //animation id, animation speed
 				lineOutput[5], lineOutput[6], lineOutput[7]); //current frame, min frame, max frame
 
-		//Loading AI state
+		//Loading AI
 		LINE = getNextRelevantLine(infile);
-		extractValues(LINE, lineOutput);
-		m->aI->set(lineOutput[0], lineOutput[1], lineOutput[2]);
+		AITable* AIi1 = action_tables.find(LINE)->second;
+		
+		LINE = getNextRelevantLine(infile);
+		Action* AIi2;
+		if (actions.find(LINE) != actions.end())
+			AIi2 = actions.find(LINE)->second;
+		else AIi2 = 0;
+		
+		LINE = getNextRelevantLine(infile);
+		Action* AIi3;
+		if (actions.find(LINE) != actions.end())
+			AIi3 = actions.find(LINE)->second;
+		else AIi3 = 0;
 
-		//Loading current state
+		m->aI = new MonsterAI(m, AIi1, AIi2, AIi3);
 		LINE = getNextRelevantLine(infile);
 		extractValues(LINE, lineOutput);
-		int total = lineOutput[0];
-		if (0 < total)
-		{
-			LINE = getNextRelevantLine(infile);
-			extractValues(LINE, lineOutput);
-			for (int j = total; 0 < j; j--)
-				m->aI->addCurrent((int)lineOutput[total-j]);
-		}
-		
-		//Loading obstackle list
-		LINE = getNextRelevantLine(infile);
-		extractValues(LINE, lineOutput);
-		total = lineOutput[0];
-		if (0 < total)
-		{
-			LINE = getNextRelevantLine(infile);
-			extractValues(LINE, lineOutput);
-			for (int j = total; 0 < j; j--)
-				m->aI->addToList(0, (int)lineOutput[total-j]);
-		}
-		
-		//Loading cliff list
-		LINE = getNextRelevantLine(infile);
-		extractValues(LINE, lineOutput);
-		total = lineOutput[0];
-		if (0 < total)
-		{
-			LINE = getNextRelevantLine(infile);
-			extractValues(LINE, lineOutput);
-			for (int j = total; 0 < j; j--)
-				m->aI->addToList(1, (int)lineOutput[total-j]);
-		}
+		m->aI->set(lineOutput[0], lineOutput[1], lineOutput[2], lineOutput[3], lineOutput[4], lineOutput[5]);
 	}
 	
 	//Initializing Borders
@@ -425,6 +449,27 @@ void Level::add_item(std::string init, Point position, Point size) {
 void Level::add_bgobject(Point start){
 	
 };
+
+void Level::turn_around(Field* field)
+{
+	if (field->owner->facing_angle == 90)
+		field->owner->facing_angle = 270;
+	else field->owner->facing_angle = 90;
+}
+
+void Level::move_forward(Field* field)
+{
+	double o = 0;
+	if (field->owner->facing_angle == 90)
+		o = 1;
+	else o = -1;
+	if (field->velocity.position_x != o*field->owner->movement_speed)
+	{
+		field->velocity.position_x = o*field->owner->movement_speed;
+		if (field->owner->animator != 0)
+			field->owner->animator->setAnimation(1);
+	}
+}
 
 void Level::advance_frame(ICameraSceneNode *cam) {
 	//Updating positions/scales/rotations:

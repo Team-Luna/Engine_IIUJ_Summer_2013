@@ -1,7 +1,6 @@
 #include <exception>
 #include <string>
 #include <list>
-#include <Windows.h>
 
 using namespace std;
 
@@ -18,7 +17,7 @@ Monster::Monster(Level* L, int ms, int mhp, std::string nm, std::string mt, //mo
 			char* animT, char* modelP, Point trans, bool anim, //animation table, model path, translation, animated?
 			int lt, bool a, bool aa, bool cl) { //life time, active, always active, climbing?
 	movement_speed = ms;
-	aI = new MonsterAI(this);
+	aI = 0; //new MonsterAI(this);
 	hp = mhp;
 	name = nm; //where will this be derived from?
 	monster_type = mt; //where will this be derived from?
@@ -40,6 +39,15 @@ unsigned int Monster::get_type() {
 }
 
 void Monster::act(double time) {
+	if (aI == 0)
+		return;
+
+	if (!aI->evaluate)
+	{
+		aI->proceed(time);
+		return;
+	}
+
 	Point p;
 	Field* f;
 	
@@ -103,18 +111,18 @@ void Monster::act(double time) {
 	bool can_drop = false;
 	bool can_jump = false;
 	bool can_jump_climb = false;
-	p.position_x = main_field->position.position_x + o*10;
+	p.position_x = main_field->position.position_x + o*6;
 	p.position_y = main_field->position.position_y - 10;
 	p.layer = main_field->position.layer;
 	f = main_field->location->collision_Point(p);
 	if ((f == 0) || (f->owner->get_type() != 4))
 	{
 		cliff_in_front = true;
-		p.position_x = main_field->position.position_x + o*2;
+		p.position_x = main_field->position.position_x;
 		p.position_y = main_field->position.position_y - 10;
 		p.layer = main_field->position.layer;
 		f = main_field->location->collision_Point(p);
-		if (f->owner->custom_attribute1 == 1)
+		if ((f != 0) && (f->owner->custom_attribute1 == 1))
 			can_climb_down = true;
 
 		for (int i = 2; i < 6; i++)
@@ -183,47 +191,10 @@ void Monster::act(double time) {
 			can_jump_climb = true;
 	}
 
-	if (move_inwards == true)
-	{
-		OutputDebugString(">> [AI]\n");
-		OutputDebugString("I can move inwards.\n");
-		OutputDebugString(">> /[AI]\n");
-	}
-	if (move_outwards == true)
-	{
-		OutputDebugString(">> [AI]\n");
-		OutputDebugString("I can move outwards.");
-		OutputDebugString(">> /[AI]\n");
-	}
-	if (obstackle_in_front == true)
-	{
-		OutputDebugString(">> [AI]\n");
-		OutputDebugString("Obstackle in front.\n");
-		if (climbable_front)
-			OutputDebugString("CAN climb it.\n");
-		if (jumpable_obstackle)
-			OutputDebugString("CAN jump over it.\n");
-		OutputDebugString(">> /[AI]\n");
-	}
-	if (wall_in_front == true)
-	{
-		OutputDebugString(">> [AI]\n");
-		OutputDebugString("Wall in front.\n");
-		if (climbable_front)
-			OutputDebugString("CAN climb it.\n");
-		OutputDebugString(">> /[AI]\n");
-	}
-	if (cliff_in_front == true)
-	{
-		OutputDebugString(">> [AI]\n");
-		OutputDebugString("Cliff in front.\n");
-		if (can_climb_down)
-			OutputDebugString("CAN climb down.\n");
-		if (can_drop)
-			OutputDebugString("CAN drop down safely.\n");
-		OutputDebugString(">> /[AI]\n");
-	}
-	aI->evaluate(time);
+	aI->evaluate_actions(move_inwards, move_outwards, obstackle_in_front, wall_in_front,
+		jumpable_obstackle, climbable_front, cliff_in_front, can_climb_down, can_drop,
+		can_jump, can_jump_climb);
+	aI->proceed(time);
 }
 
 void Monster::remove() {

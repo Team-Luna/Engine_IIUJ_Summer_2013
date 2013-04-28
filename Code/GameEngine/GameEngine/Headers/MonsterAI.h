@@ -2,30 +2,35 @@
 #define __MonsterAI_h__
 
 #include "Monster.h"
+#include "Action.h"
+#include "AITable.h"
 #include <list>
 
 class Monster;
+class Action;
+class AITable;
 
 class MonsterAI
 {
 	public:
-	MonsterAI(Monster* own);
+	MonsterAI(Monster* own, AITable* ait, Action* ca, Action* l);
 	
-	void set(double d, double iP, int o);
-	void addToList(int which, int value);
-	void addCurrent(int value);
-	void evaluate(double time);
-	void setAction(bool in, int ac, int d);
+	void set(double de, bool e, bool l, bool c, bool g, bool d);
+	void evaluate_actions(bool v1, bool v2, bool v3, bool v4, bool v5, bool v6,
+		bool v7, bool v8, bool v9, bool v10, bool v11);
+	void proceed(double time);
+	bool handle_action(int id);
 
-	private:
-	std::list<int> behaviours[10];
+	AITable* table;
 	Monster* owner;
+	Action* current;
+	Action* looped;
 	double delay;
-	double ignorePoints;
-	int orientation;
-	bool interruptable;
-	int current_action;
-	std::list<int> actions;
+	bool evaluate;
+	bool loop;
+	bool climbing;
+	bool grounded;
+	bool dead;
 };
 
 #endif

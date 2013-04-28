@@ -5,11 +5,17 @@ class Action
 {
 	public:
 	Action();
-	void set(char* nm, bool in, double d);
+	void set_values(char* nm, int id, double s1, double s2, bool l, bool e);
 
 	char* name;
-	bool interruptable;
-	double delay;
+	int ID;
+	double scale1;
+	double scale2;
+	bool loop;
+	bool evaluate;
+	Action* father;
+	Action* next_normal;
+	Action* next_extra;
 };
 
 #endif
