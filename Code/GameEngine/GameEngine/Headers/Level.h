@@ -5,6 +5,8 @@
 #include "Entity.h"
 #include "Point.h"
 #include "Condition.h"
+#include "AIPoint.h"
+#include "Action.h"
 
 #include "Background.h"
 #include "BgMovableObject.h"
@@ -67,6 +69,9 @@ class Level
 		double gravity;
 		int lc_interval;
 		float delta_time;
+		std::list<AIPoint*> aipoints;
+		std::vector<Action*> actions;
+		
 		Background* bg_sky;
 		Background* bg_trees;
 		Background* bg_beach;
@@ -79,6 +84,7 @@ class Level
 
 		void advance_frame(ICameraSceneNode *cam);
 		bool collision_detect(Field* source);
+		Field* collision_Point(Point p);
 		
 		void move_field(Field* field);
 		void demove_field(Field* field);

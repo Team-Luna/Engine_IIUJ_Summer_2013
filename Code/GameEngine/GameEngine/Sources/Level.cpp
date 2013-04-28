@@ -143,7 +143,7 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 		Point(lineOutput[6], lineOutput[7], lineOutput[8]), //size
 		lineOutput[9], lineOutput[10], lineOutput[11], //custom values
 		lineOutput[12], lineOutput[13], animT, modelP, //gravity degree, fancing angle
-		Point(lineOutput[14], lineOutput[15], lineOutput[16]), lineOutput[17]); //translation, animated?
+		Point(lineOutput[14], lineOutput[15], lineOutput[16]), lineOutput[17], lineOutput[18]); //translation, animated?, climbing?
 
 	fields.insert(fields.end(), player->main_field);
 	//Loading animator state
@@ -197,6 +197,44 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 				lineOutput[5], lineOutput[6], lineOutput[7]); //current frame, min frame, max frame
 	}
 	
+	//Initializing actions
+	LINE = getNextRelevantLine(infile);
+	std::vector<Action*> Temp_a;
+	actions = Temp_a;
+	extractValues(LINE, lineOutput);
+	for (int i = lineOutput[0]; 0 < i; i--)
+	{
+		LINE = getNextRelevantLine(infile);
+		TempLine = LINE;
+		//Transforming std::strings to char arrays (model path)
+		LINE = getNextRelevantLine(infile);
+		for (int i = 0; i < modelP_size; i++)
+			modelP[i] = 0;
+		for(int i = 0; i < LINE.length(); i++)
+			modelP[i] = LINE[i];
+		
+		//Creating item
+		extractValues(TempLine, lineOutput);
+		Action* a = new Action();
+		a->set(modelP, lineOutput[0], lineOutput[1]);
+		actions.insert(actions.end(), a);
+	}
+
+	//Initializing AIPoints
+	LINE = getNextRelevantLine(infile);
+	std::list<AIPoint*> Temp_aip;
+	aipoints = Temp_aip;
+	extractValues(LINE, lineOutput);
+	for (int i = lineOutput[0]; 0 < i; i--)
+	{
+		LINE = getNextRelevantLine(infile);
+		extractValues(LINE, lineOutput);
+
+		AIPoint* aip = new AIPoint(lineOutput[0], lineOutput[1], Point(lineOutput[2], lineOutput[3], lineOutput[4]),
+			lineOutput[5], lineOutput[6], lineOutput[7]);
+		aipoints.insert(aipoints.end(), aip);
+	}
+
 	//Initializing monsters
 	LINE = getNextRelevantLine(infile);
 	std::list<Monster*> Temp_m;
@@ -232,7 +270,7 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 			lineOutput[8], lineOutput[9], lineOutput[10], lineOutput[11], //custom attributes, gravity degree
 			lineOutput[12], animT, modelP, //facing angle, animation table, model path
 			Point(lineOutput[13], lineOutput[14], lineOutput[15]), //translation
-			lineOutput[16], lineOutput[17], lineOutput[18], lineOutput[19]); //animated?, life time, active, always active
+			lineOutput[16], lineOutput[17], lineOutput[18], lineOutput[19], lineOutput[20]); //animated?, life time, active, always active, climbing?
 		fields.insert(fields.end(), m->main_field);
 		monsters.insert(monsters.end(), m);
 		
@@ -243,6 +281,47 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 			m->animator->set(lineOutput[1], lineOutput[2], //bool active, bool looping
 				lineOutput[3], lineOutput[4], //animation id, animation speed
 				lineOutput[5], lineOutput[6], lineOutput[7]); //current frame, min frame, max frame
+
+		//Loading AI state
+		LINE = getNextRelevantLine(infile);
+		extractValues(LINE, lineOutput);
+		m->aI->set(lineOutput[0], lineOutput[1], lineOutput[2]);
+
+		//Loading current state
+		LINE = getNextRelevantLine(infile);
+		extractValues(LINE, lineOutput);
+		int total = lineOutput[0];
+		if (0 < total)
+		{
+			LINE = getNextRelevantLine(infile);
+			extractValues(LINE, lineOutput);
+			for (int j = total; 0 < j; j--)
+				m->aI->addCurrent((int)lineOutput[total-j]);
+		}
+		
+		//Loading obstackle list
+		LINE = getNextRelevantLine(infile);
+		extractValues(LINE, lineOutput);
+		total = lineOutput[0];
+		if (0 < total)
+		{
+			LINE = getNextRelevantLine(infile);
+			extractValues(LINE, lineOutput);
+			for (int j = total; 0 < j; j--)
+				m->aI->addToList(0, (int)lineOutput[total-j]);
+		}
+		
+		//Loading cliff list
+		LINE = getNextRelevantLine(infile);
+		extractValues(LINE, lineOutput);
+		total = lineOutput[0];
+		if (0 < total)
+		{
+			LINE = getNextRelevantLine(infile);
+			extractValues(LINE, lineOutput);
+			for (int j = total; 0 < j; j--)
+				m->aI->addToList(1, (int)lineOutput[total-j]);
+		}
 	}
 	
 	//Initializing Borders
@@ -397,6 +476,10 @@ void Level::advance_frame(ICameraSceneNode *cam) {
 		player->main_field->velocity.position_x = 0;
 	//player->main_field->velocity.position_y = 0; //player->main_field->get_vy()
 
+	//AI
+	for (std::list<Monster*>::iterator i = monsters.begin(); i != monsters.end(); i++)
+		(*i)->act(delta_time);
+
 	//decrementing layer change delay
 	if (lc_interval > 0)
 		lc_interval--;
@@ -486,6 +569,28 @@ bool Level::collision_detect(Field* source) {
 		++target;
 	}
 	return p;
+}
+
+Field* Level::collision_Point(Point p)
+{
+	std::list<Field*>::iterator target = fields.begin();
+	while (target != fields.end())
+	{
+		double x1 = (*target)->position.position_x - (*target)->size.position_x / 2;
+		double x2 = (*target)->position.position_x + (*target)->size.position_x / 2;
+		double y1 = (*target)->position.position_y - (*target)->size.position_y / 2;
+		double y2 = (*target)->position.position_y + (*target)->size.position_y / 2;
+		double l1 = (*target)->position.layer - (*target)->size.layer / 2;
+		double l2 = (*target)->position.layer + (*target)->size.layer / 2;
+
+		if ((l1 < p.layer) && (p.layer < l2))
+			if ((x1 < p.position_x) && (p.position_x < x2))
+				if ((y1 < p.position_y) && (p.position_y < y2))
+					return (*target);
+
+		++target;
+	}
+	return 0;
 }
 
 void Level::move_field(Field* field) {

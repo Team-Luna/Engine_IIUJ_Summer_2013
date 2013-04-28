@@ -36,6 +36,7 @@ class Field
 		Level* location;
 		scene::ISceneNode* graphic_model;
 		scene::IAnimatedMeshSceneNode* graphic_model_animated;
+		Point velocity;
 		
 		~Field();
 		Field(Entity* O, Point P, Point S, int model_type, char* Path, Level* L,
@@ -46,7 +47,6 @@ class Field
 		Event* collision_effect;
 		Point size;
 		Point translation;
-		Point velocity;
 		Point movement_point;
 		Event* destroy_event;
 		bool destroy_at_stop;

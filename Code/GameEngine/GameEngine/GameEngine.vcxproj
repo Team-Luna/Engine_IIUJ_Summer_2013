@@ -67,6 +67,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Sources\Action.cpp" />
+    <ClCompile Include="Sources\AIPoint.cpp" />
     <ClCompile Include="Sources\AnimationTable.cpp" />
     <ClCompile Include="Sources\Animator.cpp" />
     <ClCompile Include="Sources\Background.cpp" />
@@ -85,6 +87,7 @@
     <ClCompile Include="Sources\Item.cpp" />
     <ClCompile Include="Sources\Level.cpp" />
     <ClCompile Include="Sources\Monster.cpp" />
+    <ClCompile Include="Sources\MonsterAI.cpp" />
     <ClCompile Include="Sources\MoveEvent.cpp" />
     <ClCompile Include="Sources\NewFieldEvent.cpp" />
     <ClCompile Include="Sources\ParameterChangeEvent.cpp" />
@@ -92,6 +95,8 @@
     <ClCompile Include="Sources\Point.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Headers\Action.h" />
+    <ClInclude Include="Headers\AIPoint.h" />
     <ClInclude Include="Headers\AnimationTable.h" />
     <ClInclude Include="Headers\Animator.h" />
     <ClInclude Include="Headers\Background.h" />
@@ -110,6 +115,7 @@
     <ClInclude Include="Headers\Item.h" />
     <ClInclude Include="Headers\Level.h" />
     <ClInclude Include="Headers\Monster.h" />
+    <ClInclude Include="Headers\MonsterAI.h" />
     <ClInclude Include="Headers\MoveEvent.h" />
     <ClInclude Include="Headers\NewFieldEvent.h" />
     <ClInclude Include="Headers\ParameterChangeEvent.h" />
