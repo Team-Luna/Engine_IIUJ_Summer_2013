@@ -314,9 +314,37 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 		bgobjects.insert(bgobjects.end(), p);
 	}
 
-	bg_sky = new Background(vector3df(500,350,0), vector3df(1,1,1000), false, "../media/environment/sky16.JPG", 0.1, 1.0, device, player);
+
+	// Initializing Background
+	LINE = getNextRelevantLine(infile);
+	std::list<Background*> Temp_backgrounds;
+	backgrounds = Temp_backgrounds;
+	extractValues(LINE, lineOutput);
+	for(int i=lineOutput[0]; 0<i; i--)
+	{
+		LINE = getNextRelevantLine(infile);
+		TempLine = LINE;
+		LINE = getNextRelevantLine(infile);
+		for(int i=0; i<modelP_size; i++)
+			modelP[i] = 0;
+		for(int i=0; i<LINE.length(); i++)
+			modelP[i] = LINE[i];
+
+		// Creating background
+		extractValues(TempLine, lineOutput);
+		Background* bg = new Background(this,  // przekazanie levelu
+			vector3df(lineOutput[0], lineOutput[1], lineOutput[2]),  // size
+			vector3df(lineOutput[3], lineOutput[4], lineOutput[5]),  // position
+			lineOutput[6],  // transparency
+			modelP,  // path
+			lineOutput[7], lineOutput[8]);  // speed
+
+		backgrounds.insert(backgrounds.end(), bg);
+	}
+
+	/*bg_sky = new Background(vector3df(500,350,0), vector3df(1,1,1000), false, "../media/environment/sky16.JPG", 0.1, 1.0, device, player);
 	bg_trees = new Background(vector3df(20,10,0), vector3df(-300,1,300), true, "../media/environment/trees.png", 0.5, 3.1, device, player);
-	bg_beach = new Background(vector3df(800,200,0), vector3df(1,-1000,600), false, "../media/environment/beach.jpg", 5.1, 10.1, device, player);
+	bg_beach = new Background(vector3df(800,200,0), vector3df(1,-1000,600), false, "../media/environment/beach.jpg", 5.1, 10.1, device, player);*/
 
 	infile.close();
 }
@@ -345,6 +373,11 @@ void Level::add_item(std::string init, Point position, Point size) {
 
 void Level::add_bgobject(Point start){
 	
+};
+
+void Level::add_background(Point start)
+{
+
 };
 
 void Level::advance_frame(ICameraSceneNode *cam) {
@@ -588,6 +621,15 @@ void Level::remove_bgobject(BgMovableObject* entity) {
 	}
 }
 
+void Level::remove_background(Background* entity)
+{
+	if(player!=0)
+	{
+		backgrounds.remove(entity);
+		delete(entity);
+	}
+}
+
 void Level::trash(Field* field) {
 	//field->destroy_event.invoke() ??
 	garbage.insert(garbage.end(), field);
@@ -610,9 +652,11 @@ void Level::process_key(irr::EKEY_CODE keycode) {
 		{
 			player->facing_angle = 90;
 			player->main_field->velocity.position_x = player->movement_speed;
-			bg_sky->moveLeft();
+			for (std::list<Background*>::iterator i=backgrounds.begin(); i!=backgrounds.end(); i++)
+				(*i)->moveLeft();
+			/*bg_sky->moveLeft();
 			bg_trees->moveLeft();
-			bg_beach->moveLeft();
+			bg_beach->moveLeft();*/
 		}
 	}
 	if (keycode == irr::KEY_KEY_A)
@@ -621,9 +665,8 @@ void Level::process_key(irr::EKEY_CODE keycode) {
 		{
 			player->facing_angle = 270;
 			player->main_field->velocity.position_x = -player->movement_speed;
-			bg_sky->moveRight();
-			bg_trees->moveRight();
-			bg_beach->moveRight();
+			for (std::list<Background*>::iterator i=backgrounds.begin(); i!=backgrounds.end(); i++)
+				(*i)->moveRight();
 		}
 	}
 	if (keycode == irr::KEY_KEY_Q)
@@ -634,9 +677,15 @@ void Level::process_key(irr::EKEY_CODE keycode) {
 			return;
 		lc_interval = 30;
 		player->main_field->position.layer += 1;
-		bg_sky->moveInwards();
+		for(std::list<Background*>::iterator i=backgrounds.begin(); i!=backgrounds.end(); i++)
+		{
+			if(i==backgrounds.begin())\
+				(*i)->moveInwards();
+			else (*i)->moveOutwards();
+		}
+		/*bg_sky->moveInwards();
 		bg_trees->moveOutwards();
-		bg_beach->moveOutwards();
+		bg_beach->moveOutwards();*/
 		if (collision_detect(player->main_field))
 			player->main_field->position.layer -= 1;
 	}
@@ -648,9 +697,12 @@ void Level::process_key(irr::EKEY_CODE keycode) {
 			return;
 		lc_interval = 30;
 		player->main_field->position.layer -= 1;
-		bg_sky->moveOutwards();
-		bg_trees->moveInwards();
-		bg_beach->moveInwards();
+		for(std::list<Background*>::iterator i=backgrounds.begin(); i!=backgrounds.end(); i++)
+		{
+			if(i==backgrounds.begin())\
+				(*i)->moveOutwards();
+			else (*i)->moveInwards();
+		}
 		if (collision_detect(player->main_field))
 			player->main_field->position.layer += 1;
 	}

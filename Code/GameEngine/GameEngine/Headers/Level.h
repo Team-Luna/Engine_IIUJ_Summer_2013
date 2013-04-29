@@ -76,6 +76,7 @@ class Level
 		void add_monster(std::string init, Point position = Point(), Point size = Point(5.0, 10.0, 1.0));
 		void add_item(std::string init, Point position = Point(), Point size = Point(5.0, 5.0, 1.0));
 		void add_bgobject(Point start);
+		void add_background(Point start);
 
 		void advance_frame(ICameraSceneNode *cam);
 		bool collision_detect(Field* source);
@@ -88,6 +89,7 @@ class Level
 		void remove_monster(Field* field, Monster* entity);
 		void remove_item(Field* field, Item* entity);
 		void remove_bgobject(BgMovableObject* entity);
+		void remove_background(Background* entity);
 		
 		void trash(Field* field);
 		void process_key(irr::EKEY_CODE keycode);
@@ -97,6 +99,7 @@ class Level
 		std::list<Field*> garbage;
 		std::list<Item*> items;
 		std::list<BgMovableObject*> bgobjects;
+		std::list<Background*> backgrounds;
 		int time_left;
 		std::list<Monster*> monsters;
 		std::list<Border*> boundaries;

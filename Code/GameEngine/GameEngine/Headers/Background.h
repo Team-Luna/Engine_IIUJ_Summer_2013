@@ -32,16 +32,15 @@ class Background
 	ISceneNode* cubes[10];
 	irr::f32 speedHorizontal;
 	irr::f32 speedInwards;
-	Player* player;
+	float playerMovementSpeed;
 	
-
 
 public:
 	Background(void);
-	Background(vector3df Size, vector3df Position, bool Transparency, char* TexturePath, irr::f32 SpeedHorizontal, irr::f32 SpeedInwards, IrrlichtDevice* Device, Player* player);
+	Background(Level* L, vector3df Size, vector3df Position, bool Transparency, char* TexturePath, irr::f32 SpeedHorizontal, irr::f32 SpeedInwards);
 	~Background(void);
 
-	ISceneNode* generateSingleCube(vector3df Size, vector3df Position, bool Transparency, char* TexturePath, irr::f32 SpeedHorizontal, irr::f32 SpeedInwards, IrrlichtDevice* Device, Player* player);
+	ISceneNode* generateSingleCube(Level* L, vector3df Size, vector3df Position, bool Transparency, char* TexturePath, irr::f32 SpeedHorizontal, irr::f32 SpeedInwards);
 
 
 	irr::f32 getSpeedHorizontal();
