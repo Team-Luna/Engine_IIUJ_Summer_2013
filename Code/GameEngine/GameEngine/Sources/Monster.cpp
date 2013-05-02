@@ -42,12 +42,6 @@ void Monster::act(double time) {
 	if (aI == 0)
 		return;
 
-	if (!aI->evaluate)
-	{
-		aI->proceed(time);
-		return;
-	}
-
 	Point p;
 	Field* f;
 	

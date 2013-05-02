@@ -218,7 +218,7 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 		LINE = getNextRelevantLine(infile);
 		extractValues(LINE, lineOutput);
 		actions.find(name)->second->set_values(modelP, lineOutput[0],
-			lineOutput[1], lineOutput[2], lineOutput[3], lineOutput[4]);
+			lineOutput[1], lineOutput[2], lineOutput[3], lineOutput[4], lineOutput[5]);
 	}
 	//Setting relatives
 	LINE = getNextRelevantLine(infile);
@@ -447,8 +447,8 @@ void Level::add_item(std::string init, Point position, Point size) {
 }
 
 void Level::add_bgobject(Point start){
-	
-};
+
+}
 
 void Level::turn_around(Field* field)
 {
@@ -469,6 +469,81 @@ void Level::move_forward(Field* field)
 		if (field->owner->animator != 0)
 			field->owner->animator->setAnimation(1);
 	}
+}
+
+void Level::jump(Field* field, bool forward)
+{
+	double o = 0;
+	if (field->owner->facing_angle == 90)
+		o = 1;
+	else o = -1;
+	
+	//Y speed
+	field->velocity.position_y = o*2*field->owner->movement_speed;
+	//X speed
+	if (forward)
+		field->velocity.position_x = o*field->owner->movement_speed;
+	else
+		field->velocity.position_x = -o*field->owner->movement_speed;
+	//Animation
+	if (field->owner->animator != 0)
+		field->owner->animator->setAnimation(7);
+}
+
+void Level::climb(Field* field, bool upwards)
+{
+	if (field->owner->custom_attribute1 = 0)
+	{
+		field->owner->custom_attribute1 = 1;
+		//TO DO: start climbing
+	}
+	//Y speed
+	if (upwards)
+		if (field->velocity.position_y != field->owner->movement_speed)
+			field->velocity.position_y = field->owner->movement_speed;
+	else
+		if (field->velocity.position_y != -field->owner->movement_speed)
+			field->velocity.position_x = -field->owner->movement_speed;
+	//X speed
+	field->velocity.position_x = 0;
+	//Animation
+	if (field->owner->animator != 0)
+		field->owner->animator->setAnimation(10);
+}
+
+void Level::attack(Field* field)
+{
+	//Animation
+	if (field->owner->animator != 0)
+		field->owner->animator->setAnimation(3);
+}
+
+void Level::shoot(Field* field)
+{
+	//Animation
+	if (field->owner->animator != 0)
+		field->owner->animator->setAnimation(5);
+}
+
+void Level::idle(Field* field)
+{
+	//X speed
+	field->velocity.position_x = 0;
+	//Animation
+	if (field->owner->animator != 0)
+		field->owner->animator->setAnimation(0);
+}
+
+void Level::stop(Field* field, bool grounded)
+{
+	//Y speed
+	field->velocity.position_y = 0;
+	//X speed
+	field->velocity.position_x = 0;
+
+	if (grounded)
+		field->owner->animator->setAnimation(0);
+	else field->owner->animator->stop();
 }
 
 void Level::advance_frame(ICameraSceneNode *cam) {

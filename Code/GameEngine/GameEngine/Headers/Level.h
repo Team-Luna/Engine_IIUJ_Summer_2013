@@ -84,6 +84,12 @@ class Level
 
 		void turn_around(Field* field);
 		void move_forward(Field* field);
+		void jump(Field* field, bool forward);
+		void climb(Field* field, bool upwards);
+		void attack(Field* field);
+		void shoot(Field* field);
+		void idle(Field* field);
+		void stop(Field* field, bool grounded);
 
 		void advance_frame(ICameraSceneNode *cam);
 		bool collision_detect(Field* source);

@@ -19,7 +19,7 @@ class MonsterAI
 	void evaluate_actions(bool v1, bool v2, bool v3, bool v4, bool v5, bool v6,
 		bool v7, bool v8, bool v9, bool v10, bool v11);
 	void proceed(double time);
-	bool handle_action(int id);
+	bool handle_action(int id, bool extra);
 
 	AITable* table;
 	Monster* owner;

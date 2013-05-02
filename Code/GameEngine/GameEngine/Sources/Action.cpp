@@ -7,7 +7,7 @@ Action::Action()
 	next_extra = 0;
 }
 
-void Action::set_values(char* nm, int id, double s1, double s2, bool l, bool e)
+void Action::set_values(char* nm, int id, double s1, double s2, bool l, bool e, bool ex)
 {
 	name = nm;
 	ID = id;
@@ -15,4 +15,5 @@ void Action::set_values(char* nm, int id, double s1, double s2, bool l, bool e)
 	scale2 = s2;
 	loop = l;
 	evaluate = e;
+	extra = ex;
 }
