@@ -15,6 +15,14 @@ using namespace gui;
 #pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
 #endif
 
+// Gamestate Manager
+enum GAME_STATE
+{
+	MAINMENU = 0,
+	GAMEPLAY = 1,
+	QUIT = 2
+};
+
 ///Class Declarations
 class KeyReciever : public IEventReceiver
 {
@@ -22,6 +30,30 @@ public:
 	virtual bool OnEvent(const SEvent& event) {
 		if (event.EventType == irr::EET_KEY_INPUT_EVENT)
 			KeyIsDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
+
+		// dla myszki (w menu)
+        if (event.EventType == irr::EET_MOUSE_INPUT_EVENT)
+        {
+            switch(event.MouseInput.Event)
+            {
+            case EMIE_LMOUSE_PRESSED_DOWN:
+                MouseState.LeftButtonDown = true;
+                break;
+
+            case EMIE_LMOUSE_LEFT_UP:
+                MouseState.LeftButtonDown = false;
+                break;
+
+            case EMIE_MOUSE_MOVED:
+                MouseState.Position.X = event.MouseInput.X;
+                MouseState.Position.Y = event.MouseInput.Y;
+                break;
+
+            default:
+                // We won't use the wheel
+                break;
+            }
+        }
 
 		return false;
 	}
@@ -35,6 +67,25 @@ public:
 			KeyIsDown[i] = false;
 	}
 
+	// dla myszki (w menu)
+    struct SMouseState
+    {
+        core::position2di Position;
+        bool LeftButtonDown;
+        SMouseState() : LeftButtonDown(false) { }
+    } MouseState;
+
+    const SMouseState & GetMouseState(void) const
+    {
+        return MouseState;
+    }
+
+	/* // nie wiadomo czy potrzebne
+    MyEventReceiver()
+    {
+    }
+	*/
+
 private:
 	bool KeyIsDown[KEY_KEY_CODES_COUNT];
 };
@@ -42,6 +93,9 @@ private:
 ///Program Startup
 int main()
 {
+	// najpierw menu glowne
+	GAME_STATE state = MAINMENU;
+
 	KeyReciever receiver;
 
 	///Creating Game Window
@@ -57,81 +111,198 @@ int main()
 	IVideoDriver* driver = device->getVideoDriver();
 	ISceneManager* smgr = device->getSceneManager();
 	IGUIEnvironment* guienv = device->getGUIEnvironment();
-	
-	//ICameraSceneNode *cam = smgr->addCameraSceneNode(0, vector3df(0,30,0), vector3df(0,0,0));
-	ICameraSceneNode *cam = smgr->addCameraSceneNode(0, vector3df(0,15,-40), vector3df(0,0,0));
-
-	///Creating level (From file, yay!)
-	Level L = Level(device, "../Init/level1.ini");
 
 
-	Background tlo_niebo;
-	tlo_niebo = Background(vector3df(500,350,0), vector3df(1,1,1000), false, "../media/environment/sky16.JPG", 0.1, 1.0, device, L);
-
-	Background tlo_drzewa;
-	tlo_drzewa = Background(vector3df(20,10,0), vector3df(-300,1,300), true, "../media/environment/trees.png", 0.5, 3.1, device, L);
-
-	Background tlo_plaza;
-	tlo_plaza = Background(vector3df(800,200,0), vector3df(1,-1000,600), false, "../media/environment/beach.jpg", 5.1, 10.1, device, L);
-
-
-	f32 FrameInterval = 1.0/60.0;
-	u32 t2 = device->getTimer()->getTime();
-
-	///Running the Game
-	while(device->run())
+	while(true)
 	{
-		if (device->isWindowActive())
+		while(state==MAINMENU)
 		{
-			u32 t1 = device->getTimer()->getTime();
-			f32 frameDeltaTime = (f32)(t1 - t2) / 1000.f; // Time in seconds
-			if (FrameInterval <= frameDeltaTime)
+			video::ITexture* buttonTexture = driver->getTexture("../media/menu/dark.png");
+			video::ITexture* backgroundTexture = driver->getTexture("../media/menu/menu_beach_background.jpg");
+
+			gui::IGUIFont* font = device->getGUIEnvironment()->getFont("../media/menu/BuxtonSketch24.png");
+
+			while(device->run() && driver)
 			{
-				//Updating Time
-				t2 = t1;
-				driver->beginScene(true, true, SColor(255,100,101,140));
-				L.delta_time = (frameDeltaTime < 3*FrameInterval) ? frameDeltaTime : 3*FrameInterval; //min, deltaTime or 3 frames
+				if (device->isWindowActive())
+				{
+					u32 time = device->getTimer()->getTime();
+
+					driver->beginScene(true, true, SColor(255,100,101,140));
+				}
+
+				// tlo
+				driver->draw2DImage(backgroundTexture, core::position2d<s32>(0,0),
+				core::rect<s32>(0,0,800,600), 0,
+				video::SColor(255,255,255,255), false);
+
+				// przycisk NEW GAME
+				driver->draw2DImage(buttonTexture, core::position2d<s32>(250,100),
+                core::rect<s32>(0,0,300,50), 0,
+                video::SColor(255,255,255,255), false);
+
+				if((receiver.GetMouseState().Position.X>250) && (receiver.GetMouseState().Position.X<550) && (receiver.GetMouseState().Position.Y>100) && (receiver.GetMouseState().Position.Y<150))
+				{
+					driver->draw2DImage(buttonTexture, core::position2d<s32>(250,100),
+					core::rect<s32>(0,0,300,50), 0,
+					video::SColor(200,35,120,170), false);
+				}
+
+				if((receiver.GetMouseState().Position.X>250) && (receiver.GetMouseState().Position.X<550) && (receiver.GetMouseState().Position.Y>100) && (receiver.GetMouseState().Position.Y<150) && receiver.GetMouseState().LeftButtonDown)
+				{
+					state = GAMEPLAY;
+					break;
+				}
+
+				// przycisk ENTER PASSWORD
+				driver->draw2DImage(buttonTexture, core::position2d<s32>(250,200),
+                core::rect<s32>(0,0,300,50), 0,
+                video::SColor(255,255,255,255), false);
+
+				if((receiver.GetMouseState().Position.X>250) && (receiver.GetMouseState().Position.X<550) && (receiver.GetMouseState().Position.Y>200) && (receiver.GetMouseState().Position.Y<250))
+				{
+					driver->draw2DImage(buttonTexture, core::position2d<s32>(250,200),
+					core::rect<s32>(0,0,300,50), 0,
+					video::SColor(200,35,120,170), false);
+				}
+
+				// przycisk SETTINGS
+				driver->draw2DImage(buttonTexture, core::position2d<s32>(250,300),
+                core::rect<s32>(0,0,300,50), 0,
+                video::SColor(255,255,255,255), false);
+
+				if((receiver.GetMouseState().Position.X>250) && (receiver.GetMouseState().Position.X<550) && (receiver.GetMouseState().Position.Y>300) && (receiver.GetMouseState().Position.Y<350))
+				{
+					driver->draw2DImage(buttonTexture, core::position2d<s32>(250,300),
+					core::rect<s32>(0,0,300,50), 0,
+					video::SColor(200,35,120,170), false);
+				}
+
+				// przycisk EXIT
+				driver->draw2DImage(buttonTexture, core::position2d<s32>(250,400),
+                core::rect<s32>(0,0,300,50), 0,
+                video::SColor(255,255,255,255), false);
+
+				if((receiver.GetMouseState().Position.X>250) && (receiver.GetMouseState().Position.X<550) && (receiver.GetMouseState().Position.Y>400) && (receiver.GetMouseState().Position.Y<450))
+				{
+					driver->draw2DImage(buttonTexture, core::position2d<s32>(250,400),
+					core::rect<s32>(0,0,300,50), 0,
+					video::SColor(200,35,120,170), false);
+				}
 				
-				//Handling Keys
-				if(receiver.IsKeyDown(irr::KEY_KEY_W))
-					L.process_key(irr::KEY_KEY_W);
-				else if(receiver.IsKeyDown(irr::KEY_KEY_S))
-					L.process_key(irr::KEY_KEY_S);
-				if(receiver.IsKeyDown(irr::KEY_KEY_D)) {
-					L.process_key(irr::KEY_KEY_D);
-					tlo_niebo.moveLeft();
-					tlo_drzewa.moveLeft();
-					tlo_plaza.moveLeft();
-				}
-				else if(receiver.IsKeyDown(irr::KEY_KEY_A)) {
-					L.process_key(irr::KEY_KEY_A);
-					tlo_niebo.moveRight();
-					tlo_drzewa.moveRight();
-					tlo_plaza.moveRight();
-				}
-				else if(receiver.IsKeyDown(irr::KEY_KEY_Q)) {
-					L.process_key(irr::KEY_KEY_Q);
-					tlo_niebo.moveInwards();
-					tlo_drzewa.moveOutwards();
-					tlo_plaza.moveOutwards();
-				}
-				else if(receiver.IsKeyDown(irr::KEY_KEY_Z)) {
-					L.process_key(irr::KEY_KEY_Z);
-					tlo_niebo.moveOutwards();
-					tlo_drzewa.moveInwards();
-					tlo_plaza.moveInwards();
+				if((receiver.GetMouseState().Position.X>250) && (receiver.GetMouseState().Position.X<550) && (receiver.GetMouseState().Position.Y>400) && (receiver.GetMouseState().Position.Y<450) && receiver.GetMouseState().LeftButtonDown)
+				{
+					return 0;
 				}
 
-				//Updating Level
-				L.advance_frame(cam);
+				// draw some text
+				if (font)
+				{
+					font->draw(L"NEW GAME",
+						core::rect<s32>(250,100,550,150),
+						video::SColor(255,255,255,255),true,true);
 
-				smgr->drawAll();
-				guienv->drawAll();
+					font->draw(L"ENTER PASSWORD",
+						core::rect<s32>(250,200,550,250),
+						video::SColor(255,255,255,255),true,true);
+
+					font->draw(L"SETTINGS",
+						core::rect<s32>(250,300,550,350),
+						video::SColor(255,255,255,255),true,true);
+
+					font->draw(L"EXIT",
+						core::rect<s32>(250,400,550,450),
+						video::SColor(255,255,255,255),true,true);
+				}
+
+				core::position2d<s32> m = device->getCursorControl()->getPosition();
+				driver->draw2DRectangle(video::SColor(100,255,255,255),
+                core::rect<s32>(m.X-20, m.Y-20, m.X+20, m.Y+20));
 
 				driver->endScene();
 			}
 		}
+		while(state==GAMEPLAY)
+		{
+			//ICameraSceneNode *cam = smgr->addCameraSceneNode(0, vector3df(0,30,0), vector3df(0,0,0));
+			ICameraSceneNode *cam = smgr->addCameraSceneNode(0, vector3df(0,15,-40), vector3df(0,0,0));
+
+			///Creating level (From file, yay!)
+			Level L = Level(device, "../Init/level1.ini");
+
+
+			Background tlo_niebo;
+			tlo_niebo = Background(vector3df(500,350,0), vector3df(1,1,1000), false, "../media/environment/sky16.JPG", 0.1, 1.0, device, L);
+
+			Background tlo_drzewa;
+			tlo_drzewa = Background(vector3df(20,10,0), vector3df(-300,1,300), true, "../media/environment/trees.png", 0.5, 3.1, device, L);
+
+			Background tlo_plaza;
+			tlo_plaza = Background(vector3df(800,200,0), vector3df(1,-1000,600), false, "../media/environment/beach.jpg", 5.1, 10.1, device, L);
+
+			f32 FrameInterval = 1.0/60.0;
+			u32 t2 = device->getTimer()->getTime();
+
+			///Running the Game
+			while(device->run())
+			{
+				if (device->isWindowActive())
+				{
+					u32 t1 = device->getTimer()->getTime();
+					f32 frameDeltaTime = (f32)(t1 - t2) / 1000.f; // Time in seconds
+					if (FrameInterval <= frameDeltaTime)
+					{
+						//Updating Time
+						t2 = t1;
+						driver->beginScene(true, true, SColor(255,100,101,140));
+						L.delta_time = (frameDeltaTime < 3*FrameInterval) ? frameDeltaTime : 3*FrameInterval; //min, deltaTime or 3 frames
+				
+						//Handling Keys
+						if(receiver.IsKeyDown(irr::KEY_KEY_W))
+							L.process_key(irr::KEY_KEY_W);
+						else if(receiver.IsKeyDown(irr::KEY_KEY_S))
+							L.process_key(irr::KEY_KEY_S);
+						if(receiver.IsKeyDown(irr::KEY_KEY_D)) {
+							L.process_key(irr::KEY_KEY_D);
+							tlo_niebo.moveLeft();
+							tlo_drzewa.moveLeft();
+							tlo_plaza.moveLeft();
+						}
+						else if(receiver.IsKeyDown(irr::KEY_KEY_A)) {
+							L.process_key(irr::KEY_KEY_A);
+							tlo_niebo.moveRight();
+							tlo_drzewa.moveRight();
+							tlo_plaza.moveRight();
+						}
+						else if(receiver.IsKeyDown(irr::KEY_KEY_Q)) {
+							L.process_key(irr::KEY_KEY_Q);
+							tlo_niebo.moveInwards();
+							tlo_drzewa.moveOutwards();
+							tlo_plaza.moveOutwards();
+						}
+						else if(receiver.IsKeyDown(irr::KEY_KEY_Z)) {
+							L.process_key(irr::KEY_KEY_Z);
+							tlo_niebo.moveOutwards();
+							tlo_drzewa.moveInwards();
+							tlo_plaza.moveInwards();
+						}
+						else if(receiver.IsKeyDown(irr::KEY_ESCAPE)) {
+							return 0;
+						}
+
+						//Updating Level
+						L.advance_frame(cam);
+
+						smgr->drawAll();
+						guienv->drawAll();
+					
+						driver->endScene();
+					}
+				}
+			}
+			device->drop();
+		}
+		if(state==QUIT) return 0;
 	}
-	device->drop();
 	return 0;
 }
