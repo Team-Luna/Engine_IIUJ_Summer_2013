@@ -82,6 +82,7 @@
     <ClCompile Include="Sources\Event.cpp" />
     <ClCompile Include="Sources\ExternalEvent.cpp" />
     <ClCompile Include="Sources\Field.cpp" />
+    <ClCompile Include="Sources\HUD.cpp" />
     <ClCompile Include="Sources\Item.cpp" />
     <ClCompile Include="Sources\Level.cpp" />
     <ClCompile Include="Sources\Monster.cpp" />
@@ -107,6 +108,7 @@
     <ClInclude Include="Headers\Event.h" />
     <ClInclude Include="Headers\ExternalEvent.h" />
     <ClInclude Include="Headers\Field.h" />
+    <ClInclude Include="Headers\HUD.h" />
     <ClInclude Include="Headers\Item.h" />
     <ClInclude Include="Headers\Level.h" />
     <ClInclude Include="Headers\Monster.h" />

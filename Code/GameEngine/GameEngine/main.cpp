@@ -2,6 +2,7 @@
 #include <irrlicht.h>
 #include <Level.h>
 #include <Background.h>
+#include <HUD.h>
 ///Namespaces
 using namespace irr;
 using namespace core;
@@ -215,9 +216,9 @@ int main()
 						video::SColor(255,255,255,255),true,true);
 				}
 
-				core::position2d<s32> m = device->getCursorControl()->getPosition();
+				/*core::position2d<s32> m = device->getCursorControl()->getPosition();
 				driver->draw2DRectangle(video::SColor(100,255,255,255),
-                core::rect<s32>(m.X-20, m.Y-20, m.X+20, m.Y+20));
+                core::rect<s32>(m.X-20, m.Y-20, m.X+20, m.Y+20));*/
 
 				driver->endScene();
 			}
@@ -230,7 +231,6 @@ int main()
 			///Creating level (From file, yay!)
 			Level L = Level(device, "../Init/level1.ini");
 
-
 			Background tlo_niebo;
 			tlo_niebo = Background(vector3df(500,350,0), vector3df(1,1,1000), false, "../media/environment/sky16.JPG", 0.1, 1.0, device, L);
 
@@ -242,6 +242,8 @@ int main()
 
 			f32 FrameInterval = 1.0/60.0;
 			u32 t2 = device->getTimer()->getTime();
+
+			HUD headsUpDisplay = HUD(&L, device);
 
 			///Running the Game
 			while(device->run())
@@ -295,7 +297,9 @@ int main()
 
 						smgr->drawAll();
 						guienv->drawAll();
-					
+						
+						headsUpDisplay.drawHUD();
+
 						driver->endScene();
 					}
 				}
