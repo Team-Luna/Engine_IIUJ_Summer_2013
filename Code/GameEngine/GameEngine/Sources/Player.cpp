@@ -26,7 +26,7 @@ Player::Player() {
 Player::Player(Level* L, int ms, int php, int l, Point pos, Point size, //level, movement speed, hit points, position, size
 				int ca1, int ca2, int ca3, int gd, int fa, char* animT,//custom attributes, gravity degree, facing angle, animation table
 				char* modelP, Point trans, bool anim, bool cl) { //model path, translation, animated?, climbing?
-	movement_speed = ms;
+	movement_speed = (float)ms;
 	hp = php;
 	lifes = l;
 	grounded = false;

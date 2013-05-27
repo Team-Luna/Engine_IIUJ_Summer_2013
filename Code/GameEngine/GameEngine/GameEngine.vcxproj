@@ -68,6 +68,11 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Sources\Action.cpp" />
+    <ClCompile Include="Sources\ActionEvaluate.cpp" />
+    <ClCompile Include="Sources\ActionIfThenElse.cpp" />
+    <ClCompile Include="Sources\ActionLoop.cpp" />
+    <ClCompile Include="Sources\ActionUnit.cpp" />
+    <ClCompile Include="Sources\ActionWait.cpp" />
     <ClCompile Include="Sources\AITable.cpp" />
     <ClCompile Include="Sources\AnimationTable.cpp" />
     <ClCompile Include="Sources\Animator.cpp" />
@@ -77,6 +82,9 @@
     <ClCompile Include="Sources\BgMovableObject.cpp" />
     <ClCompile Include="Sources\ComplexEvent.cpp" />
     <ClCompile Include="Sources\Condition.cpp" />
+    <ClCompile Include="Sources\ConditionCompare.cpp" />
+    <ClCompile Include="Sources\ConditionComplex.cpp" />
+    <ClCompile Include="Sources\ConditionPoint.cpp" />
     <ClCompile Include="Sources\Control.cpp" />
     <ClCompile Include="Sources\Control_Set.cpp" />
     <ClCompile Include="Sources\DestroyEvent.cpp" />
@@ -93,9 +101,15 @@
     <ClCompile Include="Sources\ParameterChangeEvent.cpp" />
     <ClCompile Include="Sources\Player.cpp" />
     <ClCompile Include="Sources\Point.cpp" />
+    <ClCompile Include="Sources\ValRetrieval.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Action.h" />
+    <ClInclude Include="Headers\ActionEvaluate.h" />
+    <ClInclude Include="Headers\ActionIfThenElse.h" />
+    <ClInclude Include="Headers\ActionLoop.h" />
+    <ClInclude Include="Headers\ActionUnit.h" />
+    <ClInclude Include="Headers\ActionWait.h" />
     <ClInclude Include="Headers\AITable.h" />
     <ClInclude Include="Headers\AnimationTable.h" />
     <ClInclude Include="Headers\Animator.h" />
@@ -105,6 +119,9 @@
     <ClInclude Include="Headers\BgMovableObject.h" />
     <ClInclude Include="Headers\ComplexEvent.h" />
     <ClInclude Include="Headers\Condition.h" />
+    <ClInclude Include="Headers\ConditionCompare.h" />
+    <ClInclude Include="Headers\ConditionComplex.h" />
+    <ClInclude Include="Headers\ConditionPoint.h" />
     <ClInclude Include="Headers\Control.h" />
     <ClInclude Include="Headers\Control_Set.h" />
     <ClInclude Include="Headers\DestroyEvent.h" />
@@ -121,6 +138,7 @@
     <ClInclude Include="Headers\ParameterChangeEvent.h" />
     <ClInclude Include="Headers\Player.h" />
     <ClInclude Include="Headers\Point.h" />
+    <ClInclude Include="Headers\ValRetrieval.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="test.txt" />

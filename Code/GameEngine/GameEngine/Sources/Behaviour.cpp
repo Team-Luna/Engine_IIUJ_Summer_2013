@@ -7,8 +7,8 @@ using namespace std;
 ///Code for class Behaviour functions
 bool Behaviour::check_conditions() {
 	bool checked = true;
-	for (std::list<Condition>::iterator ii=conditions.begin();ii!=conditions.end();++ii)
-		if (!ii->check_condition()) {
+	for (std::list<Condition*>::iterator ii=conditions.begin(); ii!=conditions.end(); ++ii)
+		if (!(*ii)->check_condition()) {
 			checked = false;
 			break;
 		}

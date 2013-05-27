@@ -23,14 +23,15 @@ void MonsterAI::evaluate_actions(bool v1, bool v2, bool v3, bool v4,
 			current = table->actions[1];
 		if (v7)
 			current = table->actions[2];
-		if (v1 || v2)
-			current = table->actions[5];
 		if (false)
 			current = table->actions[3];
 		if (false)
 			current = table->actions[4];
+		if (v1 || v2)
+			current = table->actions[5];
 	}
 
+	/*
 	while(true)
 	{
 		if (current == 0)
@@ -89,16 +90,18 @@ void MonsterAI::evaluate_actions(bool v1, bool v2, bool v3, bool v4,
 			break;
 		}
 	}
+	*/
 }
 
 void MonsterAI::proceed(double time)
 {
-	if ((current == 0) && (loop == true))
-		handle_action(looped->ID, looped->extra);
+	//if ((current == 0) && (loop == true))
+	//	handle_action(looped->ID, looped->extra);
 }
 
 bool MonsterAI::handle_action(int id, bool extra)
 {
+	/*
 	switch(id)
 	{
 	case 0:
@@ -125,6 +128,7 @@ bool MonsterAI::handle_action(int id, bool extra)
 	default:
 		return false;
 	}
+	*/return false;
 }
 
 void MonsterAI::set(double de, bool e, bool l, bool c, bool g, bool d)

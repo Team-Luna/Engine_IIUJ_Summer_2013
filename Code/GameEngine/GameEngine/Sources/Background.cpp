@@ -14,7 +14,7 @@ Background::Background(vector3df Size, vector3df Position, bool Transparency, ch
 	speedInwards = SpeedInwards;
 	player = plr;
 
-	irr:f32 initialHorizontalPosition = Position.X;
+	irr::f32 initialHorizontalPosition = Position.X;
 
 	for(int i=0; i<10; i++)
 	{

@@ -208,7 +208,7 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 
 		//Creating the table
 		std::string name = LINE;
-		actions.insert(std::pair< std::string, Action* >(name, new Action()));
+		//actions.insert(std::pair< std::string, Action* >(name, new Action()));
 		
 		for (int i = 0; i < modelP_size; i++)
 			modelP[i] = 0;
@@ -217,8 +217,8 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 
 		LINE = getNextRelevantLine(infile);
 		extractValues(LINE, lineOutput);
-		actions.find(name)->second->set_values(modelP, lineOutput[0],
-			lineOutput[1], lineOutput[2], lineOutput[3], lineOutput[4], lineOutput[5]);
+		//actions.find(name)->second->set_values(modelP, lineOutput[0],
+		//	lineOutput[1], lineOutput[2], lineOutput[3], lineOutput[4], lineOutput[5]);
 	}
 	//Setting relatives
 	LINE = getNextRelevantLine(infile);
@@ -230,16 +230,16 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 
 		//Getting father
 		LINE = getNextRelevantLine(infile);
-		if (actions.find(LINE) != actions.end())
-			actions.find(name)->second->father = actions.find(LINE)->second;
+		//if (actions.find(LINE) != actions.end())
+		//	actions.find(name)->second->father = actions.find(LINE)->second;
 		//Getting normal next
 		LINE = getNextRelevantLine(infile);
-		if (actions.find(LINE) != actions.end())
-			actions.find(name)->second->next_normal = actions.find(LINE)->second;
+		//if (actions.find(LINE) != actions.end())
+		//	actions.find(name)->second->next_normal = actions.find(LINE)->second;
 		//Getting extra next
 		LINE = getNextRelevantLine(infile);
-		if (actions.find(LINE) != actions.end())
-			actions.find(name)->second->next_extra = actions.find(LINE)->second;
+		//if (actions.find(LINE) != actions.end())
+		//	actions.find(name)->second->next_extra = actions.find(LINE)->second;
 	}
 	
 	//Initializing action tables
@@ -471,7 +471,7 @@ void Level::move_forward(Field* field)
 	}
 }
 
-void Level::jump(Field* field, bool forward)
+void Level::jump_forward(Field* field)
 {
 	double o = 0;
 	if (field->owner->facing_angle == 90)
@@ -481,16 +481,31 @@ void Level::jump(Field* field, bool forward)
 	//Y speed
 	field->velocity.position_y = o*2*field->owner->movement_speed;
 	//X speed
-	if (forward)
-		field->velocity.position_x = o*field->owner->movement_speed;
-	else
-		field->velocity.position_x = -o*field->owner->movement_speed;
+	field->velocity.position_x = o*field->owner->movement_speed;
+
 	//Animation
 	if (field->owner->animator != 0)
 		field->owner->animator->setAnimation(7);
 }
 
-void Level::climb(Field* field, bool upwards)
+void Level::jump_backwards(Field* field)
+{
+	double o = 0;
+	if (field->owner->facing_angle == 90)
+		o = 1;
+	else o = -1;
+	
+	//Y speed
+	field->velocity.position_y = o*2*field->owner->movement_speed;
+	//X speed
+	field->velocity.position_x = -o*field->owner->movement_speed;
+
+	//Animation
+	if (field->owner->animator != 0)
+		field->owner->animator->setAnimation(7);
+}
+
+void Level::climb_upwards(Field* field)
 {
 	if (field->owner->custom_attribute1 = 0)
 	{
@@ -498,12 +513,25 @@ void Level::climb(Field* field, bool upwards)
 		//TO DO: start climbing
 	}
 	//Y speed
-	if (upwards)
-		if (field->velocity.position_y != field->owner->movement_speed)
-			field->velocity.position_y = field->owner->movement_speed;
-	else
-		if (field->velocity.position_y != -field->owner->movement_speed)
-			field->velocity.position_x = -field->owner->movement_speed;
+	if (field->velocity.position_y != field->owner->movement_speed)
+		field->velocity.position_y = field->owner->movement_speed;
+	//X speed
+	field->velocity.position_x = 0;
+	//Animation
+	if (field->owner->animator != 0)
+		field->owner->animator->setAnimation(10);
+}
+
+void Level::climb_downwards(Field* field)
+{
+	if (field->owner->custom_attribute1 = 0)
+	{
+		field->owner->custom_attribute1 = 1;
+		//TO DO: start climbing
+	}
+	//Y speed
+	if (field->velocity.position_y != -field->owner->movement_speed)
+		field->velocity.position_x = -field->owner->movement_speed;
 	//X speed
 	field->velocity.position_x = 0;
 	//Animation
@@ -879,6 +907,44 @@ void Level::process_key(irr::EKEY_CODE keycode) {
 		if (collision_detect(player->main_field))
 			player->main_field->position.layer += 1;
 	}
+}
+
+
+double Level::retrieveValue(int type, Field* From, Field* To)
+{
+	if (From == 0)
+		return 0;
+	if (type == 1)
+		return From->position.position_x;
+	if (type == 2)
+		return From->position.position_y;
+	if (type == 3)
+		return From->position.layer;
+	if (type == 4)
+		return From->velocity.position_x;
+	if (type == 5)
+		return From->velocity.position_y;
+	if (type == 6)
+		return From->velocity.layer;
+	if (type == 7)
+		return From->owner->custom_attribute1;
+	if (type == 8)
+		return From->owner->custom_attribute2;
+	if (type == 9)
+		return From->owner->custom_attribute3;
+	if (type == 10)
+		return From->owner->facing_angle;
+	if (type == 11)
+	{
+		double Ans = abs(From->position.position_x - To->position.position_x);
+		Ans += abs(From->position.position_y - To->position.position_y);
+		Ans = sqrt(Ans);
+		return Ans;
+	}
+	if (type == 12)
+		if (From->owner != 0)
+			return From->owner->get_type();
+	return 0;
 }
 
 inline std::string Level::getNextRelevantLine(ifstream& infile) {

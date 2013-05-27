@@ -16,7 +16,7 @@ Monster::Monster(Level* L, int ms, int mhp, std::string nm, std::string mt, //mo
 			Point pos, Point size, int ca1, int ca2, int ca3, int gd, int fa, //position, size, custom attributes, gravity degree, facing angle
 			char* animT, char* modelP, Point trans, bool anim, //animation table, model path, translation, animated?
 			int lt, bool a, bool aa, bool cl) { //life time, active, always active, climbing?
-	movement_speed = ms;
+	movement_speed = (float)ms;
 	aI = 0; //new MonsterAI(this);
 	hp = mhp;
 	name = nm; //where will this be derived from?
@@ -63,7 +63,7 @@ void Monster::act(double time) {
 		move_outwards = true;
 
 	//Orientation
-	double o = 0;
+	float o = 0;
 	if (facing_angle == 90)
 		o = 1;
 	else o = -1;

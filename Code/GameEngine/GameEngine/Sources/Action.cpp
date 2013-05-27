@@ -1,19 +1,21 @@
 #include "Action.h"
 
-Action::Action()
+int Action::get_type()
 {
-	father = 0;
-	next_normal = 0;
-	next_extra = 0;
+	return 0;
 }
 
-void Action::set_values(char* nm, int id, double s1, double s2, bool l, bool e, bool ex)
+Action* Action::get_next_action()
 {
-	name = nm;
-	ID = id;
-	scale1 = s1;
-	scale2 = s2;
-	loop = l;
-	evaluate = e;
-	extra = ex;
+	return 0;
+}
+
+Action* Action::get_extra_action()
+{
+	return 0;
+}
+
+bool Action::do_action(double deltaTime, Field* source, Field* target)
+{
+	return true;
 }

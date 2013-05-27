@@ -1,22 +1,23 @@
 #ifndef __Action_h__
 #define __Action_h__
 
+class Level;
+class Field;
+
 class Action
 {
 	public:
-	Action();
-	void set_values(char* nm, int id, double s1, double s2, bool l, bool e, bool ex);
+		Level* location;
 
-	char* name;
-	int ID;
-	double scale1;
-	double scale2;
-	bool loop;
-	bool evaluate;
-	bool extra;
-	Action* father;
-	Action* next_normal;
-	Action* next_extra;
+		virtual int get_type() = 0;	//1 - Unit
+									//2 - Evaluate
+									//3 - Wait/Animation
+									//4 - If/Then/Else
+									//5 - Loop
+		virtual Action* get_next_action() = 0;
+		virtual Action* get_extra_action() = 0;
+		virtual bool do_action(double deltaTime = 0.0, Field* source = 0, Field* target = 0) = 0;
 };
+
 
 #endif
