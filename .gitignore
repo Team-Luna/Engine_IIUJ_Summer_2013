@@ -213,15 +213,3 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
-
-#visual studio
-.exe
-.ilk
-.sdf
-.suo
-.obj
-.tlog
-.idb
-.pdb
-.log
-.lastbuildstate
