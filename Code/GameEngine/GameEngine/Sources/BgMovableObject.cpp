@@ -22,24 +22,24 @@ BgMovableObject::BgMovableObject(Level* L, Point position, Point scale, char* Te
 	graphic_model->setMaterialType(video::EMT_TRANSPARENT_ALPHA_CHANNEL);
 }
 
-void BgMovableObject::move(){
+void BgMovableObject::move(Level* L){
 
 
 	switch(type){
 		case 1:	
-				if (graphic_model->getPosition().X > -500)
+				if (graphic_model->getPosition().X > (L->player->main_field->position.position_x -150))
 					graphic_model->setPosition(graphic_model->getPosition() - vector3df(movement.position_x, 0, 0)); 
 				else
-					graphic_model->setPosition(vector3df(500, graphic_model->getPosition().Y, graphic_model->getPosition().Z));
+					graphic_model->setPosition(vector3df((L->player->main_field->position.position_x +150), graphic_model->getPosition().Y, graphic_model->getPosition().Z));
 				break;
 		case 2:
-				if (graphic_model->getPosition().X > -500){
+				if (graphic_model->getPosition().X > (L->player->main_field->position.position_x -150)){
 					if (graphic_model->getPosition().Y > -100)
 						graphic_model->setPosition(graphic_model->getPosition() - vector3df(movement.position_x, movement.position_y, 0)); 
 					else
 						graphic_model->setPosition(vector3df(graphic_model->getPosition().X, 100, graphic_model->getPosition().Z));
 				}else
-					graphic_model->setPosition(vector3df(500, graphic_model->getPosition().Y, graphic_model->getPosition().Z));
+					graphic_model->setPosition(vector3df((L->player->main_field->position.position_x +150), graphic_model->getPosition().Y, graphic_model->getPosition().Z));
 				break;
 	}			
 

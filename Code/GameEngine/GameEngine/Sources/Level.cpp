@@ -396,7 +396,7 @@ void Level::advance_frame(ICameraSceneNode *cam) {
 	
 	//BgMovableObjects move
 	for (std::list<BgMovableObject*>::iterator i = bgobjects.begin(); i != bgobjects.end(); i++)
-		(*i)->move();
+		(*i)->move(this);
 
 	//centralizing camera on player (if exists)
 	if (player != 0 && cam != 0) {

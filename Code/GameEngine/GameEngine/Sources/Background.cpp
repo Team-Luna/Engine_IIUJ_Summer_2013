@@ -15,11 +15,7 @@ Background::Background(Level* L, vector3df Size, vector3df Position, bool Transp
 	playerMovementSpeed = L->player->movement_speed;
 
 	irr:f32 initialHorizontalPosition = Position.X;
-
-	for(int i=0; i<10; i++)
-	{
-		cubes[i] = generateSingleCube(L, Size, vector3df(initialHorizontalPosition+Size.X*10*i,Position.Y,Position.Z), Transparency, TexturePath, speedHorizontal, speedInwards);
-	}
+	cubes = generateSingleCube(L, Size, vector3df(initialHorizontalPosition+Size.X*10*0,Position.Y,Position.Z), Transparency, TexturePath, speedHorizontal, speedInwards);
 
 }
 
@@ -56,7 +52,7 @@ irr::f32 Background::getSpeedInwards()
 
 vector3df Background::getPosition(int i)
 {
-	return cubes[i]->getPosition();
+	return cubes->getPosition();
 }
 
 
@@ -75,7 +71,7 @@ void Background::moveLeft()
 {
 	for(int i=0; i<10; i++)
 	{
-		cubes[i]->setPosition(cubes[i]->getPosition()+vector3df((-1)*speedHorizontal,0,0)*(playerMovementSpeed/10));
+		cubes->setPosition(cubes->getPosition()+vector3df((-1)*speedHorizontal,0,0)*(playerMovementSpeed/10));
 	}
 }
 
@@ -83,7 +79,7 @@ void Background::moveRight()
 {
 	for(int i=0; i<10; i++)
 	{
-		cubes[i]->setPosition(cubes[i]->getPosition()+vector3df(speedHorizontal,0,0)*(playerMovementSpeed/10));
+		cubes->setPosition(cubes->getPosition()+vector3df(speedHorizontal,0,0)*(playerMovementSpeed/10));
 	}
 }
 
@@ -91,7 +87,7 @@ void Background::moveInwards()
 {	
 	for(int i=0; i<10; i++)
 	{
-		cubes[i]->setPosition(cubes[i]->getPosition()+vector3df(0,speedInwards,0)*(playerMovementSpeed/10));
+		cubes->setPosition(cubes->getPosition()+vector3df(0,speedInwards,0)*(playerMovementSpeed/10));
 	}
 }
 
@@ -99,6 +95,6 @@ void Background::moveOutwards()
 {
 	for(int i=0; i<10; i++)
 	{
-		cubes[i]->setPosition(cubes[i]->getPosition()+vector3df(0,(-1)*speedInwards,0)*(playerMovementSpeed/10));
+		cubes->setPosition(cubes->getPosition()+vector3df(0,(-1)*speedInwards,0)*(playerMovementSpeed/10));
 	}
 }

@@ -29,7 +29,7 @@ class Background;
 
 class Background
 {
-	ISceneNode* cubes[10];
+	ISceneNode* cubes;
 	irr::f32 speedHorizontal;
 	irr::f32 speedInwards;
 	float playerMovementSpeed;

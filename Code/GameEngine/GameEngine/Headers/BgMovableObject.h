@@ -22,9 +22,8 @@ class BgMovableObject
 	public:
 		~BgMovableObject();
 		BgMovableObject(Level* L,Point position, Point scale,  char* TexturePath, int t, Point mov);
-		void move();
+		void move(Level* L);
 	private:
-
 		Point movement;
 		int type;
 		scene::ISceneNode* graphic_model;
