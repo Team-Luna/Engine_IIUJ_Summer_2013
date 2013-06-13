@@ -3,6 +3,9 @@
 #include <Level.h>
 #include <Background.h>
 #include <HUD.h>
+
+#include "IniWriter.h" //Temp
+#include "IniReader.h" //Temp
 ///Namespaces
 using namespace irr;
 using namespace core;
@@ -91,9 +94,32 @@ private:
 	bool KeyIsDown[KEY_KEY_CODES_COUNT];
 };
 
+bool fexists(const char *filename)
+{
+  ifstream ifile(filename);
+  return ifile;
+}
+
+void iniGenerate(){
+CIniWriter iniWriter("../Init/Settings.ini");
+ iniWriter.WriteInteger("Setting", "Resolution_X_Size", 800);   
+ iniWriter.WriteInteger("Setting", "Resolution_Y_Size", 600); 
+
+}
+
 ///Program Startup
 int main()
 {
+	int Resolution_X_Size;
+	int Resolution_Y_Size;
+	//Get .ini file
+	if(!fexists("../Init/Settings.ini")){
+		iniGenerate();
+	}
+	CIniReader iniReader("../Init/Settings.ini");
+	Resolution_X_Size = iniReader.ReadInteger("Setting", "Resolution_X_Size", 800); 
+	Resolution_Y_Size = iniReader.ReadInteger("Setting", "Resolution_Y_Size", 600); 
+	
 	// najpierw menu glowne
 	GAME_STATE state = MAINMENU;
 
@@ -101,7 +127,7 @@ int main()
 
 	///Creating Game Window
 	IrrlichtDevice *device =
-		createDevice( video::EDT_OPENGL, dimension2d<u32>(800, 600), 16,
+		createDevice( video::EDT_OPENGL, dimension2d<u32>(Resolution_X_Size, Resolution_Y_Size), 16,
 			false, false, false, &receiver);
 
 	if (!device)
@@ -134,64 +160,69 @@ int main()
 
 				// tlo
 				driver->draw2DImage(backgroundTexture, core::position2d<s32>(0,0),
-				core::rect<s32>(0,0,800,600), 0,
+				core::rect<s32>(0,0,Resolution_X_Size,Resolution_Y_Size), 0,
 				video::SColor(255,255,255,255), false);
 
 				// przycisk NEW GAME
-				driver->draw2DImage(buttonTexture, core::position2d<s32>(250,100),
-                core::rect<s32>(0,0,300,50), 0,
+				driver->draw2DImage(buttonTexture, core::position2d<s32>((Resolution_X_Size*0.3125),(Resolution_Y_Size*0.16666)),
+                core::rect<s32>(0,0,(Resolution_X_Size*0.375),(Resolution_Y_Size*0.08333)), 0,
                 video::SColor(255,255,255,255), false);
 
-				if((receiver.GetMouseState().Position.X>250) && (receiver.GetMouseState().Position.X<550) && (receiver.GetMouseState().Position.Y>100) && (receiver.GetMouseState().Position.Y<150))
+				if((receiver.GetMouseState().Position.X>(Resolution_X_Size*0.3125)) && (receiver.GetMouseState().Position.X<(Resolution_X_Size*0.6875)) && (receiver.GetMouseState().Position.Y>(Resolution_Y_Size*0.16666)) && (receiver.GetMouseState().Position.Y<(Resolution_Y_Size*0.25)))
 				{
-					driver->draw2DImage(buttonTexture, core::position2d<s32>(250,100),
-					core::rect<s32>(0,0,300,50), 0,
+					driver->draw2DImage(buttonTexture, core::position2d<s32>((Resolution_X_Size*0.3125),(Resolution_Y_Size*0.16666)),
+					core::rect<s32>(0,0,(Resolution_X_Size*0.375),(Resolution_Y_Size*0.08333)), 0,
 					video::SColor(200,35,120,170), false);
 				}
 
-				if((receiver.GetMouseState().Position.X>250) && (receiver.GetMouseState().Position.X<550) && (receiver.GetMouseState().Position.Y>100) && (receiver.GetMouseState().Position.Y<150) && receiver.GetMouseState().LeftButtonDown)
+				if((receiver.GetMouseState().Position.X>(Resolution_X_Size*0.3125)) && (receiver.GetMouseState().Position.X<(Resolution_X_Size*0.6875)) && (receiver.GetMouseState().Position.Y>(Resolution_Y_Size*0.16666)) && (receiver.GetMouseState().Position.Y<(Resolution_Y_Size*0.25)) && receiver.GetMouseState().LeftButtonDown)
 				{
 					state = GAMEPLAY;
 					break;
 				}
 
 				// przycisk ENTER PASSWORD
-				driver->draw2DImage(buttonTexture, core::position2d<s32>(250,200),
-                core::rect<s32>(0,0,300,50), 0,
+				driver->draw2DImage(buttonTexture, core::position2d<s32>((Resolution_X_Size*0.3125),(Resolution_Y_Size*0.33333)),
+                core::rect<s32>(0,0,(Resolution_X_Size*0.375),(Resolution_Y_Size*0.08333)), 0,
                 video::SColor(255,255,255,255), false);
 
-				if((receiver.GetMouseState().Position.X>250) && (receiver.GetMouseState().Position.X<550) && (receiver.GetMouseState().Position.Y>200) && (receiver.GetMouseState().Position.Y<250))
+				if((receiver.GetMouseState().Position.X>(Resolution_X_Size*0.3125)) && (receiver.GetMouseState().Position.X<(Resolution_X_Size*0.6875)) && (receiver.GetMouseState().Position.Y>(Resolution_Y_Size*0.33333)) && (receiver.GetMouseState().Position.Y<(Resolution_Y_Size*0.41666)))
 				{
-					driver->draw2DImage(buttonTexture, core::position2d<s32>(250,200),
-					core::rect<s32>(0,0,300,50), 0,
+					driver->draw2DImage(buttonTexture, core::position2d<s32>((Resolution_X_Size*0.3125),(Resolution_Y_Size*0.33333)),
+					core::rect<s32>(0,0,(Resolution_X_Size*0.375),(Resolution_Y_Size*0.08333)), 0,
 					video::SColor(200,35,120,170), false);
 				}
 
 				// przycisk SETTINGS
-				driver->draw2DImage(buttonTexture, core::position2d<s32>(250,300),
-                core::rect<s32>(0,0,300,50), 0,
+				driver->draw2DImage(buttonTexture, core::position2d<s32>((Resolution_X_Size*0.3125),(Resolution_Y_Size*0.5)),
+                core::rect<s32>(0,0,(Resolution_X_Size*0.375),(Resolution_Y_Size*0.08333)), 0,
                 video::SColor(255,255,255,255), false);
 
-				if((receiver.GetMouseState().Position.X>250) && (receiver.GetMouseState().Position.X<550) && (receiver.GetMouseState().Position.Y>300) && (receiver.GetMouseState().Position.Y<350))
+				if((receiver.GetMouseState().Position.X>(Resolution_X_Size*0.3125)) && (receiver.GetMouseState().Position.X<(Resolution_X_Size*0.6875)) && (receiver.GetMouseState().Position.Y>(Resolution_Y_Size*0.5)) && (receiver.GetMouseState().Position.Y<(Resolution_Y_Size*0.5833)))
 				{
-					driver->draw2DImage(buttonTexture, core::position2d<s32>(250,300),
-					core::rect<s32>(0,0,300,50), 0,
+					driver->draw2DImage(buttonTexture, core::position2d<s32>((Resolution_X_Size*0.3125),(Resolution_Y_Size*0.5)),
+					core::rect<s32>(0,0,(Resolution_X_Size*0.375),(Resolution_Y_Size*0.08333)), 0,
 					video::SColor(200,35,120,170), false);
+				}
+
+				if((receiver.GetMouseState().Position.X>(Resolution_X_Size*0.3125)) && (receiver.GetMouseState().Position.X<(Resolution_X_Size*0.6875)) && (receiver.GetMouseState().Position.Y>(Resolution_Y_Size*0.5)) && (receiver.GetMouseState().Position.Y<(Resolution_Y_Size*0.5833)) && receiver.GetMouseState().LeftButtonDown)
+				{
+
 				}
 
 				// przycisk EXIT
-				driver->draw2DImage(buttonTexture, core::position2d<s32>(250,400),
-                core::rect<s32>(0,0,300,50), 0,
+				driver->draw2DImage(buttonTexture, core::position2d<s32>((Resolution_X_Size*0.3125),(Resolution_Y_Size*0.66666)),
+                core::rect<s32>(0,0,(Resolution_X_Size*0.375),(Resolution_Y_Size*0.08333)), 0,
                 video::SColor(255,255,255,255), false);
 
-				if((receiver.GetMouseState().Position.X>250) && (receiver.GetMouseState().Position.X<550) && (receiver.GetMouseState().Position.Y>400) && (receiver.GetMouseState().Position.Y<450))
+				if((receiver.GetMouseState().Position.X>(Resolution_X_Size*0.3125)) && (receiver.GetMouseState().Position.X<(Resolution_X_Size*0.6875)) && (receiver.GetMouseState().Position.Y>(Resolution_Y_Size*0.66666)) && (receiver.GetMouseState().Position.Y<(Resolution_Y_Size*0.75)))
 				{
-					driver->draw2DImage(buttonTexture, core::position2d<s32>(250,400),
-					core::rect<s32>(0,0,300,50), 0,
+					driver->draw2DImage(buttonTexture, core::position2d<s32>((Resolution_X_Size*0.3125),(Resolution_Y_Size*0.66666)),
+					core::rect<s32>(0,0,(Resolution_X_Size*0.375),(Resolution_Y_Size*0.08333)), 0,
 					video::SColor(200,35,120,170), false);
 				}
 				
-				if((receiver.GetMouseState().Position.X>250) && (receiver.GetMouseState().Position.X<550) && (receiver.GetMouseState().Position.Y>400) && (receiver.GetMouseState().Position.Y<450) && receiver.GetMouseState().LeftButtonDown)
+				if((receiver.GetMouseState().Position.X>(Resolution_X_Size*0.3125)) && (receiver.GetMouseState().Position.X<(Resolution_X_Size*0.6875)) && (receiver.GetMouseState().Position.Y>(Resolution_Y_Size*0.66666)) && (receiver.GetMouseState().Position.Y<(Resolution_Y_Size*0.75)) && receiver.GetMouseState().LeftButtonDown)
 				{
 					return 0;
 				}
@@ -200,19 +231,19 @@ int main()
 				if (font)
 				{
 					font->draw(L"NEW GAME",
-						core::rect<s32>(250,100,550,150),
+						core::rect<s32>((Resolution_X_Size*0.3125),(Resolution_Y_Size*0.16666),(Resolution_X_Size*0.6875),(Resolution_Y_Size*0.25)),
 						video::SColor(255,255,255,255),true,true);
 
 					font->draw(L"ENTER PASSWORD",
-						core::rect<s32>(250,200,550,250),
+						core::rect<s32>((Resolution_X_Size*0.3125),(Resolution_Y_Size*0.33333),(Resolution_X_Size*0.6875),(Resolution_Y_Size*0.41666)),
 						video::SColor(255,255,255,255),true,true);
 
 					font->draw(L"SETTINGS",
-						core::rect<s32>(250,300,550,350),
+						core::rect<s32>((Resolution_X_Size*0.3125),(Resolution_Y_Size*0.5),(Resolution_X_Size*0.6875),(Resolution_Y_Size*0.5833)),
 						video::SColor(255,255,255,255),true,true);
 
 					font->draw(L"EXIT",
-						core::rect<s32>(250,400,550,450),
+						core::rect<s32>((Resolution_X_Size*0.3125),(Resolution_Y_Size*0.66666),(Resolution_X_Size*0.6875),(Resolution_Y_Size*0.75)),
 						video::SColor(255,255,255,255),true,true);
 				}
 
@@ -306,7 +337,9 @@ int main()
 			}
 			device->drop();
 		}
-		if(state==QUIT) return 0;
+		if(state==QUIT) {
+			return 0;
+		}
 	}
 	return 0;
 }

@@ -66,6 +66,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="IniReader.cpp" />
+    <ClCompile Include="IniWriter.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Sources\AnimationTable.cpp" />
     <ClCompile Include="Sources\Animator.cpp" />
@@ -117,6 +119,8 @@
     <ClInclude Include="Headers\ParameterChangeEvent.h" />
     <ClInclude Include="Headers\Player.h" />
     <ClInclude Include="Headers\Point.h" />
+    <ClInclude Include="IniReader.h" />
+    <ClInclude Include="IniWriter.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="test.txt" />
