@@ -262,15 +262,6 @@ int main()
 			///Creating level (From file, yay!)
 			Level L = Level(device, "../Init/level1.ini");
 
-			Background tlo_niebo;
-			tlo_niebo = Background(vector3df(500,350,0), vector3df(1,1,1000), false, "../media/environment/sky16.JPG", 0.1, 1.0, device, L);
-
-			Background tlo_drzewa;
-			tlo_drzewa = Background(vector3df(20,10,0), vector3df(-300,1,300), true, "../media/environment/trees.png", 0.5, 3.1, device, L);
-
-			Background tlo_plaza;
-			tlo_plaza = Background(vector3df(800,200,0), vector3df(1,-1000,600), false, "../media/environment/beach.jpg", 5.1, 10.1, device, L);
-
 			f32 FrameInterval = 1.0/60.0;
 			u32 t2 = device->getTimer()->getTime();
 
@@ -297,27 +288,15 @@ int main()
 							L.process_key(irr::KEY_KEY_S);
 						if(receiver.IsKeyDown(irr::KEY_KEY_D)) {
 							L.process_key(irr::KEY_KEY_D);
-							tlo_niebo.moveLeft();
-							tlo_drzewa.moveLeft();
-							tlo_plaza.moveLeft();
 						}
 						else if(receiver.IsKeyDown(irr::KEY_KEY_A)) {
 							L.process_key(irr::KEY_KEY_A);
-							tlo_niebo.moveRight();
-							tlo_drzewa.moveRight();
-							tlo_plaza.moveRight();
 						}
 						else if(receiver.IsKeyDown(irr::KEY_KEY_Q)) {
 							L.process_key(irr::KEY_KEY_Q);
-							tlo_niebo.moveInwards();
-							tlo_drzewa.moveOutwards();
-							tlo_plaza.moveOutwards();
 						}
 						else if(receiver.IsKeyDown(irr::KEY_KEY_Z)) {
 							L.process_key(irr::KEY_KEY_Z);
-							tlo_niebo.moveOutwards();
-							tlo_drzewa.moveInwards();
-							tlo_plaza.moveInwards();
 						}
 						else if(receiver.IsKeyDown(irr::KEY_ESCAPE)) {
 							return 0;
