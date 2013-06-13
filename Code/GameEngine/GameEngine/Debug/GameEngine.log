@@ -1,195 +1,13 @@
-﻿Build started 29.04.2013 20:43:19.
-     1>Project "C:\Users\Wojtek\Documents\GitHub\Engine_IIUJ_Summer_2013\Code\GameEngine\GameEngine\GameEngine.vcxproj" on node 2 (build target(s)).
+﻿Build started 2013-06-13 23:20:34.
+     1>Project "C:\Users\Konrad\Documents\GitHub\Engine_IIUJ_Summer_2013\Code\GameEngine\GameEngine\GameEngine.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\GameEngine.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Sources\Background.cpp Sources\Behaviour.cpp Sources\BgMovableObject.cpp Sources\Border.cpp Sources\ComplexEvent.cpp Sources\Control.cpp Sources\Control_Set.cpp Sources\DestroyEvent.cpp Sources\Event.cpp Sources\ExternalEvent.cpp Sources\Field.cpp Sources\Item.cpp Sources\Level.cpp Sources\Monster.cpp Sources\MoveEvent.cpp Sources\NewFieldEvent.cpp Sources\ParameterChangeEvent.cpp Sources\Player.cpp main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Sources\Background.cpp
          Background.cpp
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\background.cpp(17): warning C4102: 'irr' : unreferenced label
-         Generating Code...
-         Compiling...
-         Level.cpp
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(42): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(42): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(42): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(47): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(47): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(47): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(52): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(52): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(52): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(57): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(58): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(59): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(69): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(69): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(69): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(74): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(88): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(101): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(115): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(120): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(131): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(137): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(142): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(142): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(142): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(143): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(143): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(143): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(146): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(146): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(146): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(146): warning C4800: 'double' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(146): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(146): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(146): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(146): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(146): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(146): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(146): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(146): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(155): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(155): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(155): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(155): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(155): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(155): warning C4800: 'double' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(155): warning C4800: 'double' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(162): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(170): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(176): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(182): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(182): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(182): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(183): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(183): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(183): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(186): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(186): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(186): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(187): warning C4800: 'double' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(187): warning C4800: 'double' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(187): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(187): warning C4800: 'double' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(187): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(187): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(187): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(187): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(187): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(197): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(197): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(197): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(197): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(197): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(197): warning C4800: 'double' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(197): warning C4800: 'double' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(205): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(215): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(221): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(230): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(230): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(230): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(231): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(231): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(231): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(234): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(234): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(234): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(235): warning C4800: 'double' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(235): warning C4800: 'double' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(235): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(235): warning C4800: 'double' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(235): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(235): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(235): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(235): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(235): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(235): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(235): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(245): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(245): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(245): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(245): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(245): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(245): warning C4800: 'double' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(245): warning C4800: 'double' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(253): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(261): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(267): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(273): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(273): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(273): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(274): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(274): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(274): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(277): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(277): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(277): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(278): warning C4800: 'double' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(278): warning C4800: 'double' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(278): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(278): warning C4800: 'double' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(278): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(278): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(278): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(278): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(278): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(278): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(278): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(278): warning C4800: 'double' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(288): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(288): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(288): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(288): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(288): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(288): warning C4800: 'double' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(288): warning C4800: 'double' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(296): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(304): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(309): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(309): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(309): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(310): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(310): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(310): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(312): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(312): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(312): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(312): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(323): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(330): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(336): warning C4244: 'argument' : conversion from 'double' to 'irr::f32', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(336): warning C4244: 'argument' : conversion from 'double' to 'irr::f32', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(336): warning C4244: 'argument' : conversion from 'double' to 'irr::f32', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(337): warning C4244: 'argument' : conversion from 'double' to 'irr::f32', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(337): warning C4244: 'argument' : conversion from 'double' to 'irr::f32', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(337): warning C4244: 'argument' : conversion from 'double' to 'irr::f32', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(340): warning C4244: 'argument' : conversion from 'double' to 'irr::f32', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(340): warning C4244: 'argument' : conversion from 'double' to 'irr::f32', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(340): warning C4800: 'double' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(726): warning C4018: '<' : signed/unsigned mismatch
-         Generating Code...
-         Skipping... (no relevant changes detected)
-         main.cpp
-         Player.cpp
-         ParameterChangeEvent.cpp
-         NewFieldEvent.cpp
-         MoveEvent.cpp
-         Monster.cpp
-         Item.cpp
-         Field.cpp
-         ExternalEvent.cpp
-         Event.cpp
-         DestroyEvent.cpp
-         Control_Set.cpp
-         Control.cpp
-         ComplexEvent.cpp
-         Border.cpp
-         BgMovableObject.cpp
-         Behaviour.cpp
+     1>c:\users\konrad\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\background.cpp(25): warning C4102: 'irr' : unreferenced label
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Wojtek\Documents\GitHub\Engine_IIUJ_Summer_2013\Code\GameEngine\Debug\GameEngine.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\GameEngine.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Wojtek\Documents\GitHub\Engine_IIUJ_Summer_2013\Code\GameEngine\Debug\GameEngine.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Wojtek\Documents\GitHub\Engine_IIUJ_Summer_2013\Code\GameEngine\Debug\GameEngine.lib" /MACHINE:X86 Debug\main.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Konrad\Documents\GitHub\Engine_IIUJ_Summer_2013\Code\GameEngine\Debug\GameEngine.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\GameEngine.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Konrad\Documents\GitHub\Engine_IIUJ_Summer_2013\Code\GameEngine\Debug\GameEngine.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Konrad\Documents\GitHub\Engine_IIUJ_Summer_2013\Code\GameEngine\Debug\GameEngine.lib" /MACHINE:X86 Debug\main.obj
          Debug\AnimationTable.obj
          Debug\Animator.obj
          Debug\Background.obj
@@ -213,15 +31,15 @@
          Debug\ParameterChangeEvent.obj
          Debug\Player.obj
          Debug\Point.obj
-         LINK : C:\Users\Wojtek\Documents\GitHub\Engine_IIUJ_Summer_2013\Code\GameEngine\Debug\GameEngine.exe not found or not built by the last incremental link; performing full link
-         GameEngine.vcxproj -> C:\Users\Wojtek\Documents\GitHub\Engine_IIUJ_Summer_2013\Code\GameEngine\Debug\GameEngine.exe
+         LINK : C:\Users\Konrad\Documents\GitHub\Engine_IIUJ_Summer_2013\Code\GameEngine\Debug\GameEngine.exe not found or not built by the last incremental link; performing full link
+         GameEngine.vcxproj -> C:\Users\Konrad\Documents\GitHub\Engine_IIUJ_Summer_2013\Code\GameEngine\Debug\GameEngine.exe
        Manifest:
-         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\Wojtek\Documents\GitHub\Engine_IIUJ_Summer_2013\Code\GameEngine\Debug\GameEngine.exe;#1" /manifest Debug\GameEngine.exe.intermediate.manifest
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\Konrad\Documents\GitHub\Engine_IIUJ_Summer_2013\Code\GameEngine\Debug\GameEngine.exe;#1" /manifest Debug\GameEngine.exe.intermediate.manifest
        FinalizeBuildStatus:
          Deleting file "Debug\GameEngine.unsuccessfulbuild".
          Touching "Debug\GameEngine.lastbuildstate".
-     1>Done Building Project "C:\Users\Wojtek\Documents\GitHub\Engine_IIUJ_Summer_2013\Code\GameEngine\GameEngine\GameEngine.vcxproj" (build target(s)).
+     1>Done Building Project "C:\Users\Konrad\Documents\GitHub\Engine_IIUJ_Summer_2013\Code\GameEngine\GameEngine\GameEngine.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:04.39
+Time Elapsed 00:00:03.23

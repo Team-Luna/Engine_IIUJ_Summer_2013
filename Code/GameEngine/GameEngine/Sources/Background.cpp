@@ -10,6 +10,14 @@ Background::Background(void)
 
 Background::Background(Level* L, vector3df Size, vector3df Position, bool Transparency, char* TexturePath, irr::f32 SpeedHorizontal, irr::f32 SpeedInwards)
 {
+	SizeX=Size.X*10;
+	if(SizeX<800)
+		SizeD=800;
+	else
+		SizeD=SizeX;
+
+
+	temp=this;
 	speedHorizontal = SpeedHorizontal;
 	speedInwards = SpeedInwards;
 	playerMovementSpeed = L->player->movement_speed;
@@ -50,7 +58,7 @@ irr::f32 Background::getSpeedInwards()
 	return speedInwards;
 }
 
-vector3df Background::getPosition(int i)
+vector3df Background::getPosition()
 {
 	return cubes->getPosition();
 }
@@ -67,34 +75,37 @@ void Background::setSpeedInwards(irr::f32 newSpeed)
 }
 
 
-void Background::moveLeft()
+void Background::moveLeft(Level* L)
 {
-	for(int i=0; i<10; i++)
-	{
+	for (std::list<Background*>::iterator i=L->backgrounds.begin(); i!=L->backgrounds.end(); i++)
+		if (((*i)->cubes->getPosition().Z==temp->cubes->getPosition().Z)&&((*i)->cubes->getPosition().X>temp->cubes->getPosition().X))
+			temp=(*i);
+
+
+	if (cubes->getPosition().X > (L->player->main_field->position.position_x -SizeD))
 		cubes->setPosition(cubes->getPosition()+vector3df((-1)*speedHorizontal,0,0)*(playerMovementSpeed/10));
-	}
+	else
+		cubes->setPosition(vector3df((temp->cubes->getPosition().X +SizeX-(SizeX/100)),cubes->getPosition().Y,cubes->getPosition().Z));
 }
 
-void Background::moveRight()
+void Background::moveRight(Level* L)
 {
-	for(int i=0; i<10; i++)
-	{
+	for (std::list<Background*>::iterator i=L->backgrounds.begin(); i!=L->backgrounds.end(); i++)
+		if (((*i)->cubes->getPosition().Z==temp->cubes->getPosition().Z)&&((*i)->cubes->getPosition().X<temp->cubes->getPosition().X))
+			temp=(*i);
+
+	if (cubes->getPosition().X < (L->player->main_field->position.position_x +SizeD))
 		cubes->setPosition(cubes->getPosition()+vector3df(speedHorizontal,0,0)*(playerMovementSpeed/10));
-	}
+	else
+		cubes->setPosition(vector3df((temp->cubes->getPosition().X -SizeX+(SizeX/100)),cubes->getPosition().Y,cubes->getPosition().Z));
 }
 
 void Background::moveInwards()
 {	
-	for(int i=0; i<10; i++)
-	{
 		cubes->setPosition(cubes->getPosition()+vector3df(0,speedInwards,0)*(playerMovementSpeed/10));
-	}
 }
 
 void Background::moveOutwards()
 {
-	for(int i=0; i<10; i++)
-	{
 		cubes->setPosition(cubes->getPosition()+vector3df(0,(-1)*speedInwards,0)*(playerMovementSpeed/10));
-	}
 }

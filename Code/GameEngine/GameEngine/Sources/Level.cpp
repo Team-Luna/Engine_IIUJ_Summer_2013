@@ -144,6 +144,8 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 		lineOutput[9], lineOutput[10], lineOutput[11], //custom values
 		lineOutput[12], lineOutput[13], animT, modelP, //gravity degree, fancing angle
 		Point(lineOutput[14], lineOutput[15], lineOutput[16]), lineOutput[17]); //translation, animated?
+	
+	playerposition=lineOutput[6];
 
 	fields.insert(fields.end(), player->main_field);
 	//Loading animator state
@@ -342,6 +344,7 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 		backgrounds.insert(backgrounds.end(), bg);
 	}
 
+
 	/*bg_sky = new Background(vector3df(500,350,0), vector3df(1,1,1000), false, "../media/environment/sky16.JPG", 0.1, 1.0, device, player);
 	bg_trees = new Background(vector3df(20,10,0), vector3df(-300,1,300), true, "../media/environment/trees.png", 0.5, 3.1, device, player);
 	bg_beach = new Background(vector3df(800,200,0), vector3df(1,-1000,600), false, "../media/environment/beach.jpg", 5.1, 10.1, device, player);*/
@@ -394,9 +397,21 @@ void Level::advance_frame(ICameraSceneNode *cam) {
 		}
 	garbage.clear();
 	
-	//BgMovableObjects move
+	//Background and BgObjects move
 	for (std::list<BgMovableObject*>::iterator i = bgobjects.begin(); i != bgobjects.end(); i++)
 		(*i)->move(this);
+
+	if(player->main_field->position.position_x>playerposition){
+		playerposition=player->main_field->position.position_x;
+		for (std::list<Background*>::iterator i=backgrounds.begin(); i!=backgrounds.end(); i++)
+				(*i)->moveLeft(this);
+	}
+
+	if(player->main_field->position.position_x<playerposition){
+		playerposition=player->main_field->position.position_x;
+		for (std::list<Background*>::iterator i=backgrounds.begin(); i!=backgrounds.end(); i++)
+				(*i)->moveRight(this);
+	}
 
 	//centralizing camera on player (if exists)
 	if (player != 0 && cam != 0) {
@@ -652,8 +667,7 @@ void Level::process_key(irr::EKEY_CODE keycode) {
 		{
 			player->facing_angle = 90;
 			player->main_field->velocity.position_x = player->movement_speed;
-			for (std::list<Background*>::iterator i=backgrounds.begin(); i!=backgrounds.end(); i++)
-				(*i)->moveLeft();
+			
 			/*bg_sky->moveLeft();
 			bg_trees->moveLeft();
 			bg_beach->moveLeft();*/
@@ -665,8 +679,7 @@ void Level::process_key(irr::EKEY_CODE keycode) {
 		{
 			player->facing_angle = 270;
 			player->main_field->velocity.position_x = -player->movement_speed;
-			for (std::list<Background*>::iterator i=backgrounds.begin(); i!=backgrounds.end(); i++)
-				(*i)->moveRight();
+			
 		}
 	}
 	if (keycode == irr::KEY_KEY_Q)

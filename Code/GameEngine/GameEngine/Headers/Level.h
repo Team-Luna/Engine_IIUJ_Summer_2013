@@ -59,6 +59,7 @@ class Level
 		Point respawn;
 		Point active_range;
 		Player* player;
+		irr::f32 playerposition;
 		int custom_attribute1;
 		int custom_attribute2;
 		int custom_attribute3;
@@ -93,13 +94,13 @@ class Level
 		
 		void trash(Field* field);
 		void process_key(irr::EKEY_CODE keycode);
+		std::list<Background*> backgrounds; //const access needed
 
 	private:
 		std::list<Field*> fields;
 		std::list<Field*> garbage;
 		std::list<Item*> items;
 		std::list<BgMovableObject*> bgobjects;
-		std::list<Background*> backgrounds;
 		int time_left;
 		std::list<Monster*> monsters;
 		std::list<Border*> boundaries;
