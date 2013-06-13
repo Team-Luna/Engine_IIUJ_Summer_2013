@@ -4,51 +4,17 @@
 #include <list>
 #include <map>
 
-Level::Level(IrrlichtDevice* Device) {
-	//Creates a simple, testing Level, more specified constructors to be implemented.
-	device = Device;
+		/*
+			Wyœwietlanie debug output - jakbyœmy jeszcze potrzebowali jakiegos wyswietlenia
+		
+		#include <Windows.h>
+		char msgbuf[10];
 
-	driver = device->getVideoDriver();
-	smgr = device->getSceneManager();
-	guienv = device->getGUIEnvironment();
-	
-	start = Point(-100, 200, 0);
-	size = Point(1200, 900, 5);
-	respawn = Point();
-	player = new Player(this, 5, 100, 3, Point(0, 20, 0), Point(5, 10, 1),
-		0, 0, 0, 100, 90, "ninja", "../media/player/ninja.b3d", Point(0, -5, 0), 0);
-	custom_attribute1 = 0;
-	custom_attribute2 = 0;
-	custom_attribute3 = 0;
-	std::map< std::string, Event* > Temp_ed;
-	event_dictionary = Temp_ed;
-	gravity = 9.81;
-	lc_interval = 0;
-	delta_time = 0;
-	
-	std::list<Field*> Temp_f;
-	fields = Temp_f;
-	fields.insert(fields.end(), player->main_field);
-	std::list<Item*> Temp_i;
-	items = Temp_i;
-	active_range = Point(1200, 900, 2);
-	time_left = -1; //forever?
-	std::list<Monster*> Temp_m;
-	monsters = Temp_m;
-	std::list<Border*> Temp_b;
-	boundaries = Temp_b;
-	
-	add_monster("temp1", Point(-10.0, 3.0, 0.0), Point(5.0, 10.0, 1.0));
-	add_monster("temp2", Point(10.0, 6.0, 0.0), Point(5.0, 10.0, 1.0));
-	add_monster("temp3", Point(20.0, 9.0, 0.0), Point(5.0, 10.0, 1.0));
-	add_item("item", Point(15.0, 30.0, 0.0), Point(10.0, 10.0, 1.0));
-	for (int i = 0; i < 10; i++)
-		add_border(Point(-20 + 10*i, -10, 0), Point(10.0, 10.0, 1.0));
-	for (int i = 1; i < 5; i++)
-		add_border(Point(30, -10, i), Point(10.0, 10.0, 1.0));
-	for (int i = 1; i < 5; i++)
-		add_border(Point(30 + 10*i, -10, 4), Point(10.0, 10.0, 1.0));
-}
+		OutputDebugString("============================\n");
+		sprintf(msgbuf, "%f\n", lineOutput[7]);
+		OutputDebugString(msgbuf);
+		OutputDebugString("============================\n");
+		*/
 
 Level::Level(IrrlichtDevice* Device, char* path) {
 	//Loads a level from a file
@@ -61,7 +27,8 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 	//Creating temporary variables
 	std::string TempLine = "";
 	char animT[15];
-	char modelP[30];
+	const int modelP_size=50;
+	char modelP[modelP_size];
 	std::string LINE;
 	double lineOutput[25];
 
@@ -165,7 +132,7 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 		animT[i] = LINE[i];
 	//Transforming std::strings to char arrays (model path)
 	LINE = getNextRelevantLine(infile);
-	for (int i = 0; i < 30; i++)
+	for (int i = 0; i < modelP_size; i++)
 		modelP[i] = 0;
 	for(int i = 0; i < LINE.length(); i++)
 		modelP[i] = LINE[i];
@@ -177,6 +144,8 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 		lineOutput[9], lineOutput[10], lineOutput[11], //custom values
 		lineOutput[12], lineOutput[13], animT, modelP, //gravity degree, fancing angle
 		Point(lineOutput[14], lineOutput[15], lineOutput[16]), lineOutput[17]); //translation, animated?
+	
+	playerposition=lineOutput[6];
 
 	fields.insert(fields.end(), player->main_field);
 	//Loading animator state
@@ -204,7 +173,7 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 			animT[i] = LINE[i];
 		//Transforming std::strings to char arrays (model path)
 		LINE = getNextRelevantLine(infile);
-		for (int i = 0; i < 30; i++)
+		for (int i = 0; i < modelP_size; i++)
 			modelP[i] = 0;
 		for(int i = 0; i < LINE.length(); i++)
 			modelP[i] = LINE[i];
@@ -249,7 +218,7 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 			animT[i] = LINE[i];
 		//Transforming std::strings to char arrays (model path)
 		LINE = getNextRelevantLine(infile);
-		for (int i = 0; i < 30; i++)
+		for (int i = 0; i < modelP_size; i++)
 			modelP[i] = 0;
 		for(int i = 0; i < LINE.length(); i++)
 			modelP[i] = LINE[i];
@@ -295,7 +264,7 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 			animT[i] = LINE[i];
 		//Transforming std::strings to char arrays (model path)
 		LINE = getNextRelevantLine(infile);
-		for (int i = 0; i < 30; i++)
+		for (int i = 0; i < modelP_size; i++)
 			modelP[i] = 0;
 		for(int i = 0; i < LINE.length(); i++)
 			modelP[i] = LINE[i];
@@ -320,6 +289,66 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 				lineOutput[3], lineOutput[4], //animation id, animation speed
 				lineOutput[5], lineOutput[6], lineOutput[7]); //current frame, min frame, max frame
 	}
+
+	//Initializing BgMovableObject
+	LINE = getNextRelevantLine(infile);
+	std::list<BgMovableObject*> Temp_bgo;
+	bgobjects = Temp_bgo;
+	extractValues(LINE, lineOutput);
+	for (int i = lineOutput[0]; 0 < i; i--)
+	{
+		LINE = getNextRelevantLine(infile);
+		TempLine = LINE;
+		//Transforming std::strings to char arrays (model path)
+		LINE = getNextRelevantLine(infile);
+		for (int i = 0; i < modelP_size; i++)
+			modelP[i] = 0;
+		for(int i = 0; i < LINE.length(); i++)
+			modelP[i] = LINE[i];
+
+		//Creating bgobject
+		extractValues(TempLine, lineOutput);
+		BgMovableObject* p = new BgMovableObject(this, Point(lineOutput[0], lineOutput[1], lineOutput[2]), //position
+			Point(lineOutput[3], lineOutput[4], lineOutput[5]), //scale
+			modelP, lineOutput[6], //texture, type
+			Point(lineOutput[7], lineOutput[8], lineOutput[9])); //movement
+
+		bgobjects.insert(bgobjects.end(), p);
+	}
+
+
+	// Initializing Background
+	LINE = getNextRelevantLine(infile);
+	std::list<Background*> Temp_backgrounds;
+	backgrounds = Temp_backgrounds;
+	extractValues(LINE, lineOutput);
+	for(int i=lineOutput[0]; 0<i; i--)
+	{
+		LINE = getNextRelevantLine(infile);
+		TempLine = LINE;
+		LINE = getNextRelevantLine(infile);
+		for(int i=0; i<modelP_size; i++)
+			modelP[i] = 0;
+		for(int i=0; i<LINE.length(); i++)
+			modelP[i] = LINE[i];
+
+		// Creating background
+		extractValues(TempLine, lineOutput);
+		Background* bg = new Background(this,  // przekazanie levelu
+			vector3df(lineOutput[0], lineOutput[1], lineOutput[2]),  // size
+			vector3df(lineOutput[3], lineOutput[4], lineOutput[5]),  // position
+			lineOutput[6],  // transparency
+			modelP,  // path
+			lineOutput[7], lineOutput[8]);  // speed
+
+		backgrounds.insert(backgrounds.end(), bg);
+	}
+
+
+	/*bg_sky = new Background(vector3df(500,350,0), vector3df(1,1,1000), false, "../media/environment/sky16.JPG", 0.1, 1.0, device, player);
+	bg_trees = new Background(vector3df(20,10,0), vector3df(-300,1,300), true, "../media/environment/trees.png", 0.5, 3.1, device, player);
+	bg_beach = new Background(vector3df(800,200,0), vector3df(1,-1000,600), false, "../media/environment/beach.jpg", 5.1, 10.1, device, player);*/
+
 	infile.close();
 }
 
@@ -345,6 +374,15 @@ void Level::add_item(std::string init, Point position, Point size) {
 	//items.insert(items.end(), i);
 }
 
+void Level::add_bgobject(Point start){
+	
+};
+
+void Level::add_background(Point start)
+{
+
+};
+
 void Level::advance_frame(ICameraSceneNode *cam) {
 	//Updating positions/scales/rotations:
 	for (std::list<Field*>::iterator i = fields.begin(); i != fields.end(); i++)
@@ -359,6 +397,22 @@ void Level::advance_frame(ICameraSceneNode *cam) {
 		}
 	garbage.clear();
 	
+	//Background and BgObjects move
+	for (std::list<BgMovableObject*>::iterator i = bgobjects.begin(); i != bgobjects.end(); i++)
+		(*i)->move(this);
+
+	if(player->main_field->position.position_x>playerposition){
+		playerposition=player->main_field->position.position_x;
+		for (std::list<Background*>::iterator i=backgrounds.begin(); i!=backgrounds.end(); i++)
+				(*i)->moveLeft(this);
+	}
+
+	if(player->main_field->position.position_x<playerposition){
+		playerposition=player->main_field->position.position_x;
+		for (std::list<Background*>::iterator i=backgrounds.begin(); i!=backgrounds.end(); i++)
+				(*i)->moveRight(this);
+	}
+
 	//centralizing camera on player (if exists)
 	if (player != 0 && cam != 0) {
 		//position
@@ -574,6 +628,23 @@ void Level::remove_item(Field* field, Item* entity) {
 	delete(field);
 }
 
+void Level::remove_bgobject(BgMovableObject* entity) {
+	//Removing entity:
+	if (player != 0) {
+		bgobjects.remove(entity);
+		delete(entity);
+	}
+}
+
+void Level::remove_background(Background* entity)
+{
+	if(player!=0)
+	{
+		backgrounds.remove(entity);
+		delete(entity);
+	}
+}
+
 void Level::trash(Field* field) {
 	//field->destroy_event.invoke() ??
 	garbage.insert(garbage.end(), field);
@@ -596,6 +667,10 @@ void Level::process_key(irr::EKEY_CODE keycode) {
 		{
 			player->facing_angle = 90;
 			player->main_field->velocity.position_x = player->movement_speed;
+			
+			/*bg_sky->moveLeft();
+			bg_trees->moveLeft();
+			bg_beach->moveLeft();*/
 		}
 	}
 	if (keycode == irr::KEY_KEY_A)
@@ -604,6 +679,7 @@ void Level::process_key(irr::EKEY_CODE keycode) {
 		{
 			player->facing_angle = 270;
 			player->main_field->velocity.position_x = -player->movement_speed;
+			
 		}
 	}
 	if (keycode == irr::KEY_KEY_Q)
@@ -614,6 +690,15 @@ void Level::process_key(irr::EKEY_CODE keycode) {
 			return;
 		lc_interval = 30;
 		player->main_field->position.layer += 1;
+		for(std::list<Background*>::iterator i=backgrounds.begin(); i!=backgrounds.end(); i++)
+		{
+			if(i==backgrounds.begin())\
+				(*i)->moveInwards();
+			else (*i)->moveOutwards();
+		}
+		/*bg_sky->moveInwards();
+		bg_trees->moveOutwards();
+		bg_beach->moveOutwards();*/
 		if (collision_detect(player->main_field))
 			player->main_field->position.layer -= 1;
 	}
@@ -625,6 +710,12 @@ void Level::process_key(irr::EKEY_CODE keycode) {
 			return;
 		lc_interval = 30;
 		player->main_field->position.layer -= 1;
+		for(std::list<Background*>::iterator i=backgrounds.begin(); i!=backgrounds.end(); i++)
+		{
+			if(i==backgrounds.begin())\
+				(*i)->moveOutwards();
+			else (*i)->moveInwards();
+		}
 		if (collision_detect(player->main_field))
 			player->main_field->position.layer += 1;
 	}
@@ -660,7 +751,7 @@ void Level::extractValues(std::string source, double* output) {
 					else
 					{
 						//decimal
-						ans += (source[i] - 48)/decimal;
+						ans += (double)(source[i] - 48)/(double)decimal;
 						decimal *= 10;
 					}
 				}
@@ -672,6 +763,7 @@ void Level::extractValues(std::string source, double* output) {
 					else output[n++] = -ans;
 					negative = false;
 					ans = 0.0;
+					decimal=0;
 				}
 		i++;
 	}

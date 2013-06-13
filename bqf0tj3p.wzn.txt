@@ -1,0 +1,73 @@
+﻿Merge remote-tracking branch 'origin/Praca-nad-tlami'
+
+Conflicts:
+	.gitignore
+	Code/GameEngine/Debug/GameEngine.exe
+	Code/GameEngine/Debug/GameEngine.ilk
+	Code/GameEngine/Debug/GameEngine.pdb
+	Code/GameEngine/GameEngine.sdf
+	Code/GameEngine/GameEngine.suo
+	Code/GameEngine/GameEngine/Debug/AnimationTable.obj
+	Code/GameEngine/GameEngine/Debug/Animator.obj
+	Code/GameEngine/GameEngine/Debug/Background.obj
+	Code/GameEngine/GameEngine/Debug/Behaviour.obj
+	Code/GameEngine/GameEngine/Debug/BgMovableObject.obj
+	Code/GameEngine/GameEngine/Debug/Border.obj
+	Code/GameEngine/GameEngine/Debug/CL.read.1.tlog
+	Code/GameEngine/GameEngine/Debug/CL.write.1.tlog
+	Code/GameEngine/GameEngine/Debug/ComplexEvent.obj
+	Code/GameEngine/GameEngine/Debug/Condition.obj
+	Code/GameEngine/GameEngine/Debug/Control.obj
+	Code/GameEngine/GameEngine/Debug/Control_Set.obj
+	Code/GameEngine/GameEngine/Debug/DestroyEvent.obj
+	Code/GameEngine/GameEngine/Debug/Entity.obj
+	Code/GameEngine/GameEngine/Debug/Event.obj
+	Code/GameEngine/GameEngine/Debug/ExternalEvent.obj
+	Code/GameEngine/GameEngine/Debug/Field.obj
+	Code/GameEngine/GameEngine/Debug/GameEngine.lastbuildstate
+	Code/GameEngine/GameEngine/Debug/GameEngine.log
+	Code/GameEngine/GameEngine/Debug/Item.obj
+	Code/GameEngine/GameEngine/Debug/Level.obj
+	Code/GameEngine/GameEngine/Debug/Monster.obj
+	Code/GameEngine/GameEngine/Debug/MoveEvent.obj
+	Code/GameEngine/GameEngine/Debug/NewFieldEvent.obj
+	Code/GameEngine/GameEngine/Debug/ParameterChangeEvent.obj
+	Code/GameEngine/GameEngine/Debug/Player.obj
+	Code/GameEngine/GameEngine/Debug/Point.obj
+	Code/GameEngine/GameEngine/Debug/cl.command.1.tlog
+	Code/GameEngine/GameEngine/Debug/link.command.1.tlog
+	Code/GameEngine/GameEngine/Debug/link.read.1.tlog
+	Code/GameEngine/GameEngine/Debug/link.write.1.tlog
+	Code/GameEngine/GameEngine/Debug/main.obj
+	Code/GameEngine/GameEngine/Debug/mt.command.1.tlog
+	Code/GameEngine/GameEngine/Debug/mt.read.1.tlog
+	Code/GameEngine/GameEngine/Debug/mt.write.1.tlog
+	Code/GameEngine/GameEngine/Debug/vc100.idb
+	Code/GameEngine/GameEngine/Debug/vc100.pdb
+	Code/GameEngine/GameEngine/main.cpp
+	Code/GameEngine/ipch/gameengine-bd69cffc/gameengine-c39335c.ipch
+#
+# It looks like you may be committing a merge.
+# If this is not correct, please remove the file
+#	.git/MERGE_HEAD
+# and try again.
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# All conflicts fixed but you are still merging.
+#   (use "git commit" to conclude merge)
+#
+# Changes to be committed:
+#
+#	modified:   Code/GameEngine/GameEngine/Headers/Background.h
+#	modified:   Code/GameEngine/GameEngine/Headers/BgMovableObject.h
+#	modified:   Code/GameEngine/GameEngine/Headers/Level.h
+#	modified:   Code/GameEngine/GameEngine/Sources/Background.cpp
+#	modified:   Code/GameEngine/GameEngine/Sources/BgMovableObject.cpp
+#	modified:   Code/GameEngine/GameEngine/Sources/Level.cpp
+#	modified:   Code/GameEngine/Init/level1.ini
+#	new file:   Code/GameEngine/ipch/gameengine-bd69cffc/gameengine-c39335c.ipch
+#
+
