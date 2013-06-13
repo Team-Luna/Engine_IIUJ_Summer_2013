@@ -15,7 +15,7 @@ int ConditionComplex::get_type() {
 }
 
 bool ConditionComplex::check_condition(Field* source, Field* target) {
-	if (and == true)
+	if (and)
 	{
 		if (con1->check_condition(source, target) && con2->check_condition(source, target))
 			return true;

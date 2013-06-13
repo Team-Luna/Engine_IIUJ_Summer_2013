@@ -4,7 +4,7 @@
 #include "Action.h"
 #include "Level.h"
 
-class ActionUnit : Action
+class ActionUnit : public Action
 {
 	public:
 		ActionUnit(Level* L, int input_actionID, Action* input_next);

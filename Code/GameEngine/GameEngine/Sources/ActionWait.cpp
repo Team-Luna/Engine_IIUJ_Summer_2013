@@ -1,11 +1,12 @@
 #include "ActionWait.h"
 
-ActionWait::ActionWait(Level* L, bool input_time, double input_amount, Action* input_next)
+ActionWait::ActionWait(Level* L, bool input_time, double input_amount, Condition* input_c, Action* input_next)
 {
 	location = L;
 	time = input_time;
 	amount = input_amount;
 	next = input_next;
+	c = input_c;
 }
 
 int ActionWait::get_type()
@@ -25,6 +26,8 @@ Action* ActionWait::get_extra_action()
 
 bool ActionWait::do_action(double deltaTime, Field* source, Field* target)
 {
+	if (c != 0)
+		return c->check_condition(source, target);
 	if (time)
 	{
 		if (deltaTime < amount)

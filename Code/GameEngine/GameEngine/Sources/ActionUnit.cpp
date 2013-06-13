@@ -53,6 +53,9 @@ bool ActionUnit::do_action(double deltaTime, Field* source, Field* target)
 	case 8: //Idle
 		location->idle(source);
 		break;
+	case 9: //Stop climbing
+		location->stop_climbing(source);
+		break;
 	}
 	return true;
 }

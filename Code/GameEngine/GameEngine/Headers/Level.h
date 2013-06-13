@@ -70,6 +70,7 @@ class Level
 		ISceneManager* smgr;
 		IGUIEnvironment* guienv;
 
+		bool pause;
 		Point start; //Top left corner
 		Point size;
 		Point respawn;
@@ -107,6 +108,7 @@ class Level
 		void shoot(Field* field);
 		void idle(Field* field);
 		void stop(Field* field, bool grounded);
+		void stop_climbing(Field* field);
 
 		void advance_frame(ICameraSceneNode *cam);
 		bool collision_detect(Field* source);

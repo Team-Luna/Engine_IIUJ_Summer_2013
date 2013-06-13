@@ -11,13 +11,14 @@ class Level;
 class Field;
 class ValRetrieval;
 
-class ConditionCompare : Condition
+class ConditionCompare : public Condition
 {
 	public:
 		ConditionCompare(Level* L, int T1, int T2, double V1, double V2, int input_ref);
 		ValRetrieval* val1;
 		ValRetrieval* val2;
-		int ref;	//1 ==
+		int ref;	//0 !=
+					//1 ==
 					//2 >=
 					//3 <=
 					//4 >

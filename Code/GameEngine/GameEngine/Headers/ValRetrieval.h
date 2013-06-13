@@ -26,6 +26,7 @@ class ValRetrieval
 					// 10 = return facing angle
 					// 11 = distance
 					// 12 = type (int)
+					// 13 = animation progress [0,1]
 		double val;
 
 		double retrieve(Field* From, Field* To);

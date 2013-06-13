@@ -2,14 +2,18 @@
 #define __ActionWait_h__
 
 #include "Action.h"
+#include "Condition.h"
 #include "Level.h"
 
-class ActionWait : Action
+class Condition;
+
+class ActionWait : public Action
 {
 	public:
-		ActionWait(Level* L, bool input_time, double input_amount, Action* input_next);
+		ActionWait(Level* L, bool input_time, double input_amount, Condition* input_c, Action* input_next);
 		bool time;
 		double amount;
+		Condition* c;
 		Action* next;
 
 		int get_type();

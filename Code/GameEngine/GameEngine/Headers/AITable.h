@@ -10,8 +10,7 @@ class AITable
 	public:
 	AITable();
 
-	Action* actions[6];
-	//Wall
+	Action* actions[5];
 	//Obstackle
 	//Cliff
 	//Monster

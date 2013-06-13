@@ -4,7 +4,7 @@
 #include "Action.h"
 #include "Level.h"
 
-class ActionEvaluate : Action
+class ActionEvaluate : public Action
 {
 	public:
 		ActionEvaluate(Level* L, bool input_value, Action* input_next);

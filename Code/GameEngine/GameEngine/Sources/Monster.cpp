@@ -41,7 +41,11 @@ unsigned int Monster::get_type() {
 void Monster::act(double time) {
 	if (aI == 0)
 		return;
+	if (aI->dead)
+		return;
 
+	if (aI->evaluate)
+	{
 	Point p;
 	Field* f;
 	
@@ -73,10 +77,13 @@ void Monster::act(double time) {
 	bool wall_in_front = false;
 	bool jumpable_obstackle = false;
 	bool climbable_front = false;
-	p.position_x = main_field->position.position_x + o*10;
+	bool monster_in_front = false;
+	p.position_x = main_field->position.position_x + o*7;
 	p.position_y = main_field->position.position_y;
 	p.layer = main_field->position.layer;
 	f = main_field->location->collision_Point(p);
+	if ((f != 0) && (f->owner->get_type() == 2))
+		monster_in_front = true;
 	if ((f != 0) && (f->owner->get_type() == 4))
 	{
 		if (f->owner->custom_attribute1 == 1)
@@ -185,10 +192,19 @@ void Monster::act(double time) {
 			can_jump_climb = true;
 	}
 
-	aI->evaluate_actions(move_inwards, move_outwards, obstackle_in_front, wall_in_front,
+	//Checking player
+	bool player_in_range = false;
+	if (main_field->location->player->main_field->position.layer == main_field->position.layer)
+		if ((main_field->location->player->main_field->position.position_y - main_field->position.position_y) <= 30)
+			if ((main_field->location->player->main_field->position.position_x - main_field->position.position_x) <= 80)
+				player_in_range = true;
+
+	aI->evaluate_actions(time, move_inwards, move_outwards, obstackle_in_front, wall_in_front,
 		jumpable_obstackle, climbable_front, cliff_in_front, can_climb_down, can_drop,
-		can_jump, can_jump_climb);
-	aI->proceed(time);
+		can_jump, can_jump_climb, monster_in_front, player_in_range);
+	}
+	else
+		aI->evaluate_actions(time, false, false, false, false, false, false, false, false, false, false, false, false, false);
 }
 
 void Monster::remove() {

@@ -13,13 +13,10 @@ class AITable;
 class MonsterAI
 {
 	public:
-	MonsterAI(Monster* own, AITable* ait, Action* ca, Action* l);
+	MonsterAI(Monster* own, AITable* ait, Action* ca, Action* l, double de, bool e, bool d);
 	
-	void set(double de, bool e, bool l, bool c, bool g, bool d);
-	void evaluate_actions(bool v1, bool v2, bool v3, bool v4, bool v5, bool v6,
-		bool v7, bool v8, bool v9, bool v10, bool v11);
-	void proceed(double time);
-	bool handle_action(int id, bool extra);
+	void evaluate_actions(double time, bool v1, bool v2, bool v3, bool v4, bool v5, bool v6,
+		bool v7, bool v8, bool v9, bool v10, bool v11, bool v12, bool v13);
 
 	AITable* table;
 	Monster* owner;
@@ -27,9 +24,6 @@ class MonsterAI
 	Action* looped;
 	double delay;
 	bool evaluate;
-	bool loop;
-	bool climbing;
-	bool grounded;
 	bool dead;
 };
 

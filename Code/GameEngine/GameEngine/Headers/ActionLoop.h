@@ -4,7 +4,7 @@
 #include "Action.h"
 #include "Level.h"
 
-class ActionLoop : Action
+class ActionLoop : public Action
 {
 	public:
 		ActionLoop(Level* L, Action* input_next, Action* input_looped);

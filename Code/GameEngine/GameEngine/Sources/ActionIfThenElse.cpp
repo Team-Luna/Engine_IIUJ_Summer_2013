@@ -15,17 +15,15 @@ int ActionIfThenElse::get_type()
 
 Action* ActionIfThenElse::get_next_action()
 {
-	if (condition_if->check_condition())
-		return action_then;
-	else return action_else;
+	return action_then;
 }
 
 Action* ActionIfThenElse::get_extra_action()
 {
-	return 0;
+	return action_else;
 }
 
 bool ActionIfThenElse::do_action(double deltaTime, Field* source, Field* target)
 {
-	return true;
+	return condition_if->check_condition(source, target);
 }

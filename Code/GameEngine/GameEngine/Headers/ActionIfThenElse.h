@@ -5,7 +5,7 @@
 #include "Condition.h"
 #include "Level.h"
 
-class ActionIfThenElse : Action
+class ActionIfThenElse : public Action
 {
 	public:
 		ActionIfThenElse(Level* L, Condition* input_if, Action* input_then, Action* input_else);
