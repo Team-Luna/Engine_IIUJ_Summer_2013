@@ -22,17 +22,10 @@ Background::Background(Level* L, vector3df Size, vector3df Position, bool Transp
 	speedInwards = SpeedInwards;
 	playerMovementSpeed = L->player->movement_speed;
 
-<<<<<<< HEAD
+
 	irr:f32 initialHorizontalPosition = Position.X;
 	cubes = generateSingleCube(L, Size, vector3df(initialHorizontalPosition+Size.X*10*0,Position.Y,Position.Z), Transparency, TexturePath, speedHorizontal, speedInwards);
-=======
-	irr::f32 initialHorizontalPosition = Position.X;
 
-	for(int i=0; i<10; i++)
-	{
-		cubes[i] = generateSingleCube(Size, vector3df(initialHorizontalPosition+Size.X*10*i,Position.Y,Position.Z), Transparency, TexturePath, speedHorizontal, speedInwards, Device, plr);
-	}
->>>>>>> origin/AI-Development
 
 }
 
