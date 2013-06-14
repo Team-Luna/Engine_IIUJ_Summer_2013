@@ -1,11 +1,11 @@
-#include <exception>
+#include <Event.h>
 using namespace std;
 
-#include "Event.h"
-#include "Level.h"
-#include "Field.h"
-///Code for class Event functions
+int Event::get_type() {
+	return 0;
+}
+
 void Event::invokeEvent(Field* source, Field* target) {
-	throw "Not yet implemented";
+	return;
 }
 

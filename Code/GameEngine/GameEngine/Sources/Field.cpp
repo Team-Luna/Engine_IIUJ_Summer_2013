@@ -2,6 +2,7 @@
 #include <exception>
 #include <iostream>
 using namespace std;
+#include "Windows.h"
 
 Field::~Field() {
 	//owner already destroyed, no need to do this
@@ -19,7 +20,9 @@ Field::Field(Entity* O, Point P, Point S, int model_type, char* Path, //owner, p
 		Level* L, int lifetime, Point trans, bool anim, //level, lifetime, translation, animated?
 		bool a, bool aa) { //active, always active
 	owner = O;
-	type = O->get_type();
+	if (owner != 0)
+		type = O->get_type();
+	else type = 0;
 	movement_type = 'u'; //unknown, I assume it's based on type?
 	position = P;
 	size = S;
@@ -34,6 +37,13 @@ Field::Field(Entity* O, Point P, Point S, int model_type, char* Path, //owner, p
 	translation = trans;
 	active = a;
 	always_active = aa;
+
+	if (owner == 0)
+	{
+		graphic_model = 0;
+		graphic_model_animated = 0;
+		return;
+	}
 	if (anim)
 	{
 		graphic_model = 0;
@@ -59,7 +69,7 @@ Field::Field(Entity* O, Point P, Point S, int model_type, char* Path, //owner, p
 	
 		graphic_model->setPosition(core::vector3df(position.position_x + translation.position_x,
 			position.position_y + translation.position_y, position.layer + translation.layer));
-		graphic_model->setScale(core::vector3df(1.0, 1.0, 1.0));
+		graphic_model->setScale(core::vector3df(size.layer, size.position_y/10, size.position_x/10));
 		graphic_model->setRotation(core::vector3df(0,O->facing_angle,0));
 
 		graphic_model_animated = 0;
@@ -87,7 +97,7 @@ void Field::update() {
 	}
 	if (!always_active && !active)
 		return;
-
+	
 	//Updating unit position based on velocity, detecting collision
 	location->move_field(this);
 	/*
@@ -100,8 +110,9 @@ void Field::update() {
 	*/
 
 	//Updating animation
-	if (this->owner->animator != 0)
-		this->owner->animator->check();
+	if (this->owner != 0)
+		if (this->owner->animator != 0)
+			this->owner->animator->check();
 	
 	//Updating Model position/rotation
 	if (graphic_model != 0) {

@@ -1,5 +1,4 @@
 #include "MonsterAI.h"
-#include <Windows.h>
 
 MonsterAI::MonsterAI(Monster* own, AITable* ait, Action* ca, Action* l, double de, bool e, bool d)
 {
@@ -41,7 +40,6 @@ void MonsterAI::evaluate_actions(double time, bool v1, bool v2, bool v3, bool v4
 				delay = 0;
 				evaluate = current->do_action(delay, owner->main_field, target);
 				current = current->get_next_action();
-				OutputDebugString("Player: Evaluate change.\n");
 				continue;
 			}
 			if (current->get_type() == 4) //If/Then/Else
@@ -51,7 +49,6 @@ void MonsterAI::evaluate_actions(double time, bool v1, bool v2, bool v3, bool v4
 					current = current->get_next_action();
 				else 
 					current = current->get_extra_action();
-				OutputDebugString("Player: If/Then/Else.\n");
 				continue;
 			}
 			if (current->get_type() == 5) //Looped
@@ -59,17 +56,12 @@ void MonsterAI::evaluate_actions(double time, bool v1, bool v2, bool v3, bool v4
 				delay = 0;
 				looped = current->get_extra_action();
 				current = current->get_next_action();
-				OutputDebugString("Player: Looped.\n");
 				continue;
 			}
 			if (current->do_action(delay, owner->main_field, target)) //Standard
 			{
 				delay = 0;
 				current = current->get_next_action();
-				if (current->get_type() == 1)
-					OutputDebugString("Player: Unit.\n");
-				if (current->get_type() == 3)
-					OutputDebugString("Player: Wait.\n");
 				continue;
 			}
 			else
@@ -107,7 +99,6 @@ void MonsterAI::evaluate_actions(double time, bool v1, bool v2, bool v3, bool v4
 			delay = 0;
 			evaluate = current->do_action(delay, owner->main_field, target);
 			current = current->get_next_action();
-			OutputDebugString("Evaluate change.\n");
 			continue;
 		}
 		if (current->get_type() == 4) //If/Then/Else
@@ -117,8 +108,6 @@ void MonsterAI::evaluate_actions(double time, bool v1, bool v2, bool v3, bool v4
 				current = current->get_next_action();
 			else 
 				current = current->get_extra_action();
-			
-			OutputDebugString("If/Then/Else.\n");
 			continue;
 		}
 		if (current->get_type() == 5) //Looped
@@ -126,15 +115,10 @@ void MonsterAI::evaluate_actions(double time, bool v1, bool v2, bool v3, bool v4
 			delay = 0;
 			looped = current->get_extra_action();
 			current = current->get_next_action();
-			OutputDebugString("Looped.\n");
 			continue;
 		}
 		if (current->do_action(delay, owner->main_field, target)) //Standard
 		{
-			if (current->get_type() == 1)
-				OutputDebugString("Unit.\n");
-			if (current->get_type() == 3)
-				OutputDebugString("Wait.\n");
 			delay = 0;
 			current = current->get_next_action();
 			continue;

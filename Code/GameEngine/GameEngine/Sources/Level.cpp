@@ -3,6 +3,7 @@
 #include <string>
 #include <list>
 #include <map>
+#include <Windows.h>
 
 		/*
 			Wyœwietlanie debug output - jakbyœmy jeszcze potrzebowali jakiegos wyswietlenia
@@ -76,24 +77,12 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 	
 	//Initializing generic stuff
 	lc_interval = 0;
+	esc_interval = 0;
 	delta_time = 0;
 	std::list<Field*> Temp_f;
 	fields = Temp_f;
 	
 	//Loading second batch of data
-	//Initializing events
-	LINE = getNextRelevantLine(infile);
-	std::map< std::string, Event* > Temp_ed;
-	event_dictionary = Temp_ed;
-	extractValues(LINE, lineOutput);
-	for (int i = lineOutput[0]; 0 < i; i--)
-	{
-		LINE = getNextRelevantLine(infile);
-		//=================
-		// TO DO: Events
-		//=================
-	}
-
 	//Initializing animation tables
 	LINE = getNextRelevantLine(infile);
 	std::map< std::string, AnimationTable* > Temp_at;
@@ -208,6 +197,7 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 		Condition* c;
 		Condition* c_a;
 		Condition* c_b;
+		Field* c_f;
 		std::string temp;
 		LINE = getNextRelevantLine(infile);
 		extractValues(LINE, lineOutput);
@@ -257,9 +247,170 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 			LINE = getNextRelevantLine(infile);
 			conditions.insert(std::pair< std::string, Condition* >(LINE, c));
 			break;
+		case 4: //Area
+			//Getting field values
+			LINE = getNextRelevantLine(infile);
+			extractValues(LINE, lineOutput);
+			c_f = new Field(0, Point(lineOutput[0], lineOutput[1], lineOutput[2]), Point(lineOutput[3], lineOutput[4], lineOutput[5]),
+				0, "", this, -1, Point(), false, true, true);
+			fields.insert(fields.end(), c_f);
+			//Creating condition and inserting it under a proper name
+			c = new ConditionArea(c_f);
+			LINE = getNextRelevantLine(infile);
+			conditions.insert(std::pair< std::string, Condition* >(LINE, c));
 		default:
 			break;
 		}
+	}
+	
+	//Initializing events
+	LINE = getNextRelevantLine(infile);
+	extractValues(LINE, lineOutput);
+	for (int i = lineOutput[0]; 0 < i; i--)
+	{
+		Event* e;
+		Event* e_next;
+		Condition* c;
+		std::string temp;
+
+		LINE = getNextRelevantLine(infile);
+		extractValues(LINE, lineOutput);
+		int ID = lineOutput[0];
+		
+		if (ID == 1)
+		{
+			//Getting next event
+			LINE = getNextRelevantLine(infile);
+			if (event_dictionary.find(LINE) != event_dictionary.end())
+				e_next = event_dictionary.find(LINE)->second;
+			else e_next = 0;
+			//Getting values
+			LINE = getNextRelevantLine(infile);
+			extractValues(LINE, lineOutput);
+			//Creating event and inserting it under a proper name
+			e = new EventCP(this, lineOutput[0], lineOutput[1], lineOutput[2], lineOutput[3],
+				lineOutput[4], lineOutput[5], lineOutput[6], lineOutput[7], e_next);
+			LINE = getNextRelevantLine(infile);
+			event_dictionary.insert(std::pair< std::string, Event* >(LINE, e));
+		}
+		if (ID == 2)
+		{
+			//Getting next event
+			LINE = getNextRelevantLine(infile);
+			if (event_dictionary.find(LINE) != event_dictionary.end())
+				e_next = event_dictionary.find(LINE)->second;
+			else e_next = 0;
+
+			//Getting constructor values
+			LINE = getNextRelevantLine(infile);
+			extractValues(LINE, lineOutput);
+			//Getting monster name
+			LINE = getNextRelevantLine(infile);
+			//Creating the event
+			EventSE* e_se = new EventSE(this, lineOutput[0], e_next, lineOutput[1],
+				Point(lineOutput[2], lineOutput[3], lineOutput[4]),
+				Point(lineOutput[5], lineOutput[6], lineOutput[7]),
+				Point(lineOutput[8], lineOutput[9], lineOutput[10]),
+				lineOutput[11], LINE);
+			
+			//Transforming std::strings to char arrays (animation table name)
+			LINE = getNextRelevantLine(infile);
+			for (int i = 0; i < 15; i++)
+				animT[i] = 0;
+			for (int i = 0; i < LINE.length(); i++)
+				animT[i] = LINE[i];
+			//Transforming std::strings to char arrays (model path)
+			LINE = getNextRelevantLine(infile);
+			for (int i = 0; i < modelP_size; i++)
+				modelP[i] = 0;
+			for(int i = 0; i < LINE.length(); i++)
+				modelP[i] = LINE[i];
+			//Loading second batch of data
+			OutputDebugString(modelP);
+			LINE = getNextRelevantLine(infile);
+			extractValues(LINE, lineOutput);
+			//Setting new values
+			e_se->set1(lineOutput[0], lineOutput[1], lineOutput[2],
+				Point(lineOutput[3], lineOutput[4], lineOutput[5]), lineOutput[6],
+				lineOutput[7], lineOutput[8], lineOutput[9], animT, modelP);
+			
+			//Loading second batch of data
+			LINE = getNextRelevantLine(infile);
+			extractValues(LINE, lineOutput);
+			//Getting monster_type
+			LINE = getNextRelevantLine(infile);
+			//Setting new values
+			e_se->set2(lineOutput[0], lineOutput[1], lineOutput[2], lineOutput[3],
+				lineOutput[4], lineOutput[5], lineOutput[6], lineOutput[7], lineOutput[8],
+				lineOutput[9], LINE);
+			//FINALLY putting created event into the dictionary
+			LINE = getNextRelevantLine(infile);
+			event_dictionary.insert(std::pair< std::string, Event* >(LINE, e_se));
+		}
+		if (ID == 3)
+		{
+			//Creating and inserting the event
+			e = new EventDestroy(this);
+			LINE = getNextRelevantLine(infile);
+			event_dictionary.insert(std::pair< std::string, Event* >(LINE, e));
+		}
+		if (ID == 4)
+		{
+			//Getting next event
+			LINE = getNextRelevantLine(infile);
+			if (event_dictionary.find(LINE) != event_dictionary.end())
+				e_next = event_dictionary.find(LINE)->second;
+			else e_next = 0;
+			
+			LINE = getNextRelevantLine(infile);
+			extractValues(LINE, lineOutput);
+			//Creating and inserting the event
+			e = new EventDamage(this, lineOutput[0], e_next);
+			LINE = getNextRelevantLine(infile);
+			event_dictionary.insert(std::pair< std::string, Event* >(LINE, e));
+		}
+		if (ID == 5)
+		{
+			//Getting next event
+			LINE = getNextRelevantLine(infile);
+			if (event_dictionary.find(LINE) != event_dictionary.end())
+				e_next = event_dictionary.find(LINE)->second;
+			else e_next = 0;
+			
+			LINE = getNextRelevantLine(infile);
+			extractValues(LINE, lineOutput);
+			//Creating and inserting the event
+			e = new EventLevel(this, lineOutput[0], Point(lineOutput[1], lineOutput[2], lineOutput[3]), e_next);
+			LINE = getNextRelevantLine(infile);
+			event_dictionary.insert(std::pair< std::string, Event* >(LINE, e));
+		}
+	}
+	
+	//Initializing triggers
+	LINE = getNextRelevantLine(infile);
+	extractValues(LINE, lineOutput);
+	for (int i = lineOutput[0]; 0 < i; i--)
+	{
+		Condition* c;
+		Event* e;
+
+		//Getting condition
+		LINE = getNextRelevantLine(infile);
+		if (conditions.find(LINE) != conditions.end())
+			c = conditions.find(LINE)->second;
+		else c = 0;
+		//Getting event
+		LINE = getNextRelevantLine(infile);
+		if (event_dictionary.find(LINE) != event_dictionary.end())
+			e = event_dictionary.find(LINE)->second;
+		else e = 0;
+		//Getting trigger input data
+		LINE = getNextRelevantLine(infile);
+		extractValues(LINE, lineOutput);
+		//Creating event and inserting it under a proper name
+		Trigger* t = new Trigger(c, e, lineOutput[0]);
+		LINE = getNextRelevantLine(infile);
+		triggers.insert(std::pair< std::string, Trigger* >(LINE, t));
 	}
 
 	//Initializing actions
@@ -555,22 +706,61 @@ void Level::add_event(std::string init) {
 	throw "Not yet implemented";
 }
 
-void Level::add_border(Point start, Point size) {
-	//Border* b = new Border(start, size, this);
-	//fields.insert(fields.end(), b->main_field);
-	//boundaries.insert(boundaries.end(), b);
+void Level::add_border(EventSE* Creator) {
+	//Creating border
+	Border* b = new Border(this, Creator->ms, Creator->abs, Creator->b, //movement speed, absolute, bouncing
+		Creator->pos, //position
+		Creator->size, //size
+		Creator->ca1, Creator->ca2, Creator->ca3, Creator->gd, //custom attributes, gravity degree
+		Creator->fa, Creator->mt, Creator->animT, Creator->modelP, //facing angle, model type, animation table, model path
+		Creator->trans, //translation
+		Creator->anim, Creator->lt, Creator->a, Creator->aa); //animated?, life time, active, always active
+	fields.insert(fields.end(), b->main_field);
+	boundaries.insert(boundaries.end(), b);
+	
+	//Loading animator state
+	if (Creator->load) //if set is needed, else go with default
+		b->animator->set(Creator->ac, Creator->lo, //bool active, bool looping
+			Creator->aid, Creator->as, //animation id, animation speed
+			Creator->curf, Creator->minf, Creator->maxf); //current frame, min frame, max frame
 }
 
-void Level::add_monster(std::string init, Point position, Point size) {
-	//Monster* m = new Monster(init, this, position, size);
-	//fields.insert(fields.end(), m->main_field);
-	//monsters.insert(monsters.end(), m);
+void Level::add_monster(EventSE* Creator) {
+	//Creating monster
+	Monster* m = new Monster(this, Creator->ms, Creator->hit_points, //movement speed, hit points
+		"spawned_monster", Creator->monster_type, //name, monster type,
+		Creator->pos, //position
+		Creator->size, //size
+		Creator->ca1, Creator->ca2, Creator->ca3, Creator->gd, //custom attributes, gravity degree
+		Creator->fa, Creator->animT, Creator->modelP, //facing angle, animation table, model path
+		Creator->trans, //translation
+		Creator->anim, Creator->lt, Creator->a, Creator->aa, 0); //animated?, life time, active, always active, climbing?
+	fields.insert(fields.end(), m->main_field);
+	monsters.insert(monsters.end(), m);
+
+	//Loading animator state
+	if (Creator->load) //if set is needed, else go with default
+		m->animator->set(Creator->ac, Creator->lo, //bool active, bool looping
+			Creator->aid, Creator->as, //animation id, animation speed
+			Creator->curf, Creator->minf, Creator->maxf); //current frame, min frame, max frame
 }
 
-void Level::add_item(std::string init, Point position, Point size) {
-	//Item* i = new Item(init, this, position, size);
-	//fields.insert(fields.end(), i->main_field);
-	//items.insert(items.end(), i);
+void Level::add_item(EventSE* Creator) {
+	//Creating item
+	Item* p = new Item(this, Creator->ms, //movement speed
+		Creator->pos, //position
+		Creator->size, //size
+		Creator->ca1, Creator->ca2, Creator->ca3, Creator->gd, //custom attributes, gravity degree
+		Creator->fa, Creator->animT, Creator->modelP, //facing angle, animation table, model path
+		Creator->trans, //translation
+		Creator->anim, Creator->lt, Creator->a, Creator->aa); //animated?, life time, active, always active
+	fields.insert(fields.end(), p->main_field);
+	items.insert(items.end(), p);
+	//Loading animator state
+	if (Creator->load) //if set is needed, else go with default
+		p->animator->set(Creator->ac, Creator->lo, //bool active, bool looping
+			Creator->aid, Creator->as, //animation id, animation speed
+			Creator->curf, Creator->minf, Creator->maxf); //current frame, min frame, max frame
 }
 
 void Level::add_bgobject(Point start){
@@ -724,12 +914,21 @@ void Level::climb_downwards(Field* field)
 
 void Level::attack(Field* field)
 {
-	//X speed
-	field->velocity.position_x = 0;
-
 	//Animation
 	if (field->owner->animator != 0)
-		field->owner->animator->setAnimation(3);
+		if (field->owner->animator->getAnimation() != 3)
+			field->owner->animator->setAnimation(3);
+
+	//X speed
+	field->velocity.position_x = 0;
+	
+	double o = 0;
+	if (field->owner->facing_angle == 90)
+		o = 1;
+	else o = -1;
+
+	Field* f = collision_Point(field->position + Point(o*(5+field->size.position_x/2), 0, 0));
+	damage(f, 20);
 }
 
 void Level::shoot(Field* field)
@@ -787,8 +986,63 @@ void Level::stop_climbing(Field* field)
 
 void Level::advance_frame(ICameraSceneNode *cam) {
 	//Handling pause status
+	if (esc_interval > 0)
+		esc_interval--;
 	if (pause)
+	{
+		for (std::list<Field*>::iterator i = fields.begin(); i != fields.end(); i++)
+			if ((*i)->owner != 0)
+				if ((*i)->owner->animator != 0)
+					(*i)->owner->animator->stop();
 		return;
+	}
+
+	//Checking player position (if inside level)
+	double x1 = start.position_x;
+	double y1 = start.position_y;
+	double z1 = start.layer;
+	double x2 = x1 + size.position_x;
+	double y2 = y1 + size.position_y;
+	double z2 = z1 + size.layer;
+
+	/*
+	//Debug write up
+	char msgbuf[40];
+	sprintf(msgbuf, "Level: x1=%f", x1);
+	OutputDebugString(msgbuf);
+	sprintf(msgbuf, " x2=%f", x2);
+	OutputDebugString(msgbuf);
+	sprintf(msgbuf, " y1=%f", y1);
+	OutputDebugString(msgbuf);
+	sprintf(msgbuf, " y2=%f", y2);
+	OutputDebugString(msgbuf);
+	sprintf(msgbuf, " z1=%f", z1);
+	OutputDebugString(msgbuf);
+	sprintf(msgbuf, " z2=%f\n", z2);
+	OutputDebugString(msgbuf);
+	sprintf(msgbuf, "Player: x=%f", player->main_field->position.position_x);
+	OutputDebugString(msgbuf);
+	sprintf(msgbuf, " y=%f", player->main_field->position.position_y);
+	OutputDebugString(msgbuf);
+	sprintf(msgbuf, " z=%f\n", player->main_field->position.layer);
+	OutputDebugString(msgbuf);
+	*/
+
+	if ((player->main_field->position.position_x < x1) || (x2 < player->main_field->position.position_x))
+		player_death();
+	if ((player->main_field->position.position_y < y1) || (y2 < player->main_field->position.position_y))
+		player_death();
+	if ((player->main_field->position.layer < z1) || (z2 < player->main_field->position.layer))
+		player_death();
+
+	//Handling triggers
+	for (std::map< std::string, Trigger* >::iterator i = triggers.begin(); i != triggers.end(); i++)
+	{
+		if (i->second->takes_units)
+			for (std::list<Field*>::iterator j = fields.begin(); j != fields.end(); j++)
+				i->second->check((*j), 0);
+		else i->second->check();
+	}
 
 	//Updating positions/scales/rotations:
 	for (std::list<Field*>::iterator i = fields.begin(); i != fields.end(); i++)
@@ -930,7 +1184,7 @@ bool Level::collision_detect(Field* source) {
 			if (ty1 < sy2 && sy2 < ty2)
 				collided = true;
 		}
-
+		
 		//Handling collision (if any)
 		if (collided)
 		{
@@ -949,6 +1203,26 @@ bool Level::collision_detect(Field* source) {
 		++target;
 	}
 	return p;
+}
+
+bool Level::inside(Field* field, Field* area)
+{
+	double fx = field->position.position_x;
+	double fy = field->position.position_y;
+	double fz = field->position.layer;
+
+	double ax1 = area->position.position_x - area->size.position_x / 2;
+	double ax2 = area->position.position_x + area->size.position_x / 2;
+	double ay1 = area->position.position_y - area->size.position_y / 2;
+	double ay2 = area->position.position_y + area->size.position_y / 2;
+	double az1 = area->position.layer - area->size.layer / 2;
+	double az2 = area->position.layer + area->size.layer / 2;
+
+	if (ax1 <= fx && fx <= ax2)
+		if (ay1 <= fy && fy <= ay2)
+			if (az1 <= fz && fz <= az2)
+				return true;
+	return false;
 }
 
 Field* Level::collision_Point(Point p)
@@ -989,13 +1263,15 @@ void Level::move_field(Field* field) {
 	Point base = field->position;
 	switch (field->movement_type) {
 	default:
-		field->position.position_x += field->velocity.position_x * field->owner->movement_speed * delta_time;
+		if (field->owner != 0)
+			field->position.position_x += field->velocity.position_x * field->owner->movement_speed * delta_time;
 		if (collision_detect(field))
 		{
 			field->position.position_x = base.position_x;
 			field->velocity.position_x = 0;
 		}
-		field->position.position_y += field->velocity.position_y * field->owner->movement_speed * delta_time;
+		if (field->owner != 0)
+			field->position.position_y += field->velocity.position_y * field->owner->movement_speed * delta_time;
 		if (collision_detect(field))
 		{
 			field->position.position_y = base.position_y;
@@ -1089,9 +1365,25 @@ void Level::trash(Field* field) {
 void Level::process_key(irr::EKEY_CODE keycode) {
 	if (player == 0)
 		return;
+	
+	if (keycode == irr::KEY_ESCAPE)
+	{
+		if (esc_interval != 0)
+			return;
+		esc_interval = 30;
+		pause = !pause;
+		if (!pause)
+			for (std::list<Field*>::iterator i = fields.begin(); i != fields.end(); i++)
+				if ((*i)->owner != 0)
+					if ((*i)->owner->animator != 0)
+						(*i)->owner->animator->resume();
+	}
+	if (!control_enabled)
+		return;
+
 	if (keycode == irr::KEY_KEY_W)
 		if (player->grounded)
-			player->main_field->velocity.position_y = player->movement_speed*2;
+			jump_forward(player->main_field);
 	/*
 	if (keycode == irr::KEY_KEY_S)
 		if (player->grounded)
@@ -1099,25 +1391,13 @@ void Level::process_key(irr::EKEY_CODE keycode) {
 	*/
 	if (keycode == irr::KEY_KEY_D)
 	{
-		if (player->grounded)
-		{
-			player->facing_angle = 90;
-			player->main_field->velocity.position_x = player->movement_speed;
-			bg_sky->moveLeft();
-			bg_trees->moveLeft();
-			bg_beach->moveLeft();
-		}
+		player->facing_angle = 90;
+		player->main_field->velocity.position_x = player->movement_speed;
 	}
 	if (keycode == irr::KEY_KEY_A)
 	{
-		if (player->grounded)
-		{
-			player->facing_angle = 270;
-			player->main_field->velocity.position_x = -player->movement_speed;
-			bg_sky->moveRight();
-			bg_trees->moveRight();
-			bg_beach->moveRight();
-		}
+		player->facing_angle = 270;
+		player->main_field->velocity.position_x = -player->movement_speed;
 	}
 	if (keycode == irr::KEY_KEY_Q)
 	{
@@ -1190,7 +1470,87 @@ double Level::retrieveValue(int type, Field* From, Field* To)
 		if (From->owner != 0)
 			if (From->owner->animator != 0)
 				return From->owner->animator->checkProgress();
+	if (type == 14)
+		return delta_time;
 	return 0;
+}
+
+void Level::editValue(int type, Field* From, double New)
+{
+	if (type == 1)
+		From->position.position_x = New;
+	if (type == 2)
+		From->position.position_y = New;
+	if (type == 3)
+		From->position.layer = New;
+	if (type == 4)
+		From->velocity.position_x = New;
+	if (type == 5)
+		From->velocity.position_y = New;
+	if (type == 6)
+		From->velocity.layer = New;
+	if (type == 7)
+		From->owner->custom_attribute1 = New;
+	if (type == 8)
+		From->owner->custom_attribute2 = New;
+	if (type == 9)
+		From->owner->custom_attribute3 = New;
+	if (type == 10)
+		From->owner->facing_angle = New;
+}
+
+void Level::damage(Field* f, double amount)
+{
+	if (f == 0)
+		return;
+	if (f->owner == 0)
+		return;
+	if (f->owner->get_type() > 2)
+		return;
+	//Finding the monster who owns this field
+	Monster* M = 0;
+	for (std::list<Monster*>::iterator i = monsters.begin(); i != monsters.end(); i++)
+		if ((*i)->main_field == f)
+			M = (*i);
+	//Dealing damage
+	if (M != 0)
+	{
+		M->hp -= amount;
+	
+		//Handling death
+		if (M->hp <= 0)
+		{
+			M->animator->setAnimation(11);
+			M->aI->dead = true;
+			M->custom_attribute3 = 1; //ignore collision
+		}
+	}
+	else
+	{
+		player->hp -= amount;
+		if (player->hp <= 0)
+			player_death();
+	}
+}
+
+void Level::player_respawn()
+{
+	control_enabled = true;
+}
+
+void Level::player_death()
+{
+	control_enabled = false;
+	OutputDebugString("Player died.\n");
+}
+
+void Level::victory()
+{
+
+}
+void Level::defeat()
+{
+
 }
 
 inline std::string Level::getNextRelevantLine(ifstream& infile) {

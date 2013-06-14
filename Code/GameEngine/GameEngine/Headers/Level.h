@@ -8,6 +8,7 @@
 #include "ValRetrieval.h"
 
 #include "Condition.h"
+#include "ConditionArea.h"
 #include "ConditionComplex.h"
 #include "ConditionCompare.h"
 #include "ConditionPoint.h"
@@ -21,9 +22,18 @@
 
 #include "AITable.h"
 
+#include "Event.h"
+#include "EventCP.h"
+#include "EventSE.h"
+#include "EventDestroy.h"
+#include "EventDamage.h"
+#include "EventLevel.h"
+#include "Trigger.h"
+
 #include "Background.h"
 #include "Behaviour.h"
 #include "BgMovableObject.h"
+#include "Field.h"
 #include "Player.h"
 #include "Monster.h"
 #include "Item.h"
@@ -58,6 +68,7 @@ class Event;
 class Monster;
 class Border;
 class Level;
+class EventSE;
 
 class Level
 {
@@ -70,8 +81,9 @@ class Level
 		ISceneManager* smgr;
 		IGUIEnvironment* guienv;
 
+		bool control_enabled;
 		bool pause;
-		Point start; //Top left corner
+		Point start; //Top left close corner
 		Point size;
 		Point respawn;
 		Point active_range;
@@ -81,8 +93,10 @@ class Level
 		int custom_attribute3;
 		std::map< std::string, AnimationTable* > animation_tables;
 		std::map< std::string, Event* > event_dictionary;
+		std::map< std::string, Trigger* > triggers;
 		double gravity;
 		int lc_interval;
+		int esc_interval;
 		float delta_time;
 		std::map< std::string, Condition* > conditions;
 		std::map< std::string, Action* > actions;
@@ -93,9 +107,9 @@ class Level
 		Background* bg_beach;
 
 		void add_event(std::string init);
-		void add_border(Point start, Point size);
-		void add_monster(std::string init, Point position = Point(), Point size = Point(5.0, 10.0, 1.0));
-		void add_item(std::string init, Point position = Point(), Point size = Point(5.0, 5.0, 1.0));
+		void add_border(EventSE* Creator);
+		void add_monster(EventSE* Creator);
+		void add_item(EventSE* Creator);
 		void add_bgobject(Point start);
 
 		void turn_around(Field* field);
@@ -112,6 +126,7 @@ class Level
 
 		void advance_frame(ICameraSceneNode *cam);
 		bool collision_detect(Field* source);
+		bool inside(Field* field, Field* area);
 		Field* collision_Point(Point p);
 		
 		void move_field(Field* field);
@@ -127,6 +142,14 @@ class Level
 		void process_key(irr::EKEY_CODE keycode);
 
 		double retrieveValue(int type, Field* From, Field* To);
+		void editValue(int type, Field* From, double New);
+
+		void damage(Field* f, double amount);
+
+		void player_respawn();
+		void player_death();
+		void victory();
+		void defeat();
 
 	private:
 		std::list<Field*> fields;

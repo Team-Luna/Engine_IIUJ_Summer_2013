@@ -27,6 +27,7 @@ class ValRetrieval
 					// 11 = distance
 					// 12 = type (int)
 					// 13 = animation progress [0,1]
+					// 14 = deltaTime
 		double val;
 
 		double retrieve(Field* From, Field* To);
