@@ -1,6 +1,12 @@
 ///Includes
 #include <irrlicht.h>
 #include <Level.h>
+
+#include <iostream>
+#include <string>
+#include <windows.h>
+#include "irrklang/irrKlang.h"
+
 ///Namespaces
 using namespace irr;
 using namespace core;
@@ -8,10 +14,17 @@ using namespace scene;
 using namespace video;
 using namespace io;
 using namespace gui;
+
+using namespace std;
+using namespace irrklang;
+
 ///Defs
 #ifdef _IRR_WINDOWS_
 #pragma comment(lib, "Irrlicht.lib")
 #pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
+
+#pragma comment(lib, "irrKlang.lib")
+
 #endif
 
 ///Class Declarations

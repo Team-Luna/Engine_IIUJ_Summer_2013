@@ -47,6 +47,7 @@
 #include <vector>
 #include <map>
 
+#include "../irrklang/irrKlang.h"
 
 using namespace irr;
 
@@ -57,6 +58,8 @@ using namespace io;
 using namespace gui;
 
 using namespace std;
+
+using namespace irrklang;
 
 class Background;
 class BgMovableObject;
@@ -80,6 +83,8 @@ class Level
 		IVideoDriver* driver;
 		ISceneManager* smgr;
 		IGUIEnvironment* guienv;
+
+		ISoundEngine* se;
 
 		bool control_enabled;
 		bool pause;

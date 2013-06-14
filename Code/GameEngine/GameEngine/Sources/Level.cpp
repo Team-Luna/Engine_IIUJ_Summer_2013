@@ -699,6 +699,20 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 	bg_trees = new Background(vector3df(20,10,0), vector3df(-300,1,300), true, "../media/environment/trees.png", 0.5, 3.1, device, player);
 	bg_beach = new Background(vector3df(800,200,0), vector3df(1,-1000,600), false, "../media/environment/beach.jpg", 5.1, 10.1, device, player);
 
+
+	
+	// Initializing Sound
+	LINE = getNextRelevantLine(infile);
+
+	for(int i=0; i<modelP_size; i++)
+		modelP[i] = 0;
+	for(int i=0; i<LINE.length(); i++)
+		modelP[i] = LINE[i];
+
+	se = createIrrKlangDevice();
+	se->play2D(modelP, true);
+
+
 	infile.close();
 }
 
