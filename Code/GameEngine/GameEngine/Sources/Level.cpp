@@ -1548,9 +1548,12 @@ void Level::damage(Field* f, double amount)
 	else
 	{
 		player->hp -= amount;
-		if(!se->isCurrentlyPlaying("../media/sound/scream.wav")) se->play2D("../media/sound/scream.wav");
 		if (player->hp <= 0)
 			player_death();
+		else
+		{
+			if(!se->isCurrentlyPlaying("../media/sound/scream.wav")) se->play2D("../media/sound/scream.wav");
+		}
 	}
 }
 
@@ -1561,6 +1564,7 @@ void Level::player_respawn()
 
 void Level::player_death()
 {
+	if(!se->isCurrentlyPlaying("../media/sound/death.wav")) se->play2D("../media/sound/death.wav");
 	if(!se->isCurrentlyPlaying("../media/sound/game-over.wav")) se->play2D("../media/sound/game-over.wav");
 	control_enabled = false;
 	OutputDebugString("Player died.\n");
