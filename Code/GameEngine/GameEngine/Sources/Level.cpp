@@ -945,6 +945,8 @@ void Level::attack(Field* field)
 
 	Field* f = collision_Point(field->position + Point(o*(5+field->size.position_x/2), 0, 0));
 	damage(f, 20);
+
+	if(!se->isCurrentlyPlaying("../media/sound/attack.wav")) se->play2D("../media/sound/attack.wav");
 }
 
 void Level::shoot(Field* field)
@@ -1546,6 +1548,7 @@ void Level::damage(Field* f, double amount)
 	else
 	{
 		player->hp -= amount;
+		if(!se->isCurrentlyPlaying("../media/sound/scream.wav")) se->play2D("../media/sound/scream.wav");
 		if (player->hp <= 0)
 			player_death();
 	}
@@ -1558,17 +1561,18 @@ void Level::player_respawn()
 
 void Level::player_death()
 {
+	if(!se->isCurrentlyPlaying("../media/sound/game-over.wav")) se->play2D("../media/sound/game-over.wav");
 	control_enabled = false;
 	OutputDebugString("Player died.\n");
 }
 
 void Level::victory()
 {
-
+	if(!se->isCurrentlyPlaying("../media/sound/level-completed.wav")) se->play2D("../media/sound/level-completed.wav");
 }
 void Level::defeat()
 {
-
+	if(!se->isCurrentlyPlaying("../media/sound/game-over.wav")) se->play2D("../media/sound/game-over.wav");
 }
 
 inline std::string Level::getNextRelevantLine(ifstream& infile) {
