@@ -1,17 +1,64 @@
-﻿Build started 2013-06-14 09:46:38.
-     1>Project "C:\Users\Mati\Documents\GitHub\Engine_IIUJ_Summer_2013\Code\GameEngine\GameEngine\GameEngine.vcxproj" on node 2 (build target(s)).
+﻿Build started 14.06.2013 10:12:08.
+     1>Project "C:\Users\Wojtek\Documents\GitHub\Engine_IIUJ_Summer_2013\Code\GameEngine\GameEngine\GameEngine.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\GameEngine.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         All outputs are up-to-date.
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         main.cpp
+     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\main.cpp(66): warning C4305: 'initializing' : truncation from 'double' to 'irr::f32'
        Link:
-         All outputs are up-to-date.
-         GameEngine.vcxproj -> C:\Users\Mati\Documents\GitHub\Engine_IIUJ_Summer_2013\Code\GameEngine\Debug\GameEngine.exe
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Wojtek\Documents\GitHub\Engine_IIUJ_Summer_2013\Code\GameEngine\Debug\GameEngine.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\GameEngine.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Wojtek\Documents\GitHub\Engine_IIUJ_Summer_2013\Code\GameEngine\Debug\GameEngine.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Wojtek\Documents\GitHub\Engine_IIUJ_Summer_2013\Code\GameEngine\Debug\GameEngine.lib" /MACHINE:X86 Debug\main.obj
+         Debug\Action.obj
+         Debug\ActionEvaluate.obj
+         Debug\ActionIfThenElse.obj
+         Debug\ActionLoop.obj
+         Debug\ActionUnit.obj
+         Debug\ActionWait.obj
+         Debug\AITable.obj
+         Debug\AnimationTable.obj
+         Debug\Animator.obj
+         Debug\Background.obj
+         Debug\Behaviour.obj
+         Debug\Border.obj
+         Debug\BgMovableObject.obj
+         Debug\ComplexEvent.obj
+         Debug\Condition.obj
+         Debug\ConditionArea.obj
+         Debug\ConditionCompare.obj
+         Debug\ConditionComplex.obj
+         Debug\ConditionPoint.obj
+         Debug\Control.obj
+         Debug\Control_Set.obj
+         Debug\DestroyEvent.obj
+         Debug\Entity.obj
+         Debug\Event.obj
+         Debug\EventCP.obj
+         Debug\EventDamage.obj
+         Debug\EventDestroy.obj
+         Debug\EventLevel.obj
+         Debug\EventSE.obj
+         Debug\ExternalEvent.obj
+         Debug\Field.obj
+         Debug\Item.obj
+         Debug\Level.obj
+         Debug\Monster.obj
+         Debug\MonsterAI.obj
+         Debug\MoveEvent.obj
+         Debug\NewFieldEvent.obj
+         Debug\ParameterChangeEvent.obj
+         Debug\Player.obj
+         Debug\Point.obj
+         Debug\Trigger.obj
+         Debug\ValRetrieval.obj
+         LINK : C:\Users\Wojtek\Documents\GitHub\Engine_IIUJ_Summer_2013\Code\GameEngine\Debug\GameEngine.exe not found or not built by the last incremental link; performing full link
+         GameEngine.vcxproj -> C:\Users\Wojtek\Documents\GitHub\Engine_IIUJ_Summer_2013\Code\GameEngine\Debug\GameEngine.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\Wojtek\Documents\GitHub\Engine_IIUJ_Summer_2013\Code\GameEngine\Debug\GameEngine.exe;#1" /manifest Debug\GameEngine.exe.intermediate.manifest
        FinalizeBuildStatus:
          Deleting file "Debug\GameEngine.unsuccessfulbuild".
          Touching "Debug\GameEngine.lastbuildstate".
-     1>Done Building Project "C:\Users\Mati\Documents\GitHub\Engine_IIUJ_Summer_2013\Code\GameEngine\GameEngine\GameEngine.vcxproj" (build target(s)).
+     1>Done Building Project "C:\Users\Wojtek\Documents\GitHub\Engine_IIUJ_Summer_2013\Code\GameEngine\GameEngine\GameEngine.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.34
+Time Elapsed 00:00:04.82

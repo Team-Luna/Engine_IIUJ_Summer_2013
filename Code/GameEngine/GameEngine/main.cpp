@@ -97,6 +97,9 @@ int main()
 				else if(receiver.IsKeyDown(irr::KEY_KEY_Z)) {
 					L.process_key(irr::KEY_KEY_Z);
 				}
+				else if(receiver.IsKeyDown(irr::KEY_ESCAPE)) {
+					L.process_key(irr::KEY_ESCAPE);
+				}
 
 				//Updating Level
 				L.advance_frame(cam);
