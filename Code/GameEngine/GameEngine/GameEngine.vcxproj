@@ -82,6 +82,7 @@
     <ClCompile Include="Sources\BgMovableObject.cpp" />
     <ClCompile Include="Sources\ComplexEvent.cpp" />
     <ClCompile Include="Sources\Condition.cpp" />
+    <ClCompile Include="Sources\ConditionArea.cpp" />
     <ClCompile Include="Sources\ConditionCompare.cpp" />
     <ClCompile Include="Sources\ConditionComplex.cpp" />
     <ClCompile Include="Sources\ConditionPoint.cpp" />
@@ -90,6 +91,11 @@
     <ClCompile Include="Sources\DestroyEvent.cpp" />
     <ClCompile Include="Sources\Entity.cpp" />
     <ClCompile Include="Sources\Event.cpp" />
+    <ClCompile Include="Sources\EventCP.cpp" />
+    <ClCompile Include="Sources\EventDamage.cpp" />
+    <ClCompile Include="Sources\EventDestroy.cpp" />
+    <ClCompile Include="Sources\EventLevel.cpp" />
+    <ClCompile Include="Sources\EventSE.cpp" />
     <ClCompile Include="Sources\ExternalEvent.cpp" />
     <ClCompile Include="Sources\Field.cpp" />
     <ClCompile Include="Sources\Item.cpp" />
@@ -101,6 +107,7 @@
     <ClCompile Include="Sources\ParameterChangeEvent.cpp" />
     <ClCompile Include="Sources\Player.cpp" />
     <ClCompile Include="Sources\Point.cpp" />
+    <ClCompile Include="Sources\Trigger.cpp" />
     <ClCompile Include="Sources\ValRetrieval.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -119,6 +126,7 @@
     <ClInclude Include="Headers\BgMovableObject.h" />
     <ClInclude Include="Headers\ComplexEvent.h" />
     <ClInclude Include="Headers\Condition.h" />
+    <ClInclude Include="Headers\ConditionArea.h" />
     <ClInclude Include="Headers\ConditionCompare.h" />
     <ClInclude Include="Headers\ConditionComplex.h" />
     <ClInclude Include="Headers\ConditionPoint.h" />
@@ -127,6 +135,11 @@
     <ClInclude Include="Headers\DestroyEvent.h" />
     <ClInclude Include="Headers\Entity.h" />
     <ClInclude Include="Headers\Event.h" />
+    <ClInclude Include="Headers\EventCP.h" />
+    <ClInclude Include="Headers\EventDamage.h" />
+    <ClInclude Include="Headers\EventDestroy.h" />
+    <ClInclude Include="Headers\EventLevel.h" />
+    <ClInclude Include="Headers\EventSE.h" />
     <ClInclude Include="Headers\ExternalEvent.h" />
     <ClInclude Include="Headers\Field.h" />
     <ClInclude Include="Headers\Item.h" />
@@ -138,6 +151,7 @@
     <ClInclude Include="Headers\ParameterChangeEvent.h" />
     <ClInclude Include="Headers\Player.h" />
     <ClInclude Include="Headers\Point.h" />
+    <ClInclude Include="Headers\Trigger.h" />
     <ClInclude Include="Headers\ValRetrieval.h" />
   </ItemGroup>
   <ItemGroup>
