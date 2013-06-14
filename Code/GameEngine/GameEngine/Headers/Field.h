@@ -44,9 +44,9 @@ class Field
 		void update();
 	private:
 		Event* collision_effect;
+		Point velocity;
 		Point size;
 		Point translation;
-		Point velocity;
 		Point movement_point;
 		Event* destroy_event;
 		bool destroy_at_stop;

@@ -119,7 +119,8 @@ void Field::update() {
 
 	//Handling gravity
 	if (this->owner)
-		velocity.position_y -= location->gravity*location->delta_time*this->owner->gravity_degree/100;
+		if (this->owner->custom_attribute1 != 1)
+			velocity.position_y -= location->gravity*location->delta_time*this->owner->gravity_degree/100;
 
 	//Handling life time
 	if (time_left == 0)

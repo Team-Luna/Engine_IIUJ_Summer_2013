@@ -1,0 +1,125 @@
+﻿Merge remote-tracking branch 'origin/AI-Development'
+
+Conflicts:
+	Code/GameEngine/Debug/GameEngine.exe
+	Code/GameEngine/Debug/GameEngine.ilk
+	Code/GameEngine/Debug/GameEngine.pdb
+	Code/GameEngine/GameEngine.sdf
+	Code/GameEngine/GameEngine.suo
+	Code/GameEngine/GameEngine/Debug/AnimationTable.obj
+	Code/GameEngine/GameEngine/Debug/Animator.obj
+	Code/GameEngine/GameEngine/Debug/Background.obj
+	Code/GameEngine/GameEngine/Debug/Behaviour.obj
+	Code/GameEngine/GameEngine/Debug/BgMovableObject.obj
+	Code/GameEngine/GameEngine/Debug/Border.obj
+	Code/GameEngine/GameEngine/Debug/CL.read.1.tlog
+	Code/GameEngine/GameEngine/Debug/CL.write.1.tlog
+	Code/GameEngine/GameEngine/Debug/ComplexEvent.obj
+	Code/GameEngine/GameEngine/Debug/Condition.obj
+	Code/GameEngine/GameEngine/Debug/Control.obj
+	Code/GameEngine/GameEngine/Debug/Control_Set.obj
+	Code/GameEngine/GameEngine/Debug/DestroyEvent.obj
+	Code/GameEngine/GameEngine/Debug/Entity.obj
+	Code/GameEngine/GameEngine/Debug/Event.obj
+	Code/GameEngine/GameEngine/Debug/ExternalEvent.obj
+	Code/GameEngine/GameEngine/Debug/Field.obj
+	Code/GameEngine/GameEngine/Debug/GameEngine.lastbuildstate
+	Code/GameEngine/GameEngine/Debug/GameEngine.log
+	Code/GameEngine/GameEngine/Debug/Item.obj
+	Code/GameEngine/GameEngine/Debug/Level.obj
+	Code/GameEngine/GameEngine/Debug/Monster.obj
+	Code/GameEngine/GameEngine/Debug/MoveEvent.obj
+	Code/GameEngine/GameEngine/Debug/NewFieldEvent.obj
+	Code/GameEngine/GameEngine/Debug/ParameterChangeEvent.obj
+	Code/GameEngine/GameEngine/Debug/Player.obj
+	Code/GameEngine/GameEngine/Debug/Point.obj
+	Code/GameEngine/GameEngine/Debug/cl.command.1.tlog
+	Code/GameEngine/GameEngine/Debug/link.command.1.tlog
+	Code/GameEngine/GameEngine/Debug/link.read.1.tlog
+	Code/GameEngine/GameEngine/Debug/link.write.1.tlog
+	Code/GameEngine/GameEngine/Debug/main.obj
+	Code/GameEngine/GameEngine/Debug/mt.command.1.tlog
+	Code/GameEngine/GameEngine/Debug/mt.read.1.tlog
+	Code/GameEngine/GameEngine/Debug/mt.write.1.tlog
+	Code/GameEngine/GameEngine/Debug/vc100.idb
+	Code/GameEngine/GameEngine/Debug/vc100.pdb
+	Code/GameEngine/GameEngine/GameEngine.vcxproj
+	Code/GameEngine/GameEngine/GameEngine.vcxproj.filters
+	Code/GameEngine/GameEngine/Sources/Background.cpp
+	Code/GameEngine/GameEngine/Sources/Level.cpp
+	Code/GameEngine/ipch/gameengine-97324fd3/gameengine-c39335c.ipch
+#
+# It looks like you may be committing a merge.
+# If this is not correct, please remove the file
+#	.git/MERGE_HEAD
+# and try again.
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# All conflicts fixed but you are still merging.
+#   (use "git commit" to conclude merge)
+#
+# Changes to be committed:
+#
+#	new file:   Code/GameEngine/GameEngine.sdf
+#	new file:   Code/GameEngine/GameEngine/Debug/AIPoint.obj
+#	new file:   Code/GameEngine/GameEngine/Debug/AITable.obj
+#	new file:   Code/GameEngine/GameEngine/Debug/Action.obj
+#	new file:   Code/GameEngine/GameEngine/Debug/ActionEvaluate.obj
+#	new file:   Code/GameEngine/GameEngine/Debug/ActionIfThenElse.obj
+#	new file:   Code/GameEngine/GameEngine/Debug/ActionLoop.obj
+#	new file:   Code/GameEngine/GameEngine/Debug/ActionUnit.obj
+#	new file:   Code/GameEngine/GameEngine/Debug/ActionWait.obj
+#	new file:   Code/GameEngine/GameEngine/Debug/ConditionCompare.obj
+#	new file:   Code/GameEngine/GameEngine/Debug/ConditionComplex.obj
+#	new file:   Code/GameEngine/GameEngine/Debug/ConditionPoint.obj
+#	new file:   Code/GameEngine/GameEngine/Debug/ConditionPointIsEmpty.obj
+#	new file:   Code/GameEngine/GameEngine/Debug/GameCondition.obj
+#	new file:   Code/GameEngine/GameEngine/Debug/MonsterAI.obj
+#	new file:   Code/GameEngine/GameEngine/Debug/ValRetrieval.obj
+#	new file:   Code/GameEngine/GameEngine/Headers/AITable.h
+#	new file:   Code/GameEngine/GameEngine/Headers/Action.h
+#	new file:   Code/GameEngine/GameEngine/Headers/ActionEvaluate.h
+#	new file:   Code/GameEngine/GameEngine/Headers/ActionIfThenElse.h
+#	new file:   Code/GameEngine/GameEngine/Headers/ActionLoop.h
+#	new file:   Code/GameEngine/GameEngine/Headers/ActionUnit.h
+#	new file:   Code/GameEngine/GameEngine/Headers/ActionWait.h
+#	modified:   Code/GameEngine/GameEngine/Headers/Behaviour.h
+#	modified:   Code/GameEngine/GameEngine/Headers/Condition.h
+#	new file:   Code/GameEngine/GameEngine/Headers/ConditionCompare.h
+#	new file:   Code/GameEngine/GameEngine/Headers/ConditionComplex.h
+#	new file:   Code/GameEngine/GameEngine/Headers/ConditionPoint.h
+#	modified:   Code/GameEngine/GameEngine/Headers/Entity.h
+#	modified:   Code/GameEngine/GameEngine/Headers/Field.h
+#	modified:   Code/GameEngine/GameEngine/Headers/Level.h
+#	modified:   Code/GameEngine/GameEngine/Headers/Monster.h
+#	new file:   Code/GameEngine/GameEngine/Headers/MonsterAI.h
+#	modified:   Code/GameEngine/GameEngine/Headers/Player.h
+#	new file:   Code/GameEngine/GameEngine/Headers/ValRetrieval.h
+#	new file:   Code/GameEngine/GameEngine/Sources/AITable.cpp
+#	new file:   Code/GameEngine/GameEngine/Sources/Action.cpp
+#	new file:   Code/GameEngine/GameEngine/Sources/ActionEvaluate.cpp
+#	new file:   Code/GameEngine/GameEngine/Sources/ActionIfThenElse.cpp
+#	new file:   Code/GameEngine/GameEngine/Sources/ActionLoop.cpp
+#	new file:   Code/GameEngine/GameEngine/Sources/ActionUnit.cpp
+#	new file:   Code/GameEngine/GameEngine/Sources/ActionWait.cpp
+#	modified:   Code/GameEngine/GameEngine/Sources/Animator.cpp
+#	modified:   Code/GameEngine/GameEngine/Sources/Background.cpp
+#	modified:   Code/GameEngine/GameEngine/Sources/Behaviour.cpp
+#	modified:   Code/GameEngine/GameEngine/Sources/Condition.cpp
+#	new file:   Code/GameEngine/GameEngine/Sources/ConditionCompare.cpp
+#	new file:   Code/GameEngine/GameEngine/Sources/ConditionComplex.cpp
+#	new file:   Code/GameEngine/GameEngine/Sources/ConditionPoint.cpp
+#	modified:   Code/GameEngine/GameEngine/Sources/Field.cpp
+#	modified:   Code/GameEngine/GameEngine/Sources/Level.cpp
+#	modified:   Code/GameEngine/GameEngine/Sources/Monster.cpp
+#	new file:   Code/GameEngine/GameEngine/Sources/MonsterAI.cpp
+#	modified:   Code/GameEngine/GameEngine/Sources/Player.cpp
+#	new file:   Code/GameEngine/GameEngine/Sources/ValRetrieval.cpp
+#	modified:   Code/GameEngine/Init/level1.ini
+#	renamed:    Code/GameEngine/ipch/gameengine-bd69cffc/gameengine-c39335c.ipch -> Code/GameEngine/ipch/gameengine-97324fd3/gameengine-c39335c.ipch
+#	new file:   Code/GameEngine/media/environment/t351sml.jpg
+#
+

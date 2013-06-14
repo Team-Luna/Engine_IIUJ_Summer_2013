@@ -7,9 +7,9 @@ using namespace std;
 #include "Condition.h"
 #include "Event.h"
 
-class Condition;
 class Event;
 class Behaviour;
+
 ///Declarations for class Behaviour
 class Behaviour
 {
@@ -17,7 +17,7 @@ class Behaviour
 		bool check_conditions();
 		Event* Event;
 	private:
-		std::list<Condition> conditions;
+		std::list<Condition*> conditions;
 };
 
 #endif

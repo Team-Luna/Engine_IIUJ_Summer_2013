@@ -4,9 +4,25 @@
 #include "AnimationTable.h"
 #include "Entity.h"
 #include "Point.h"
+
+#include "ValRetrieval.h"
+
 #include "Condition.h"
+#include "ConditionComplex.h"
+#include "ConditionCompare.h"
+#include "ConditionPoint.h"
+
+#include "Action.h"
+#include "ActionUnit.h"
+#include "ActionEvaluate.h"
+#include "ActionWait.h"
+#include "ActionIfThenElse.h"
+#include "ActionLoop.h"
+
+#include "AITable.h"
 
 #include "Background.h"
+#include "Behaviour.h"
 #include "BgMovableObject.h"
 #include "Player.h"
 #include "Monster.h"
@@ -54,6 +70,7 @@ class Level
 		ISceneManager* smgr;
 		IGUIEnvironment* guienv;
 
+		bool pause;
 		Point start; //Top left corner
 		Point size;
 		Point respawn;
@@ -68,6 +85,10 @@ class Level
 		double gravity;
 		int lc_interval;
 		float delta_time;
+		std::map< std::string, Condition* > conditions;
+		std::map< std::string, Action* > actions;
+		std::map< std::string, AITable* > action_tables;
+		
 		Background* bg_sky;
 		Background* bg_trees;
 		Background* bg_beach;
@@ -79,8 +100,21 @@ class Level
 		void add_bgobject(Point start);
 		void add_background(Point start);
 
+		void turn_around(Field* field);
+		void move_forward(Field* field);
+		void jump_forward(Field* field);
+		void jump_backwards(Field* field);
+		void climb_upwards(Field* field);
+		void climb_downwards(Field* field);
+		void attack(Field* field);
+		void shoot(Field* field);
+		void idle(Field* field);
+		void stop(Field* field, bool grounded);
+		void stop_climbing(Field* field);
+
 		void advance_frame(ICameraSceneNode *cam);
 		bool collision_detect(Field* source);
+		Field* collision_Point(Point p);
 		
 		void move_field(Field* field);
 		void demove_field(Field* field);
@@ -95,6 +129,8 @@ class Level
 		void trash(Field* field);
 		void process_key(irr::EKEY_CODE keycode);
 		std::list<Background*> backgrounds; //const access needed
+
+		double retrieveValue(int type, Field* From, Field* To);
 
 	private:
 		std::list<Field*> fields;

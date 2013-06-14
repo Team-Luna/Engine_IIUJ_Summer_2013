@@ -25,7 +25,7 @@ void Animator::check()
 double Animator::checkProgress() {
 	double current = graphic_model->getFrameNr() - graphic_model->getStartFrame();
 	current /= graphic_model->getEndFrame() - graphic_model->getStartFrame();
-	return current;
+	return abs(current);
 }
 
 int Animator::getAnimation()
@@ -35,6 +35,7 @@ int Animator::getAnimation()
 
 void Animator::setAnimation(int As)
 {
+	resume();
 	active = true;
 	//If no change is needed, skip the rest
 	if ((animID == As) && (animTable->size[As] < 2))
@@ -48,11 +49,13 @@ void Animator::setAnimation(int As)
 		looping = true;
 	if (As == 2)
 		looping = true;
+	if (As == 10)
+		looping = true;
 	
 	//Set the new cycle
 	int minFrame = graphic_model->getFrameNr();
 	int maxFrame = graphic_model->getFrameNr();
-	if ((0 < animTable->size[As]) && looping)
+	if (0 < animTable->size[As])
 	{
 		int random = rand()%(animTable->size[As]);
 

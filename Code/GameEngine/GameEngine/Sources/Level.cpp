@@ -23,6 +23,7 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 	driver = device->getVideoDriver();
 	smgr = device->getSceneManager();
 	guienv = device->getGUIEnvironment();
+	pause = false;
 
 	//Creating temporary variables
 	std::string TempLine = "";
@@ -143,9 +144,13 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 		Point(lineOutput[6], lineOutput[7], lineOutput[8]), //size
 		lineOutput[9], lineOutput[10], lineOutput[11], //custom values
 		lineOutput[12], lineOutput[13], animT, modelP, //gravity degree, fancing angle
+<<<<<<< HEAD
 		Point(lineOutput[14], lineOutput[15], lineOutput[16]), lineOutput[17]); //translation, animated?
 	
 	playerposition=lineOutput[6];
+=======
+		Point(lineOutput[14], lineOutput[15], lineOutput[16]), lineOutput[17], lineOutput[18]); //translation, animated?, climbing?
+>>>>>>> origin/AI-Development
 
 	fields.insert(fields.end(), player->main_field);
 	//Loading animator state
@@ -199,6 +204,215 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 				lineOutput[5], lineOutput[6], lineOutput[7]); //current frame, min frame, max frame
 	}
 	
+	//Initializing conditions
+	LINE = getNextRelevantLine(infile);
+	std::map< std::string, Condition* > Temp_cond;
+	conditions = Temp_cond;
+	extractValues(LINE, lineOutput);
+	for (int i = lineOutput[0]; 0 < i; i--)
+	{
+		Condition* c;
+		Condition* c_a;
+		Condition* c_b;
+		std::string temp;
+		LINE = getNextRelevantLine(infile);
+		extractValues(LINE, lineOutput);
+
+		int ID = (int)lineOutput[0];
+
+		switch(ID)
+		{
+		case 1: //Complex
+			//Getting first part
+			LINE = getNextRelevantLine(infile);
+			if (conditions.find(LINE) != conditions.end())
+				c_a = conditions.find(LINE)->second;
+			else c_a = 0;
+			//Getting second part
+			LINE = getNextRelevantLine(infile);
+			if (conditions.find(LINE) != conditions.end())
+				c_b = conditions.find(LINE)->second;
+			else c_b = 0;
+			//And / Or
+			LINE = getNextRelevantLine(infile);
+			extractValues(LINE, lineOutput); //1 = and, 0 = or
+			//Creating condition and inserting it under a proper name
+			c = new ConditionComplex(c_a, c_b, lineOutput[0]);
+			LINE = getNextRelevantLine(infile);
+			conditions.insert(std::pair< std::string, Condition* >(LINE, c));
+			break;
+		case 2: //Compare
+			LINE = getNextRelevantLine(infile);
+			extractValues(LINE, lineOutput);
+			//Creating condition and inserting it under a proper name
+			c = new ConditionCompare(this, lineOutput[0], lineOutput[1], lineOutput[2], lineOutput[3], lineOutput[4]);
+			LINE = getNextRelevantLine(infile);
+			conditions.insert(std::pair< std::string, Condition* >(LINE, c));
+			break;
+		case 3: //Point
+			//Getting values
+			LINE = getNextRelevantLine(infile);
+			extractValues(LINE, lineOutput);
+			//Getting next condition
+			LINE = getNextRelevantLine(infile);
+			if (conditions.find(LINE) != conditions.end())
+				c_a = conditions.find(LINE)->second;
+			else c_a = 0;
+			//Creating condition and inserting it under a proper name
+			c = new ConditionPoint(this, c_a, Point(lineOutput[0], lineOutput[1], lineOutput[2]), lineOutput[3], lineOutput[4]);
+			LINE = getNextRelevantLine(infile);
+			conditions.insert(std::pair< std::string, Condition* >(LINE, c));
+			break;
+		default:
+			break;
+		}
+	}
+
+	//Initializing actions
+	LINE = getNextRelevantLine(infile);
+	std::map< std::string, Action* > Temp_act;
+	actions = Temp_act;
+	extractValues(LINE, lineOutput);
+	for (int i = lineOutput[0]; 0 < i; i--)
+	{
+		Action* a;
+		Action* a_next;
+		Action* a_extra;
+		Condition* c;
+		LINE = getNextRelevantLine(infile);
+		extractValues(LINE, lineOutput);
+
+		int ID = (int)lineOutput[0];
+
+		switch(ID)
+		{
+		case 1: //Unit
+			//Getting next Action
+			LINE = getNextRelevantLine(infile);
+			if (actions.find(LINE) != actions.end())
+				a_next = actions.find(LINE)->second;
+			else a_next = 0;
+			//Getting Action ID
+			LINE = getNextRelevantLine(infile);
+			extractValues(LINE, lineOutput);
+			//Creating actual action
+			a = new ActionUnit(this, lineOutput[0], a_next);
+			//Inserting action into map
+			LINE = getNextRelevantLine(infile);
+			actions.insert(std::pair< std::string, Action* >(LINE, a));
+			break;
+		case 2: //Evaluate
+			//Getting next Action
+			LINE = getNextRelevantLine(infile);
+			if (actions.find(LINE) != actions.end())
+				a_next = actions.find(LINE)->second;
+			else a_next = 0;
+			//Getting Evaluate
+			LINE = getNextRelevantLine(infile);
+			extractValues(LINE, lineOutput);
+			//Creating actual action
+			a = new ActionEvaluate(this, lineOutput[0], a_next);
+			//Inserting action into map
+			LINE = getNextRelevantLine(infile);
+			actions.insert(std::pair< std::string, Action* >(LINE, a));
+			break;
+		case 3: //Wait
+			//Getting condition
+			LINE = getNextRelevantLine(infile);
+			if (conditions.find(LINE) != conditions.end())
+				c = conditions.find(LINE)->second;
+			else c = 0;
+			//Getting next Action
+			LINE = getNextRelevantLine(infile);
+			if (actions.find(LINE) != actions.end())
+				a_next = actions.find(LINE)->second;
+			else a_next = 0;
+			//Getting Values
+			LINE = getNextRelevantLine(infile);
+			extractValues(LINE, lineOutput);
+			//Creating actual action
+			a = new ActionWait(this, lineOutput[0], lineOutput[1], c, a_next);
+			//Inserting action into map
+			LINE = getNextRelevantLine(infile);
+			actions.insert(std::pair< std::string, Action* >(LINE, a));
+			break;
+		case 4: //If/Then/Else
+			//Getting condition
+			LINE = getNextRelevantLine(infile);
+			if (conditions.find(LINE) != conditions.end())
+				c = conditions.find(LINE)->second;
+			else c = 0;
+			//Getting next Action
+			LINE = getNextRelevantLine(infile);
+			if (actions.find(LINE) != actions.end())
+				a_next = actions.find(LINE)->second;
+			else a_next = 0;
+			//Getting extra Action
+			LINE = getNextRelevantLine(infile);
+			if (actions.find(LINE) != actions.end())
+				a_extra = actions.find(LINE)->second;
+			else a_extra = 0;
+			//Creating actual action
+			a = new ActionIfThenElse(this, c, a_next, a_extra);
+			//Inserting action into map
+			LINE = getNextRelevantLine(infile);
+			actions.insert(std::pair< std::string, Action* >(LINE, a));
+			break;
+		case 5: //Loop
+			//Getting next Action
+			LINE = getNextRelevantLine(infile);
+			if (actions.find(LINE) != actions.end())
+				a_next = actions.find(LINE)->second;
+			else a_next = 0;
+			//Getting extra Action
+			LINE = getNextRelevantLine(infile);
+			if (actions.find(LINE) != actions.end())
+				a_extra = actions.find(LINE)->second;
+			else a_extra = 0;
+			//Creating actual action
+			a = new ActionLoop(this, a_next, a_extra);
+			//Inserting action into map
+			LINE = getNextRelevantLine(infile);
+			actions.insert(std::pair< std::string, Action* >(LINE, a));
+			break;
+		default:
+			break;
+		}
+	}
+
+	//Initializing action tables
+	LINE = getNextRelevantLine(infile);
+	std::map< std::string, AITable* > Temp_aitable;
+	action_tables = Temp_aitable;
+	extractValues(LINE, lineOutput);
+	for (int i = lineOutput[0]; 0 < i; i--)
+	{
+		LINE = getNextRelevantLine(infile);
+		std::string name = LINE;
+		action_tables.insert(std::pair< std::string, AITable* >(name, new AITable()));
+
+		//Obstackle
+		LINE = getNextRelevantLine(infile);
+		if (actions.find(LINE) != actions.end())
+			action_tables.find(name)->second->actions[0] = actions.find(LINE)->second;
+		//Cliff
+		LINE = getNextRelevantLine(infile);
+		if (actions.find(LINE) != actions.end())
+			action_tables.find(name)->second->actions[1] = actions.find(LINE)->second;
+		//Monster
+		LINE = getNextRelevantLine(infile);
+		if (actions.find(LINE) != actions.end())
+			action_tables.find(name)->second->actions[2] = actions.find(LINE)->second;
+		//Player
+		LINE = getNextRelevantLine(infile);
+		if (actions.find(LINE) != actions.end())
+			action_tables.find(name)->second->actions[3] = actions.find(LINE)->second;
+		//Side
+		LINE = getNextRelevantLine(infile);
+		if (actions.find(LINE) != actions.end())
+			action_tables.find(name)->second->actions[4] = actions.find(LINE)->second;
+	}
+
 	//Initializing monsters
 	LINE = getNextRelevantLine(infile);
 	std::list<Monster*> Temp_m;
@@ -234,7 +448,7 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 			lineOutput[8], lineOutput[9], lineOutput[10], lineOutput[11], //custom attributes, gravity degree
 			lineOutput[12], animT, modelP, //facing angle, animation table, model path
 			Point(lineOutput[13], lineOutput[14], lineOutput[15]), //translation
-			lineOutput[16], lineOutput[17], lineOutput[18], lineOutput[19]); //animated?, life time, active, always active
+			lineOutput[16], lineOutput[17], lineOutput[18], lineOutput[19], lineOutput[20]); //animated?, life time, active, always active, climbing?
 		fields.insert(fields.end(), m->main_field);
 		monsters.insert(monsters.end(), m);
 		
@@ -245,6 +459,26 @@ Level::Level(IrrlichtDevice* Device, char* path) {
 			m->animator->set(lineOutput[1], lineOutput[2], //bool active, bool looping
 				lineOutput[3], lineOutput[4], //animation id, animation speed
 				lineOutput[5], lineOutput[6], lineOutput[7]); //current frame, min frame, max frame
+		
+		//Loading AI
+		LINE = getNextRelevantLine(infile);
+		AITable* AIi1 = action_tables.find(LINE)->second;
+		
+		LINE = getNextRelevantLine(infile);
+		Action* AIi2;
+		if (actions.find(LINE) != actions.end())
+			AIi2 = actions.find(LINE)->second;
+		else AIi2 = 0;
+		
+		LINE = getNextRelevantLine(infile);
+		Action* AIi3;
+		if (actions.find(LINE) != actions.end())
+			AIi3 = actions.find(LINE)->second;
+		else AIi3 = 0;
+
+		LINE = getNextRelevantLine(infile);
+		extractValues(LINE, lineOutput);
+		m->aI = new MonsterAI(m, AIi1, AIi2, AIi3, lineOutput[0], lineOutput[1], lineOutput[2]);
 	}
 	
 	//Initializing Borders
@@ -375,8 +609,216 @@ void Level::add_item(std::string init, Point position, Point size) {
 }
 
 void Level::add_bgobject(Point start){
+
+}
+
+void Level::turn_around(Field* field)
+{
+	if (field->owner->facing_angle == 90)
+		field->owner->facing_angle = 270;
+	else field->owner->facing_angle = 90;
+}
+
+void Level::move_forward(Field* field)
+{
+	if (field->owner->animator != 0)
+		if (field->owner->animator->getAnimation() != 1)
+			field->owner->animator->setAnimation(1);
+	double o = 0;
+	if (field->owner->facing_angle == 90)
+		o = 1;
+	else o = -1;
+	if (field->velocity.position_x != o*field->owner->movement_speed)
+		field->velocity.position_x = o*field->owner->movement_speed;
+}
+
+void Level::jump_forward(Field* field)
+{
+	//Animation
+	if (field->owner->animator != 0)
+		if (field->owner->animator->getAnimation() != 7)
+			field->owner->animator->setAnimation(7);
+
+	double o = 0;
+	if (field->owner->facing_angle == 90)
+		o = 1;
+	else o = -1;
 	
-};
+	//Y speed
+	field->velocity.position_y = 2*field->owner->movement_speed;
+	//X speed
+	field->velocity.position_x = o*field->owner->movement_speed;
+}
+
+void Level::jump_backwards(Field* field)
+{
+	double o = 0;
+	if (field->owner->facing_angle == 90)
+		o = 1;
+	else o = -1;
+	
+	//Y speed
+	field->velocity.position_y = 2*field->owner->movement_speed;
+	//X speed
+	field->velocity.position_x = -o*field->owner->movement_speed;
+
+	//Animation
+	if (field->owner->animator != 0)
+		field->owner->animator->setAnimation(7);
+}
+
+void Level::climb_upwards(Field* field)
+{
+	//Animation
+	if (field->owner->animator != 0)
+		if (field->owner->animator->getAnimation() != 10)
+			field->owner->animator->setAnimation(10);
+
+	//Y speed
+	field->velocity.position_y = field->owner->movement_speed;
+	//X speed
+	field->velocity.position_x = 0;
+
+	double o = 0;
+	if (field->owner->facing_angle == 90)
+		o = 1;
+	else o = -1;
+
+	//Checking Field
+	Field* F = collision_Point(field->position + Point(o*8, 0, 0));
+	if (F == 0)
+		return;
+	if (F->owner == 0)
+		return;
+	if (F->owner->get_type() != 4)
+		return;
+	if (F->owner->custom_attribute1 != 1)
+		return;
+	
+	//Starting to climb
+	if (field->owner->custom_attribute1 == 0)
+	{
+		field->owner->custom_attribute1 = 1;
+		if (o == 1)
+			field->position.position_x = F->position.position_x - (2 + F->size.position_x + field->size.position_x)/2;
+		else
+			field->position.position_x = F->position.position_x + (2 + F->size.position_x + field->size.position_x)/2;
+	}
+}
+
+void Level::climb_downwards(Field* field)
+{
+	//Animation
+	if (field->owner->animator != 0)
+		if (field->owner->animator->getAnimation() != 10)
+		{
+			field->owner->animator->setAnimation(10);
+			field->owner->animator->setSpeed(-15);
+		}
+
+	//Y speed
+	field->velocity.position_y = -field->owner->movement_speed;
+	//X speed
+	field->velocity.position_x = 0;
+
+	double o = 0;
+	if (field->owner->facing_angle == 90)
+		o = 1;
+	else o = -1;
+
+	//Checking Field
+	Field* F = collision_Point(field->position + Point(o*3, -9, 0));
+	if (F == 0)
+		return;
+	if (F->owner == 0)
+		return;
+	if (F->owner->get_type() != 4)
+		return;
+	if (F->owner->custom_attribute1 != 1)
+		return;
+	
+	//Starting to climb
+	if (field->owner->custom_attribute1 == 0)
+	{
+		field->owner->custom_attribute1 = 1;
+		if (o == 1)
+		{
+			field->position.position_x = F->position.position_x + (2 + F->size.position_x + field->size.position_x)/2;
+			field->position.position_y = F->position.position_y + (F->size.position_y)/2;
+		}
+		else
+		{
+			field->position.position_x = F->position.position_x - (2 + F->size.position_x + field->size.position_x)/2;
+			field->position.position_y = F->position.position_y + (F->size.position_y)/2;
+		}
+		if (field->owner->facing_angle == 90)
+			field->owner->facing_angle = 270;
+		else field->owner->facing_angle = 90;
+	}
+}
+
+void Level::attack(Field* field)
+{
+	//X speed
+	field->velocity.position_x = 0;
+
+	//Animation
+	if (field->owner->animator != 0)
+		field->owner->animator->setAnimation(3);
+}
+
+void Level::shoot(Field* field)
+{
+	//Animation
+	if (field->owner->animator != 0)
+		field->owner->animator->setAnimation(5);
+}
+
+void Level::idle(Field* field)
+{
+	//X speed
+	field->velocity.position_x = 0;
+	//Animation
+	if (field->owner->animator != 0)
+		field->owner->animator->setAnimation(0);
+}
+
+void Level::stop(Field* field, bool grounded)
+{
+	//Y speed
+	field->velocity.position_y = 0;
+	//X speed
+	field->velocity.position_x = 0;
+
+	if (grounded)
+		field->owner->animator->setAnimation(0);
+	else field->owner->animator->stop();
+}
+
+void Level::stop_climbing(Field* field)
+{
+	//Animation
+	field->owner->animator->setSpeed(15);
+	//Y speed
+	field->velocity.position_y = 0;
+	//X speed
+	field->velocity.position_x = 0;
+
+	double o = 0;
+	if (field->owner->facing_angle == 90)
+		o = 1;
+	else o = -1;
+	Field* F = collision_Point(field->position + Point(o*7, 6, 0));
+	if (F == 0)
+	{
+		F = collision_Point(field->position + Point(o*5, 0, 0));
+		field->position = F->position;
+		field->position.position_y += (2 + F->size.position_y + field->size.position_y)/2;
+	}
+	
+	if (field->owner != 0)
+		field->owner->custom_attribute1 = 0;
+}
 
 void Level::add_background(Point start)
 {
@@ -384,6 +826,10 @@ void Level::add_background(Point start)
 };
 
 void Level::advance_frame(ICameraSceneNode *cam) {
+	//Handling pause status
+	if (pause)
+		return;
+
 	//Updating positions/scales/rotations:
 	for (std::list<Field*>::iterator i = fields.begin(); i != fields.end(); i++)
 		(*i)->update();
@@ -445,12 +891,20 @@ void Level::advance_frame(ICameraSceneNode *cam) {
 		player->main_field->velocity.position_x = 0;
 	//player->main_field->velocity.position_y = 0; //player->main_field->get_vy()
 
+	//AI
+	for (std::list<Monster*>::iterator i = monsters.begin(); i != monsters.end(); i++)
+		(*i)->act(delta_time);
+
 	//decrementing layer change delay
 	if (lc_interval > 0)
 		lc_interval--;
 }
 
 bool Level::collision_detect(Field* source) {
+	if (source->owner == 0) //Empty field, used for triggers
+		return false;
+	if (source->owner->custom_attribute3 == 1) //this field lacks collision
+		return false;
 	std::list<Field*>::iterator target = fields.begin();
 	bool p = false;
 	while (target != fields.end())
@@ -471,6 +925,19 @@ bool Level::collision_detect(Field* source) {
 			++target;
 			continue;
 		}
+		//Checking if the field is empty
+		if ((*target)->owner == 0)
+		{
+			++target;
+			continue;
+		}
+		//Checking if the field has collision
+		if ((*target)->owner->custom_attribute3 == 1)
+		{
+			++target;
+			continue;
+		}
+			
 		//Vefining values for further usage
 		bool collided = false;
 
@@ -515,7 +982,7 @@ bool Level::collision_detect(Field* source) {
 			if (ty1 < sy2 && sy2 < ty2)
 				collided = true;
 		}
-		
+
 		//Handling collision (if any)
 		if (collided)
 		{
@@ -536,13 +1003,44 @@ bool Level::collision_detect(Field* source) {
 	return p;
 }
 
+Field* Level::collision_Point(Point p)
+{
+	std::list<Field*>::iterator target = fields.begin();
+	while (target != fields.end())
+	{
+		if ((*target)->owner == 0) //Empty field, used for triggers
+		{
+			++target;
+			continue;
+		}
+		if ((*target)->owner->custom_attribute3 == 1) //this field lacks collision
+		{
+			++target;
+			continue;
+		}
+
+		//Checking collision
+		double x1 = (*target)->position.position_x - (*target)->size.position_x / 2;
+		double x2 = (*target)->position.position_x + (*target)->size.position_x / 2;
+		double y1 = (*target)->position.position_y - (*target)->size.position_y / 2;
+		double y2 = (*target)->position.position_y + (*target)->size.position_y / 2;
+		double l1 = (*target)->position.layer - (*target)->size.layer / 2;
+		double l2 = (*target)->position.layer + (*target)->size.layer / 2;
+
+		if ((l1 < p.layer) && (p.layer < l2))
+			if ((x1 < p.position_x) && (p.position_x < x2))
+				if ((y1 < p.position_y) && (p.position_y < y2))
+					return (*target);
+
+		++target;
+	}
+	return 0;
+}
+
 void Level::move_field(Field* field) {
 	Point base = field->position;
 	switch (field->movement_type) {
-	case -1: {
-		break;
-			 }
-	case 'u':{
+	default:
 		field->position.position_x += field->velocity.position_x * field->owner->movement_speed * delta_time;
 		if (collision_detect(field))
 		{
@@ -556,9 +1054,8 @@ void Level::move_field(Field* field) {
 			field->velocity.position_y = 0;
 		}
 		break;
-			}
 	}
-	--field->time_left;
+	//--field->time_left;
 }
 
 void Level::demove_field(Field* field) {
@@ -719,6 +1216,50 @@ void Level::process_key(irr::EKEY_CODE keycode) {
 		if (collision_detect(player->main_field))
 			player->main_field->position.layer += 1;
 	}
+}
+
+
+double Level::retrieveValue(int type, Field* From, Field* To)
+{
+	if (From == 0)
+		return 0;
+	if (type == 1)
+		return From->position.position_x;
+	if (type == 2)
+		return From->position.position_y;
+	if (type == 3)
+		return From->position.layer;
+	if (type == 4)
+		return From->velocity.position_x;
+	if (type == 5)
+		return From->velocity.position_y;
+	if (type == 6)
+		return From->velocity.layer;
+	if (type == 7)
+		return From->owner->custom_attribute1;
+	if (type == 8)
+		return From->owner->custom_attribute2;
+	if (type == 9)
+		return From->owner->custom_attribute3;
+	if (type == 10)
+		return From->owner->facing_angle;
+	if (type == 11)
+	{
+		if (To == 0)
+			return 0;
+		double Ans = abs(From->position.position_x - To->position.position_x);
+		Ans += abs(From->position.position_y - To->position.position_y);
+		Ans = sqrt(Ans);
+		return Ans;
+	}
+	if (type == 12)
+		if (From->owner != 0)
+			return From->owner->get_type();
+	if (type == 13)
+		if (From->owner != 0)
+			if (From->owner->animator != 0)
+				return From->owner->animator->checkProgress();
+	return 0;
 }
 
 inline std::string Level::getNextRelevantLine(ifstream& infile) {
