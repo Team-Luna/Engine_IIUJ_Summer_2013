@@ -3,7 +3,7 @@
 #include <string>
 #include <list>
 #include <map>
-#include <Windows.h>
+#include <windows.h>
 
 		/*
 			Wyœwietlanie debug output - jakbyœmy jeszcze potrzebowali jakiegos wyswietlenia
@@ -817,6 +817,8 @@ void Level::jump_forward(Field* field)
 	field->velocity.position_y = 2*field->owner->movement_speed;
 	//X speed
 	field->velocity.position_x = o*field->owner->movement_speed;
+
+	if(!se->isCurrentlyPlaying("../media/sound/jumping.wav")) se->play2D("../media/sound/jumping.wav");
 }
 
 void Level::jump_backwards(Field* field)
@@ -1396,8 +1398,10 @@ void Level::process_key(irr::EKEY_CODE keycode) {
 		return;
 
 	if (keycode == irr::KEY_KEY_W)
+	{
 		if (player->grounded)
 			jump_forward(player->main_field);
+	}
 	/*
 	if (keycode == irr::KEY_KEY_S)
 		if (player->grounded)

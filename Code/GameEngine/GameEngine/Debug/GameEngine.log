@@ -1,20 +1,9 @@
-﻿Build started 14.06.2013 10:26:30.
+﻿Build started 14.06.2013 10:39:56.
      1>Project "C:\Users\Wojtek\Documents\GitHub\Engine_IIUJ_Summer_2013\Code\GameEngine\GameEngine\GameEngine.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\GameEngine.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Sources\AITable.cpp Sources\Action.cpp Sources\ActionEvaluate.cpp Sources\ActionIfThenElse.cpp Sources\ActionLoop.cpp Sources\ActionUnit.cpp Sources\ActionWait.cpp Sources\Animator.cpp Sources\Background.cpp Sources\Behaviour.cpp Sources\Border.cpp Sources\ComplexEvent.cpp Sources\Condition.cpp Sources\ConditionArea.cpp Sources\ConditionCompare.cpp Sources\ConditionComplex.cpp Sources\ConditionPoint.cpp Sources\Control.cpp Sources\Control_Set.cpp Sources\DestroyEvent.cpp Sources\Entity.cpp Sources\Event.cpp Sources\EventCP.cpp Sources\EventDamage.cpp Sources\EventDestroy.cpp Sources\EventLevel.cpp Sources\EventSE.cpp Sources\ExternalEvent.cpp Sources\Field.cpp Sources\Item.cpp Sources\Level.cpp Sources\Monster.cpp Sources\MonsterAI.cpp Sources\MoveEvent.cpp Sources\NewFieldEvent.cpp Sources\ParameterChangeEvent.cpp Sources\Player.cpp Sources\Trigger.cpp Sources\ValRetrieval.cpp main.cpp
-         main.cpp
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\main.cpp(79): warning C4305: 'initializing' : truncation from 'double' to 'irr::f32'
-         ValRetrieval.cpp
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\valretrieval.cpp(17): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
-         Trigger.cpp
-         Player.cpp
-         ParameterChangeEvent.cpp
-         NewFieldEvent.cpp
-         MoveEvent.cpp
-         MonsterAI.cpp
-         Monster.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Sources\Level.cpp
          Level.cpp
      1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(44): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
      1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(44): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
@@ -243,78 +232,26 @@
      1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(273): warning C4101: 'c' : unreferenced local variable
      1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(801): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(819): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(832): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(857): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(899): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(944): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(989): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(992): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(1295): warning C4065: switch statement contains 'default' but no 'case' labels
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(1495): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(1497): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(834): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(859): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(901): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(946): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(991): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(994): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(1297): warning C4065: switch statement contains 'default' but no 'case' labels
      1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(1499): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(1501): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(1503): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(1505): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(1507): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(1509): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(1507): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(1509): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(1511): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
      1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(1513): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(1532): warning C4244: '-=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(1544): warning C4244: '-=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(1585): warning C4018: '<' : signed/unsigned mismatch
-         Item.cpp
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\item.cpp(13): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-         Field.cpp
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\field.cpp(59): warning C4244: 'argument' : conversion from 'int' to 'irr::f32', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\field.cpp(73): warning C4244: 'argument' : conversion from 'int' to 'irr::f32', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\field.cpp(122): warning C4244: 'argument' : conversion from 'int' to 'irr::f32', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\field.cpp(128): warning C4244: 'argument' : conversion from 'int' to 'irr::f32', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\field.cpp(134): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
-         ExternalEvent.cpp
-         EventSE.cpp
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\eventse.cpp(15): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\eventse.cpp(16): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\eventse.cpp(17): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-         EventLevel.cpp
-         EventDestroy.cpp
-         EventDamage.cpp
-         EventCP.cpp
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\eventcp.cpp(7): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
-         Event.cpp
-         Entity.cpp
-         Generating Code...
-         Compiling...
-         DestroyEvent.cpp
-         Control_Set.cpp
-         Control.cpp
-         ConditionPoint.cpp
-         ConditionComplex.cpp
-         ConditionCompare.cpp
-         ConditionArea.cpp
-         Condition.cpp
-         ComplexEvent.cpp
-         Border.cpp
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\border.cpp(13): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-         Behaviour.cpp
-         Background.cpp
-         Animator.cpp
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\animator.cpp(56): warning C4244: 'initializing' : conversion from 'irr::f32' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\animator.cpp(57): warning C4244: 'initializing' : conversion from 'irr::f32' to 'int', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\animator.cpp(66): warning C4244: 'argument' : conversion from 'int' to 'irr::f32', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\animator.cpp(67): warning C4244: 'argument' : conversion from 'int' to 'irr::f32', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\animator.cpp(73): warning C4244: 'argument' : conversion from 'int' to 'irr::f32', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\animator.cpp(84): warning C4244: 'argument' : conversion from 'int' to 'irr::f32', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\animator.cpp(98): warning C4244: 'argument' : conversion from 'int' to 'irr::f32', possible loss of data
-     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\animator.cpp(100): warning C4244: 'argument' : conversion from 'int' to 'irr::f32', possible loss of data
-         ActionWait.cpp
-         ActionUnit.cpp
-         ActionLoop.cpp
-         ActionIfThenElse.cpp
-         ActionEvaluate.cpp
-         Action.cpp
-         AITable.cpp
-         Generating Code...
+     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(1515): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(1517): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(1536): warning C4244: '-=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(1548): warning C4244: '-=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\wojtek\documents\github\engine_iiuj_summer_2013\code\gameengine\gameengine\sources\level.cpp(1589): warning C4018: '<' : signed/unsigned mismatch
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Wojtek\Documents\GitHub\Engine_IIUJ_Summer_2013\Code\GameEngine\Debug\GameEngine.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\GameEngine.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Wojtek\Documents\GitHub\Engine_IIUJ_Summer_2013\Code\GameEngine\Debug\GameEngine.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Wojtek\Documents\GitHub\Engine_IIUJ_Summer_2013\Code\GameEngine\Debug\GameEngine.lib" /MACHINE:X86 Debug\main.obj
          Debug\Action.obj
@@ -370,4 +307,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:44.57
+Time Elapsed 00:00:04.39
